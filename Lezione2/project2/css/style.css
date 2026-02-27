@@ -3,6 +3,11 @@
 /* Selettori per elemento.
 Seleziono in base al tagname
 La regola si applicherà a tutti gli elementi che hanno quel tagname */
+
+body{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
 p{
     color: blue;
 }
@@ -53,6 +58,10 @@ Tutti tag contenuti nell'elemento che possiede quel nome classe: tutte le immagi
     background-color: black;
 }
 
+.bgYellow{
+    background-color: yellow;
+}
+
 .clearfix{
     clear: both;
 }
@@ -67,4 +76,38 @@ Tutti tag contenuti nell'elemento che possiede quel nome classe: tutte le immagi
 #testiAlbum{
     text-align: center;
     background-color: cadetblue;
+}
+
+/* Fornisco una regola alle immagini */
+
+/* #canzoni img{
+    width: 50px;
+    height: auto;
+} */
+
+/* .box img{
+    width: 50px;
+    height: auto;
+} */
+
+.imgDim{
+    width: 100px;
+    height: auto;
+}
+
+.container{
+    width: 800px;
+    height: 250px;
+    background-color: rgb(250, 200, 139);
+    margin: 50px auto;
+}
+
+
+.box{
+    float: left;
+    width: 150px;
+    height: 150px;
+    margin-left: 25px;
+    margin-right: 25px;
+    padding: 25px;
 }
