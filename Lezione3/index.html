@@ -45,7 +45,34 @@
 
             <label for="sito_web">Sito web</label>
             <input type="url" id="sito_web" name="sito_web" placeholder="Inserisci il tuo sito web" required> <br>
+
+            <label for="orario">Orario</label> 
+            <input type="time" id="orario" name="orario" required> <br>
+
+            <label for="cerca">Cerca</label>
+            <input type="search" id="cerca" name="cerca" placeholder="Cerca qualcosa..." required> <br>
+
         </fildset>
+
+        <fieldset>
+            <legend>Informazioni di accesso</legend>
+            <!-- Accesso-->
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Scegli un username" required> <br>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Scegli una password" required> <br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Genere</legend>
+            <input type="radio" id="maschio" name="genere" value="maschio" required>
+            <label for="maschio">Maschio</label>
+            <input type="radio" id="femmina" name="genere" value="femmina" required>
+            <label for="femmina">Femmina</label>
+            <input type="radio" id="altro" name="genere" value="altro" required>
+            <label for="altro">Altro</label>
+        </fieldset>
 
     </form> 
 </body>
