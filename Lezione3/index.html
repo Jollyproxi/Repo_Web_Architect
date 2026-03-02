@@ -67,13 +67,85 @@
         <fieldset>
             <legend>Genere</legend>
             <input type="radio" id="maschio" name="genere" value="maschio" required>
-            <label for="maschio">Maschio</label>
+            <label for="maschio">Maschio</label> <br>   
             <input type="radio" id="femmina" name="genere" value="femmina" required>
-            <label for="femmina">Femmina</label>
+            <label for="femmina">Femmina</label> <br>
             <input type="radio" id="altro" name="genere" value="altro" required>
-            <label for="altro">Altro</label>
+            <label for="altro">Altro</label> <br>
+            
+            
         </fieldset>
 
-    </form> 
+
+        <fieldset>
+            <legend>Professione</legend>
+            <select id="professione" name="professione" required>
+                <option value="" selected disabled>Seleziona la tua professione</option>
+                <option value="studente">Studente</option>
+                <option value="insegnante">Insegnante</option>
+                <option value="ingegnere">Ingegnere</option>
+                <option value="medico">Medico</option>
+                <option value="sviluppatore_web">Sviluppatore Web</option>
+                <option value="mafioso">Mafioso</option>
+                <option value="criminale">Criminale</option>
+                <option value="avvocato">Avvocato</option>
+                <option value="criptoguru">Criptoguru</option>
+                <option value="altro">Altro</option>
+            </select> <br>
+
+
+
+            <label for="interessi">Auto preferita</label>
+            <select id="interessi" name="interessi" required>
+                <option value="" selected disabled>Seleziona la tua auto preferita</option>
+                <optgroup label="Svedesi">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                </optgroup>
+                <optgroup label="Tedesche">
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+                    <option value="bmw">BMW</option>
+                </optgroup>
+                <optgroup label="Italiane">
+                    <option value="fiat">Fiat</option>
+                    <option value="lancia">Lancia</option>
+                    <option value="ferrari">Ferrari</option>
+                    <option value="lamborghini">Lamborghini</option>
+                    <option value="alfa_romeo">Alfa Romeo</option>
+                </optgroup>                    
+            </select> <br>
+
+            <label for="colour">Colore</label>
+            <input type="color" id="colour" name="colour" value="#ff0000" required> <br>
+
+
+
+        </fieldset>
+
+        <fieldset>
+
+            <legend>Approvazioni</legend>
+            <input type="checkbox" id="termini" name="termini" required>
+            <label for="termini">Accetto i termini e le condizioni</label> <br>
+            <input type="checkbox" id="newsletter" name="newsletter">
+            <label for="newsletter">Iscriviti alla newsletter</label> <br>
+            <input type="checkbox" id="offerte" name="offerte">
+            <label for="offerte">Ricevi offerte speciali</label> <br>
+            <label for="privacy">Privacy</label>
+            <input type="checkbox" id="privacy" name="privacy" required>
+            <label for="privacy">Accetto la politica sulla privacy</label> <br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Altro</legend>
+            <label for="rating">Valuta il nostro servizio (1-10)</label>
+            <input type="range" id="rating" name="rating" min="1" max="10" value="3" step="1" required>  <br>
+
+
+            <label for="messaggio">Messaggio</label>
+            <textarea id="messaggio" name="messaggio" placeholder="Scrivi un messaggio..." required rows="4" cols="10"></textarea> <br>
+        </fieldset>
+
 </body>
 </html>
