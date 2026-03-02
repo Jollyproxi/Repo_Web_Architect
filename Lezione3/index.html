@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html
+<head>
+    <meta charset="UTF-8">
+    <title>Lezione 3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <h1>Form Control</h1>
+
+    <h3>Modulo di registrazione da compilare</h3>
+
+    <form action="#" autocomplete="on" method ="get">  <!-- action: specifica l'URL a cui inviare i dati del modulo quando viene inviato. 
+    autocomplete: specifica se il browser deve abilitare o disabilitare la funzionalità di completamento automatico per i campi del modulo.
+    method: specifica il metodo HTTP da utilizzare quando si inviano i dati del modulo.  Con get i dati del modulo vengono inviati come parte dell'URL, 
+    mentre con post i dati vengono inviati nel corpo della richiesta HTTP.  e con get il name diventa una chiave -->
+        
+        <fieldset>
+            <legend>Informazioni personali</legend>
+            <!-- Anagrafica-->
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="name" placeholder="Inserisci il tuo nome" required autofocus> <br> <!-- required: obbliga l'utente a compilare il campo prima di inviare il modulo. 
+            autofocus: indica che il campo deve essere automaticamente selezionato quando la pagina viene caricata. -->
+
+            <label for="cognome">Cognome</label>
+            <input type="text" id="cognome" name="cognome" placeholder="Inserisci il tuo cognome" required> <br>  <!-- imput tag  muto perchè non richiede chiusura  -->
+
+            <label for="data_nascita">Data di nascita</label>
+            <input type="date" id="data_nascita" name="data_nascita" required placeholder="Inserisci la tua data di nascita"> <br>
+
+            <label for="eta">Età</label>
+            <input type="number" id="eta" name="eta" min="0" max="150" placeholder="Inserisci la tua età" required> <br>
+
+        </fieldset>
+
+        <fildset>
+            <legend>Informazioni di contatto</legend>
+            <!-- Contatti-->
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Inserisci la tua email" required> <br>
+
+            <label for="telefono">Telefono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="Inserisci il tuo numero di telefono" required> <br>
+
+            <label for="sito_web">Sito web</label>
+            <input type="url" id="sito_web" name="sito_web" placeholder="Inserisci il tuo sito web" required> <br>
+        </fildset>
+
+    </form> 
+</body>
+</html>
