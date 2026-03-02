@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html
-<head>
+<head>  
     <meta charset="UTF-8">
     <title>Lezione 3</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,10 +11,16 @@
 
     <h3>Modulo di registrazione da compilare</h3>
 
-    <form action="#" autocomplete="on" method ="get">  <!-- action: specifica l'URL a cui inviare i dati del modulo quando viene inviato. 
+    <form action="#" autocomplete="on" method ="post">  <!-- action: specifica l'URL a cui inviare i dati del modulo quando viene inviato.   Get è di default, se non viene specificato.
     autocomplete: specifica se il browser deve abilitare o disabilitare la funzionalità di completamento automatico per i campi del modulo.
     method: specifica il metodo HTTP da utilizzare quando si inviano i dati del modulo.  Con get i dati del modulo vengono inviati come parte dell'URL, 
-    mentre con post i dati vengono inviati nel corpo della richiesta HTTP.  e con get il name diventa una chiave -->
+    mentre con post i dati vengono inviati nel corpo della richiesta HTTP.  e con get il name diventa una chiave
+    Il metodo get è più adatto per richieste che non modificano lo stato del server, come la ricerca o la visualizzazione di dati e viene visualizzato nell'URL,
+    mentre il metodo post è più adatto per richieste che modificano lo stato del server, come l'invio di dati o la creazione di risorse.  
+    
+    
+    
+    -->
         
         <fieldset>
             <legend>Informazioni personali</legend>
@@ -132,7 +138,6 @@
             <label for="newsletter">Iscriviti alla newsletter</label> <br>
             <input type="checkbox" id="offerte" name="offerte">
             <label for="offerte">Ricevi offerte speciali</label> <br>
-            <label for="privacy">Privacy</label>
             <input type="checkbox" id="privacy" name="privacy" required>
             <label for="privacy">Accetto la politica sulla privacy</label> <br>
         </fieldset>
@@ -140,12 +145,18 @@
         <fieldset>
             <legend>Altro</legend>
             <label for="rating">Valuta il nostro servizio (1-10)</label>
-            <input type="range" id="rating" name="rating" min="1" max="10" value="3" step="1" required>  <br>
+            <input type="range" id="rating" name="rating" min="1" max="10" value="3" step="0.1" required>  <br>
 
 
             <label for="messaggio">Messaggio</label>
             <textarea id="messaggio" name="messaggio" placeholder="Scrivi un messaggio..." required rows="4" cols="10"></textarea> <br>
         </fieldset>
+
+        <button type="submit">Invia</button>
+        <button type="reset">Reset</button> 
+        <button type="button" onclick="alert('Hai cliccato il pulsante!')">Cliccami</button> <!-- button: crea un pulsante cliccabile.  type: specifica il tipo di pulsante.  
+        submit: invia il modulo, reset: reimposta i campi del modulo ai valori
+    </form>
 
 </body>
 </html>
