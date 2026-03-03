@@ -1,51 +1,81 @@
-input{
-    padding: 10px;
-    margin: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+input:active{
+    border: 5px solid red !important;
+    z-index: 1;
 }
-
-input[type="color"]{
-    width: 50px;
-    height: 30px;
-    padding: 0;
-}   
 
 label{
-    display: block;
-    margin-top: 10px; 
-    color: green;  
+    color: green;
 }
 
-input[type="submit"], input[type="reset"], button{
-    background-color: #4CAF50; 
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-input:active{
-    border: 5px solid red;
-    z-index: 0;
-}
+/* Pseudo classi */
 
 a{
-    color: black;
     text-decoration: none;
+    color: black;
 }
+
 a:hover{
-    color: red;
-    text-decoration: underline;
     font-size: 24px;
-}       
-flexcontainer{
-    display: flex ;
-    /*
-    flex-direction: column;
-    */
-    flex-direction: row;
+    color: blue;
+}
+
+
+.flex-container{
+    width: 80%;
+    margin: 0 auto;
+    
+    display: flex;
+
+    flex-wrap: wrap;
+
+    /* regola che stabilisce il main axis: flex-direction */
+    /* flex-direction: row; Valore di DEFAULT */
+    /* flex-direction: column; */
+    /* flex-direction: row-reverse; */
+    /* flex-direction: column-reverse; */
+
+    /* Regola per distribuire gli elementi figlio nel container genitore lungo il MAIN-AXIS */
+    /* justify-content: start; DEFAULT */
+    /* justify-content: center; */
+    /* justify-content: end; */
+    /* justify-content: space-around; */
+    /* justify-content: space-between; */
+    justify-content: space-evenly;
+
+    /* Regola per distribuire gli elementi lungo il CROSS-AXIS */
+    /* align-items: flex-start; */
+    /* align-items: start;     */
+    /* align-items: center; */
+    /* align-items: end; */
+    /* align-items: flex-end; */
+    /* align-items: stretch; */
+    /* align-items: baseline; Questa regola tiene conto del testo */
+    align-items: baseline;
+
+    height: 600px;
+    border: 1px solid black;
+
+    /* transform: rotate(45deg); */
+
+    /* flex-wrap: wrap; */
 }
 
 .box{
-    width: 150px;
-    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 20%;
+    height: 50vh;
+    border: 1px solid red;
+    background-color: brown;
+    color: white;
+}
+
+.boxMin{
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    background-color: green;
 }

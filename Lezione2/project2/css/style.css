@@ -120,21 +120,24 @@ Tutti tag contenuti nell'elemento che possiede quel nome classe: tutte le immagi
 }
 
 
-.containerPerc {
-    width: 80%;
+.mt4{
+    margin-top: 40px;
+}
+
+
+.containerPerc{
+    width: 60%;
     min-height: 50vh;
-    background-color: rgb(250, 200, 139);
+    background-color: bisque;
     margin: 10% auto;
-    padding: 50px 0;
+    padding: 50px;
 }
 
 .boxPerc{
     float: left;
     width: 20%;
     height: 20vh;
-    margin: 2.5%;
-    text-align: center;
-    color: black;
+    background-color: black;
+    margin: auto 2.5%;
 }
 
-.containerPerc 
