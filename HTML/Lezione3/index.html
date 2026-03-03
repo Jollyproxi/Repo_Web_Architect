@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione 3</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    
+    <h1>Form control</h1>
+
+    <h3>Modulo di registrazione da compilare</h3>
+
+    <p>Per info leggere la seguente <a href="./pages/informativa.html">Informativa</a></p>
+
+    <p>Per studiare Flexbox vai su questa <a href="./fleboxStudio.html">Pagina</a></p>
+
+    <form action="./pages/benvenuto.html" autocomplete="on" method="post">
+        
+        <!-- Anagrafica -->
+        <fieldset>
+            <legend>Anagrafica</legend>
+
+            <label for="nome">Nome:</label><br>
+            <input type="text" name="nome" id="nome" placeholder="Inserisci il tuo nome"> <br>
+
+            <label for="cognome">Cognome: </label><br>
+            <input type="text" name="cognome" id="cognome" value="" required> <br>
+
+            <label for="dataNascita">Data di Nascita</label><br>
+            <input type="date" name="dataNascita" id="dataNascita" required> <br>
+
+            <label for="eta">Età: </label><br>
+            <input type="number" name="eta" id="eta" min="1" max="120" required><br>
+        </fieldset>
+
+        <fieldset>
+            <legend>Contatti</legend>
+
+            <label for="email">Email</label><br>
+            <input type="email" name="email" id="email" required> <br>
+            
+            <label for="sito">Sito web:</label><br>
+            <input type="url" name="sito" id="sito" required> <br>
+
+            <label for="cerca">Cerca: </label><br>
+            <input type="search" id="cerca" name="cerca" required> <br>
+            
+            <label for="orario">Orario:</label><br>
+            <input type="time" id="orario" name="orario" required> <br>
+
+        </fieldset>
+
+
+        <fieldset>
+            <legend>Credenziali</legend>
+
+            <label for="username">Username:</label> <br>
+            <input type="text" id="username" name="username" maxlength="20" required><br>
+
+            <label for="password">Password</label><br>
+            <input type="password" id="password" name="password" required><br>
+
+        </fieldset>
+
+
+        <fieldset>
+            <legend>Genere</legend>
+            <!-- name permette di creare dei pulsanti mutuamente esclusivi legati tra loro. Il value è obbligatorio -->
+            <input type="radio" id="uomo" name="genere" value="uomo">
+            <label for="uomo">Uomo</label><br>
+
+            <input type="radio" id="donna" name="genere" value="donna">
+            <label for="donna">Donna</label><br>
+
+            <input type="radio" id="altro" name="genere" value="altro">
+            <label for="altro">Altro</label><br>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Professione e auto</legend>
+
+            <label for="professione">Professione</label><br>
+            <select name="professione" id="professione">
+                <option value="" selected disabled> Scegli una professione</option>
+                <option value="docente">Docente</option>
+                <option value="impiegato">Impiegto</option>
+                <option value="sviluppatore">Sviluppatore</option>
+                <option value="studente">Studente</option>
+            </select><br>
+
+
+            <label for="auto">Auto preferita:</label><br>
+            <select name="auto" id="auto">
+
+                <option value="" selected disabled>Seleziona un'auto</option>
+      
+                <optgroup label="auto svedesi">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                </optgroup>
+
+                <optgroup label="auto tedesche">
+                    <option value="mercedes">Mercedes</option>
+                    <option value="BMW">BMW</option>
+                </optgroup>
+
+                <optgroup label="auto italiane">
+                    <option value="fiat">Fiat</option>
+                    <option value="alfa romeo">Alfa Romeo</option>
+                </optgroup>
+
+            </select><br>
+
+            <label for="color">Colore</label><br>
+            <input type="color" id="colore" name="colore" value="#1e90ff">
+        </fieldset>
+
+        <fieldset>
+            <legend>Approvazioni</legend>
+            
+            <input type="checkbox" id="termCond" name="termCond" value="termCond" required>
+            <label for="termCond">Accetta i Termini e Condizioni della pagina</label><br>
+
+            <input type="checkbox" id="privacy" name="privacy" value="privacy" required>
+            <label for="privacy">Accetta i termini della privacy</label>        
+        </fieldset>
+
+        <fieldset>
+            <legend>Altre info</legend>
+
+            <label for="rating">Rating (da 1 a 10)</label> <br>
+            <input type="range" id="rating" name="rating" min="1" max="10" step="1" value="5"><br>
+
+
+            <label for="messaggio">Messaggio: </label><br>
+            <textarea name="messaggio" id="messaggio" rows="5" cols="50" placeholder="scrivi qui il tuo messaggio..."></textarea><br>
+            
+        </fieldset>
+
+
+        <!-- <button type="submit" value="invia">invia</button> -->
+        <input type="submit" value="Invia">
+        <input type="reset" value="Cancella">
+
+        <input type="button" value="Cliccami" onclick="console.log('Ciao dalla console')">
+
+    </form>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+input:active{
+    border: 5px solid red !important;
+    z-index: 1;
+}
+
+label{
+    color: green;
+}
+
+/* Pseudo classi */
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+a:hover{
+    font-size: 24px;
+    color: blue;
+}
+
+
+.flex-container{
+    width: 80%;
+    margin: 0 auto;
+    
+    display: flex;
+
+    flex-wrap: wrap;
+
+    /* regola che stabilisce il main axis: flex-direction */
+    /* flex-direction: row; Valore di DEFAULT */
+    /* flex-direction: column; */
+    /* flex-direction: row-reverse; */
+    /* flex-direction: column-reverse; */
+
+    /* Regola per distribuire gli elementi figlio nel container genitore lungo il MAIN-AXIS */
+    /* justify-content: start; DEFAULT */
+    /* justify-content: center; */
+    /* justify-content: end; */
+    /* justify-content: space-around; */
+    /* justify-content: space-between; */
+    justify-content: space-evenly;
+
+    /* Regola per distribuire gli elementi lungo il CROSS-AXIS */
+    /* align-items: flex-start; */
+    /* align-items: start;     */
+    /* align-items: center; */
+    /* align-items: end; */
+    /* align-items: flex-end; */
+    /* align-items: stretch; */
+    /* align-items: baseline; Questa regola tiene conto del testo */
+    align-items: baseline;
+
+    height: 600px;
+    border: 1px solid black;
+
+    /* transform: rotate(45deg); */
+
+    /* flex-wrap: wrap; */
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 20%;
+    height: 50vh;
+    border: 1px solid red;
+    background-color: brown;
+    color: white;
+}
+
+.boxMin{
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    background-color: green;
+}
