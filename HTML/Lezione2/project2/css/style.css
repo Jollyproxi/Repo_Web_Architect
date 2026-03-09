@@ -103,6 +103,10 @@ Tutti tag contenuti nell'elemento che possiede quel nome classe: tutte le immagi
     padding: 50px 0;
 }
 
+.mt4{
+    margin-top: 4px;
+}   
+
 
 .box{
     float: left;
