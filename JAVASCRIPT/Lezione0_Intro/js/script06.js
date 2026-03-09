@@ -1,11 +1,11 @@
 // ...existing code...
 
-var items = [];
+const items = [];
 
-var addButton = document.getElementById("btnAdd");
-var itemInput = document.getElementById("item");
-var dateInput = document.getElementById("data");
-var todoList = document.getElementById("listaItems");
+const addButton = document.getElementById("btnAdd");
+const itemInput = document.getElementById("item");
+const dateInput = document.getElementById("data");
+const todoList = document.getElementById("listaItems");
 
 function parseIsoDate(iso) {
     var parts = iso.split("-"); // yyyy-mm-dd
