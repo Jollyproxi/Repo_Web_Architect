@@ -13,7 +13,10 @@ let presenza = true;
 let assenza = false;
 
 //Per quanto sia possibile non è una buona cosa saltare da un tipo all'altro
+//numero = "cinque"; oppure
 numero = "5";
+
+
 console.log(numero);
 
 //Esempio sulla tipizzazione debole
@@ -21,17 +24,24 @@ let num1 = "10"; //String
 let num2 = "3"; //String
 
 
-let somma = Number(num1) + Number(num2); //Qui ho un problema a causa della duplice natura dell'operatore + perché + è un concatenatore di stringhe. Soluzione: cast del dato (forzare una variabile ad essere di un determinato tipo)
+//Qui ho un problema a causa della duplice natura dell'operatore + perché + è un concatenatore di stringhe. Soluzione: cast del dato (forzare una variabile ad essere di un determinato tipo)
+// let somma = num1 + num2; // 103
+
+let somma = Number(num1) + Number(num2); 
 //Tecnicamente il cast andrebbe fatto anche per le operazioni sotto ma lascio che il browser interpreti per me
-let diff = num1 - num2;
-let prod = num1 * num2;
-let quoz = num1 / num2;
+let diff = num1 - num2; //7
+let prod = num1 * num2; //30
+let quoz = num1 / num2; //3,3
 
 console.log("=== OPERAZIONI ===");
 console.log(`Somma: ${somma}`);
 console.log(`diff: ${diff}`);
 console.log(`prod: ${prod}`);
 console.log(`quoz: ${quoz}`);
+
+let str1 = 20;
+console.log(String(str1) + 2);
+
 
 //ESEMPIO : raccogli due numeri con il prompt e calcola il valore delle 4 operazioni
 //ATT: tutto ciò che raccolgo da un prompt o un campo input sono sempre e solo stringhe
