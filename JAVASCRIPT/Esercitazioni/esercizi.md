@@ -25,7 +25,7 @@ Scrivere il diagramma di flusso e creare l’algoritmo
 
 ### Esercizio 5 
 Scrivere un programma che estrae e stampa in console l’estensione di un file
-Es: fileEsercitazione.pdf 🡪 pdf oppure index.html 🡪 html
+Es: fileEsercitazione.pdf -> pdf oppure index.html -> html
 
 ### Esercizio 6 
 Scrivere un programma che crea una nuova stringa, a partire da una fornita, aggiungendo due
