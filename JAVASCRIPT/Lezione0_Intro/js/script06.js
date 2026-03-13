@@ -8,16 +8,23 @@ const dateInput = document.getElementById("data");
 const todoList = document.getElementById("listaItems");
 
 function parseIsoDate(iso) {
-    var parts = iso.split("-"); // yyyy-mm-dd
+    let parts = iso.split("-"); // yyyy-mm-dd
     return new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
 }
 
 
 function formatDateIT(date) {
-    var dd = String(date.getDate()).padStart(2, "0");
-    var mm = String(date.getMonth() + 1).padStart(2, "0");
-    var yyyy = date.getFullYear();
+    let dd = String(date.getDate()).padStart(2, "0");
+    let mm = String(date.getMonth() + 1).padStart(2, "0");
+    let yyyy = date.getFullYear();
     return dd + "/" + mm + "/" + yyyy; // gg/mm/yyyy
+}
+
+function formatDateUS(date) {
+    let dd = String(date.getDate()).padStart(2, "0");
+    let mm = String(date.getMonth() + 1).padStart(2, "0");
+    let yyyy = date.getFullYear();
+    return mm + "/" + dd + "/" + yyyy; // mm/dd/yyyy
 }
 
 function renderList() {
@@ -28,15 +35,15 @@ function renderList() {
     });
 
     items.forEach(function (todoItem) {
-        var listItem = document.createElement("li");
+        let listItem = document.createElement("li");
         listItem.textContent = todoItem.text + " - " + formatDateIT(todoItem.date);
         todoList.appendChild(listItem);
     });
 }
 
 addButton.addEventListener("click", function () {
-    var item = itemInput.value;
-    var dateValue = dateInput.value; // from <input type="date">
+    let item = itemInput.value;
+    let dateValue = dateInput.value; // from <input type="date">
 
     items.push({
         text: item,
