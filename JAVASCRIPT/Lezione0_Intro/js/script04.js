@@ -18,6 +18,8 @@ console.log(arrayParole[1]);
 console.log(arrayParole[2]);
 console.log(arrayParole[arrayParole.length - 1]);
 
+
+
 //Lavorare con gli array
 //aggiungere al fondo un elemento
 arrayParole.push("Buongiorno");
