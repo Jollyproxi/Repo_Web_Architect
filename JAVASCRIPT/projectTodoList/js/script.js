@@ -13,7 +13,8 @@ btnAdd.addEventListener("click", function(){
     let itemValue = item.value;
     let dataValue = new Date(data.value);
 
-    let formatMonth = ((dataValue.getMonth()) < 10 ? "0" + dataValue.getMonth(): dataValue.getMonth() + 1);
+    let meseCorrente = dataValue.getMonth() + 1
+    let formatMonth = (meseCorrente < 10 ? "0" + meseCorrente: meseCorrente);
 
     let dataCompleta = dataValue.getDate() + "/" +  formatMonth + "/" + dataValue.getFullYear();
 
@@ -22,6 +23,9 @@ btnAdd.addEventListener("click", function(){
     items.push(todo);
 
     items.forEach(todo => {
-        listaItems.innerHTML += `<li> ${todo} </li>`
-    })    
+        listaItems.innerHTML += `<li> ${todo} </li>`;
+        
+    })
+    
+    Geolocation
 })
