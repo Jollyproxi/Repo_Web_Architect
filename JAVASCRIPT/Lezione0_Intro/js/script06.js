@@ -12,6 +12,7 @@ function parseIsoDate(iso) {
     return new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
 }
 
+
 function formatDateIT(date) {
     var dd = String(date.getDate()).padStart(2, "0");
     var mm = String(date.getMonth() + 1).padStart(2, "0");
