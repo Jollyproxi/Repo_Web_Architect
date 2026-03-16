@@ -1,7 +1,7 @@
 //SWITCH mi permette di controllare il valore di una varibile applicando una casistica
 
 let msg = "";
-let livello = 1;
+let livello = "uno";
 
 //Nel gioco ci sono 3 livelli dall' 1 al 3. Per ogni livello mando un messaggio al mio utente
 
@@ -51,3 +51,24 @@ btn.addEventListener("click", function(){
     }
     
 })
+
+//Più casi contemporaneamente
+switch(livello){
+    case 1:
+    case "1":
+    case "uno":
+        msg = "Benvenuto al primo livello. Giusto per iniziare";
+    break;
+    case 2:
+        msg = "Sei al secondo livello. Vediamo come te la cavi";
+    break;
+    case 3:
+        msg = "Sei arrivato al terzo livello. Adesso affronterai il boss finale";
+    break;
+
+    default:
+        msg = "Ciao giocatore, non ti trovi in nessun livello";
+    break
+}
+
+console.log(msg);
