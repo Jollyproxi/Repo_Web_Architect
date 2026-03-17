@@ -2,7 +2,7 @@
 
 //BREAK - Interrompe un ciclo
 let numeri = [1,9,5,12,8,99,4,32,5,4];
-let numDaCercare = 6; 
+let numDaCercare = 8; 
 let trovato = false;
 
 //Appena trovo il numero 4 devo interrompere il ciclo
@@ -26,7 +26,5 @@ for(let i = 0; i < numeri.length; i++){
         console.log(`Il numero ${numeri[i]} è un numero pari`);
         continue;
     }
-    
     console.log(numeri[i]);
-    
 }

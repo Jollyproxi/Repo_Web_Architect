@@ -35,6 +35,10 @@ for(let i = listaNumeri.length - 1; i >= 0; i--){
     console.log("Numero in posizione " + i + ": " + listaNumeri[i]);
 }
 
+
+//SINTASSI FOREACH
+// Array.forEach(..callback function)
+
 //FOREACH è tarato sugli array
 listaNumeri.forEach(num => {
     if( num == 7){
