@@ -1,0 +1,36 @@
+body{
+    padding: 0 20%;
+}
+.mb2{
+    margin-bottom: 20px;
+}
+
+.mt2{
+    margin-top: 20px;
+}
+
+.pt2{
+    padding-top: 20px;
+}
+
+.p2{
+    padding: 20px;
+}
+.txtCenter{
+    text-align: center;
+}
+
+.container{
+    display: flex;
+    /* max-width: 1200px; */
+    background-color: aliceblue;
+    justify-content: space-around;
+}
+
+.box{
+    width: 40%;
+    height: 100px;
+    background-color: aqua;
+    border: 2px solid gray;
+    border-radius: 20px;
+}
