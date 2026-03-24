@@ -21,12 +21,55 @@
 
         <h1>Compila il seguente Form</h1>
 
-        <label for=""></label>
+        <label for="nome">Nome:</label>
+        <br>
+        <input type="text" id="nome">
+        <br>
+
+        <label for="cognome">Cognome:</label>
+        <br>
+        <input type="text" id="cognome">
+        <br>
+
+        <label for="eta">Età: </label>
+        <br>
+        <input type="number" id="eta">
+        <br>
+        
+        <label for="email">Email:</label>
+        <br>
+        <input type="email" id="email">
+        <br>
+
+        <label for="codFisc">C.fisc.</label>
+        <br>
+        <input type="text" id="codFisc">
+        <br>
+
+        <label for="corso">Corso</label>
+        <br>
+        <select name="corso" id="corso">
+            <option value="" selected disabled></option>
+            <option value="WSA">Web Solution Architect</option>
+            <option value="BID">Business Intelligence Developer</option>
+            <option value="BAD">Business Automation Developer</option>
+            <option value="GD">Graphic Design</option>
+        </select>
+
+        <br>
+        <button class="btn btn-primary" type="button" id="btnInvia">Invia</button>
+        
+        <br>
+
+        <div id="feed"></div>
+
 
     </main>
 
     <footer>
-        
+
     </footer>
+
+    <script src="./js/script05.js"></script>
 </body>
 </html>
