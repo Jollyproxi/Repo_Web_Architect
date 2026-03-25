@@ -1,0 +1,37 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container{
+    padding: 1rem;
+}
+
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo{
+    height: 35px;;
+}
+
+.social{
+    display: flex;
+    gap: .5rem;
+}
+
+.social a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 162);
+    color: white;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+}
