@@ -1,122 +1,52 @@
-// Lista di parole per il gioco
-const parole = ["javascript", "html", "css", "programmazione", "algoritmo", "variabile", "funzione"];
+const btnTest = document.getElementById("btnTest");
+const risultato = document.getElementById("risultato");
+const elLettera = document.getElementById("lettera");
+const elTentativi = document.getElementById("tentativi");
 
-// Variabili del gioco
-let parolaSegreta = "";
-let tentativiRimasti = 7;
-let parolaIndovinata = [];
-let lettereTentate = [];
+const PAROLASEGRETA = "CASA";
+let TENTATIVI = 7;
+let parolaMostrata = [];
 
-// Inizializzazione del gioco
-function inizializzaGioco() {
-    // Seleziona una parola casuale
-    parolaSegreta = parole[Math.floor(Math.random() * parole.length)];
-    
-    // Inizializza l'array con i caratteri nascosti
-    parolaIndovinata = Array(parolaSegreta.length).fill("_");
-    
-    // Resetta le variabili
-    tentativiRimasti = 7;
-    lettereTentate = [];
-    
-    // Aggiorna l'interfaccia
-    aggiornaUI();
-    pulisciInput();
+function inizializzaGioco(){
+    let parolaGhost = "";
+
+    PAROLASEGRETA.split("").forEach(lettera => {
+        parolaGhost += "_ ";
+        parolaMostrata.push("_");
+    })
+    // parolaGhost = PAROLASEGRETA.split("").fill("_").join(" ");
+    risultato.innerHTML += `<h2 class='txtCenter'> ${parolaGhost} </h2>`
 }
 
-// Gestisce il tentativo di una lettera
-function provaTentativo() {
-    const inputElement = document.getElementById("lettera");
-    const lettera = inputElement.value.toLowerCase();
-    
-    // Validazione input
-    if (!lettera || lettera.length !== 1 || !/[a-z]/.test(lettera)) {
-        alert("Inserisci una sola lettera valida!");
-        pulisciInput();
-        return;
-    }
-    
-    // Verifica se la lettera è già stata tentata
-    if (lettereTentate.includes(lettera)) {
-        alert("Hai già tentato questa lettera!");
-        pulisciInput();
-        return;
-    }
-    
-    // Aggiunge la lettera alle tentate
-    lettereTentate.push(lettera);
-    
-    // Verifica se la lettera è nella parola
-    let letteraTrovata = false;
-    for (let i = 0; i < parolaSegreta.length; i++) {
-        if (parolaSegreta[i] === lettera) {
-            parolaIndovinata[i] = lettera;
-            letteraTrovata = true;
-        }
-    }
-    
-    // Se la lettera non è trovata, diminuisci i tentativi
-    if (!letteraTrovata) {
-        tentativiRimasti--;
-    }
-    
-    // Aggiorna l'interfaccia
-    aggiornaUI();
-    
-    // Verifica se il gioco è finito
-    verificaFinGioco();
-    
-    // Pulisci l'input
-    pulisciInput();
-}
+/**
+ * 
+ * @param {String} lettera 
+ */
+function controllaLettera(lettera){
+    lettera = lettera.toUpperCase();
 
-// Aggiorna l'interfaccia del gioco
-function aggiornaUI() {
-    // Aggiorna i tentativi rimanenti
-    document.getElementById("tentativi").textContent = tentativiRimasti;
-    
-    // Mostra le lettere tentate
-    document.getElementById("lettereProva").innerHTML = 
-        "<strong>Lettere tentate:</strong> " + lettereTentate.join(", ");
-    
-    // Mostra la parola con le lettere indovinate
-    document.getElementById("risultato").innerHTML = 
-        "<strong>Parola:</strong> " + parolaIndovinata.join(" ");
-}
+    if(TENTATIVI > 0){
 
-// Verifica se il gioco è finito
-function verificaFinGioco() {
-    const parolaCompleta = parolaIndovinata.join("");
-    
-    // Se la parola è completa
-    if (parolaCompleta === parolaSegreta) {
-        alert("🎉 Hai vinto! La parola era: " + parolaSegreta);
-        inizializzaGioco();
-        return;
-    }
-    
-    // Se i tentativi sono finiti
-    if (tentativiRimasti === 0) {
-        alert("❌ Hai perso! La parola era: " + parolaSegreta);
-        inizializzaGioco();
+        for(let i = 0; i < PAROLASEGRETA.length; i++){
+            if(PAROLASEGRETA[i] === lettera && parolaMostrata[i] != lettera){
+                parolaMostrata[i] = lettera;
+            }    
+        }   
+        TENTATIVI--;
+        elTentativi.innerHTML = TENTATIVI + " tentativi";  
+        risultato.innerHTML = parolaMostrata.join(" ");
+
+        if(parolaMostrata.join("").toLocaleUpperCase() == PAROLASEGRETA){
+            risultato.innerHTML += "<br>BRAVO, hai vinto !!";
+        };
+        
+    }else{
+        risultato.innerHTML = "Mi spiace, non hai trovato la parola segreta";
     }
 }
 
-// Pulisce l'input field
-function pulisciInput() {
-    document.getElementById("lettera").value = "";
-    document.getElementById("lettera").focus();
-}
+btnTest.addEventListener("click", function(){
+    controllaLettera(elLettera.value);
+})
 
-// Event listeners
-document.getElementById("btnTest").addEventListener("click", provaTentativo);
-
-// Permetti l'invio con il tasto Enter
-document.getElementById("lettera").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-        provaTentativo();
-    }
-});
-
-// Inizializza il gioco al caricamento
-inizializzaGioco();
+document.addEventListener("DOMContentLoaded", inizializzaGioco)

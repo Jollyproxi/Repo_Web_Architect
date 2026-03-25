@@ -26,7 +26,7 @@ function somma(a,b){
 
 console.log(eseguiOperazione(5,3, somma));
 
-//Anonima
+//Anonima con arrow function e senza
 console.log(eseguiOperazione(5,4, (a,b) => a + b));
 console.log(eseguiOperazione(5,4, (a,b) => a * b));
 console.log(eseguiOperazione(5,4, function(a,b){ return a / b}));
@@ -58,6 +58,8 @@ let intervallo = setInterval( ()=> {
 //esempio con foreach
 let nomi = ["Paola", "Francesco", "Anna", "Luisa"];
 let cognomi =["Rossi", "Verdi", "Bianchi", "Gialli"];
+
+nomi.forEach(nome => {console.log(nome);})
 
 nomi.map((nome, index)=>{
     let cognome = cognomi[index];

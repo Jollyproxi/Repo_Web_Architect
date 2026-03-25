@@ -65,7 +65,7 @@ function calcolaArea(base, altezza){
 }
 
 function calcolcaVolume(base, altezza, profondita){
-    let area = calcolaArea(base, altezza)
+    let area = calcolaArea(base, altezza);
     let volume = area * profondita;
     return volume;
 }

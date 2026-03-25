@@ -1,3 +1,61 @@
 .bgBlue{
     background-color: blue;
 }
+nav ul{
+    padding: 0 !important;
+}
+
+nav{
+    padding: 10px;
+    background-color: black;
+}
+
+nav li{
+    display: inline-block;
+    text-decoration: none;
+}
+
+nav a{
+    border: 1px solid rgba(0, 0, 0, 0.698);
+    padding: 10px;
+    margin: 5px;
+    background-color: rgb(248, 194, 194);
+    border-radius: 8%;
+}
+
+nav a:active{
+    color: white;
+}
+
+input{
+    margin-bottom: 10px;
+}
+
+label{
+    margin-right: 20px;
+}
+main{
+    padding: 0 5% ;
+}
+
+.btn{
+    margin: 10px auto;
+    border: 1px solid grey;
+    border-radius: 5%;
+    text-decoration: none;
+    color: white;
+}
+
+.btn:hover{
+    cursor: pointer;
+    transform: scale(1.09);
+    transition: transform 0.3 ease-in;
+}
+
+.btn-primary{
+    background-color: rgb(0, 110, 255);
+}
+
+.brdRed{
+    border: 2px solid red;
+}
