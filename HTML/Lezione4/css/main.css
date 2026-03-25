@@ -1,37 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap');
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+  }
+:root {
+    --bg: #d4d4d4;          /* ex text */
+    --bg-light: #e0e0e0;
+    --text: #1e1e1e;        /* più leggibile su chiaro */
+    --text-muted: #555555;
+
+    /* IDE-style accents */
+    --accent: #007acc;      /* blu VSCode */
+    --string: #a31515;      /* stringhe */
+    --comment: #6a9955;     /* commenti */
+    --function: #795e26;    /* funzioni */
 }
 
-.container{
+body {
+    font-family: "Tangerine", cursive;
+    color: var(--text);
+}
+
+.container {
     padding: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-header{
+header {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.logo{
+.logo {
     height: 35px;;
 }
 
-.social{
+.social {
     display: flex;
     gap: .5rem;
 }
 
-.social a{
+.social a {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(0, 0, 162);
+    background-color: var(--accent);
     color: white;
     border-radius: 100%;
     width: 30px;
     height: 30px;
     text-decoration: none;
+}
+
+
+
+nav{
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent);
+    padding: .5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: .4rem;
+}
+
+nav ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    gap: .5rem;
+    background-color: var(--accent);
+}
+
+nav a{
+    color: var(--bg);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.tangerine-regular {
+    font-family: "Tangerine", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.tangerine-bold {
+    font-family: "Tangerine", cursive;
+    font-weight: 700;
+    font-style: normal;
 }
