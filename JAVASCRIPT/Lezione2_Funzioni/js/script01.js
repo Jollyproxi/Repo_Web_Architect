@@ -62,7 +62,6 @@ let demo2 = document.getElementById("demo2");
 
 function cambiaColore(){
     demo2.classList.add("bgBlue");
-
     console.log("Sto cambiando colore al div");
 }
 

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <h1>Wordle a una lettera</h1>
+
+    <div class="mt2">
+
+        <p class="mb2">Inserisci una lettera per scoprire se esiste. Hai <span id="tentativi">7<span> tentativi</p>
+
+        <input type="text" id="lettera">
+
+        <button class="mb2" id="btnTest">Prova</button>
+
+        <hr>
+    </div>
+
+    <div class="container p2">
+        <div class="box pt2">
+
+            <h4 class="txtCenter">Parola da scoprire</h4>
+            <div class="txtCenter" id="risultato">
+
+            </div>
+        </div>
+
+        <div class="box" id="lettereProva"></div>
+    </div>
+    <script src="./js/script0.js"></script>
+</body>
+
+</html>
