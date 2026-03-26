@@ -1,54 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-:root {
-    --bg: #d4d4d4;          /* ex text */
-    --bg-light: #e0e0e0;
-    --text: #1e1e1e;        /* più leggibile su chiaro */
-    --text-muted: #555555;
-
-    /* IDE-style accents */
-    --accent: #007acc;      /* blu VSCode */
-    --string: #a31515;      /* stringhe */
-    --comment: #6a9955;     /* commenti */
-    --function: #795e26;    /* funzioni */
 }
 
-body {
-    font-family: "Tangerine", cursive;
-    color: var(--text);
+/* Con questa pseudoclasse posso impostare la palette colori */
+:root{
+    --primary: #21335f;
+    --secondary: #D95D39;
+    --text-color: #2a2928;
+    --bg-color: #ffffff;
 }
 
-.container {
+body{
+    font-family: "Open Sans", sans-serif;
+    color: var(--text-color);
+}
+
+.container{
     padding: 1rem;
-    max-width: 800px;
+    max-width: 960px;
     margin: 0 auto;
 }
 
-header {
+header{
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.logo {
+.logo{
     height: 35px;;
 }
 
-.social {
+.social{
     display: flex;
     gap: .5rem;
 }
 
-.social a {
+.social a{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--accent);
+    background-color: var(--primary);
     color: white;
     border-radius: 100%;
     width: 30px;
@@ -56,43 +52,29 @@ header {
     text-decoration: none;
 }
 
-
-
 nav{
-    font-size: 2rem;
     display: flex;
-    align-items: center;
     justify-content: center;
-    background-color: var(--accent);
+    align-items: center;
+    background-color: var(--primary);
     padding: .5rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    border-radius: .4rem;
+    border-radius: .4rem ;
 }
 
 nav ul{
+    width: 100%;
     display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
-    justify-content: center;
-    list-style: none;
-    gap: .5rem;
-    background-color: var(--accent);
+    list-style: none; /*con questa regola tolgo il pallino accanto ad li*/
+    gap: 1.5rem;
 }
 
 nav a{
-    color: var(--bg);
+    color: var(--bg-color);
     cursor: pointer;
     text-decoration: none;
-}
-
-.tangerine-regular {
-    font-family: "Tangerine", cursive;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.tangerine-bold {
-    font-family: "Tangerine", cursive;
-    font-weight: 700;
-    font-style: normal;
 }
