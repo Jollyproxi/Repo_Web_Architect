@@ -1,0 +1,36 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* --------STILE PER MOBILE---------- */
+body{
+    color: white;
+    background-color: #313131;
+}
+
+main{
+    padding: 1rem;
+}
+
+
+/*-----------STILE PER TABLET-----------*/
+@media screen and (min-width: 768px){
+    body{
+        background-color: #4e3939;
+    }
+
+    main{
+        max-width: 80%;
+        margin: 0 auto;
+    }
+}
+
+
+/*-----------STILE DESKTOP--------*/
+@media screen and (min-width: 1200px){
+    body{
+        background-color: rgb(109, 109, 188);
+    }
+}

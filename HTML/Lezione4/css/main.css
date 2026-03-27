@@ -21,7 +21,7 @@ body{
 
 .container{
     padding: 1rem;
-    max-width: 960px;
+    max-width: 1140px;
     margin: 0 auto;
 }
 
@@ -77,4 +77,76 @@ nav a{
     color: var(--bg-color);
     cursor: pointer;
     text-decoration: none;
+}
+
+.intro{
+    display: flex;
+    flex-direction: row;
+}
+
+.claim{
+    min-height: 400px;
+    width: 80%;
+    background-image: url("../img/sfondo_palme.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: .5rem;
+    margin-right: 1rem;
+}
+
+.overlay{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.213);
+    color: var(--bg-color);
+    padding: 1rem;
+    border-radius: .5rem;
+}
+
+.card-group{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.card-group .card h3{
+    margin-bottom: .5rem;
+}
+
+.articles{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.article{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem
+}
+
+.article img{
+    border-radius: .5rem;
+}
+
+.article.article-inv img{
+    order: 1;
+}
+
+footer{
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--secondary);
+    margin-top: 2rem;
+    border-radius: .5rem;
+}
+
+footer p {
+    margin-bottom: 0;
 }
