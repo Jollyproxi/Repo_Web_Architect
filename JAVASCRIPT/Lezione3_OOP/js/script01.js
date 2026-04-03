@@ -63,3 +63,53 @@ let aula = [
 aula.forEach(s => {
     console.log(s.nome + " " + s.cognome);
 })
+
+//Esempio automobile
+
+let auto = {
+    marca: "Fiat",
+    modello: "500 Abarth",
+    colore: "Rosso",
+    cilindrata: 1200,
+    marce: 6,
+    velocita: 0,
+    num_giri: 0,
+    acceso: false,
+
+    //modo abbreviato di dichiarare un metodo
+    presentaAuto(){
+        return `L'auto che hai selezionato è una ${this.marca} ${this.modello}. Colore ${this.colore}. Cilindrata ${this.cilindrata}`;
+    },
+
+    //Attraverso i metodi posso modificare delle propr
+    modificaGiri(num_giri){
+        this.num_giri = num_giri; 
+        return `Giri motore: ${this.num_giri}`;
+    },
+
+    calcolaVel(){
+        if(this.num_giri != 0 && this.acceso){
+            this.velocita = this.num_giri * this.marce;
+            return `La tua velecità attuale è ${this.velocita}`;
+        }else{
+            return "La tua auto non è accesa e i giri sono a 0";
+        }
+    },
+
+    accendi_spegni(){
+        this.acceso = !this.acceso;
+        if(this.acceso){
+            return true
+        }else{
+            return false
+        }
+    }
+}
+
+
+// auto.accendi_spegni();
+console.log( auto.modificaGiri(2000) );
+console.log(auto.calcolaVel());
+
+
+//Esempio
