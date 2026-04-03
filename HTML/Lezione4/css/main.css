@@ -21,7 +21,7 @@ body{
 
 .container{
     padding: 1rem;
-    max-width: 960px;
+    max-width: 1140px;
     margin: 0 auto;
 }
 
@@ -54,7 +54,7 @@ header{
 
 nav{
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     background-color: var(--primary);
     padding: .5rem;
@@ -64,17 +64,112 @@ nav{
 }
 
 nav ul{
+    position: fixed;
+    top:0;
+    right: -100%;
+    height: 100vh;
     width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     list-style: none; /*con questa regola tolgo il pallino accanto ad li*/
     gap: 1.5rem;
+    transition: all .2s ease-in-out;
+}
+
+nav ul.open{
+    right: 0;
+    background-color: var(--primary);
+}
+
+nav .close-btn{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+nav .open-btn,
+nav .close-btn{
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: var(--bg-color);
 }
 
 nav a{
     color: var(--bg-color);
     cursor: pointer;
     text-decoration: none;
+}
+
+.intro{
+    display: flex;
+    flex-direction: row;
+}
+
+.claim{
+    min-height: 400px;
+    width: 80%;
+    background-image: url("../img/sfondo_palme.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: .5rem;
+    margin-right: 1rem;
+}
+
+.overlay{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.213);
+    color: var(--bg-color);
+    padding: 1rem;
+    border-radius: .5rem;
+}
+
+.card-group{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.card-group .card h3{
+    margin-bottom: .5rem;
+}
+
+.articles{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.article{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem
+}
+
+.article img{
+    border-radius: .5rem;
+}
+
+.article.article-inv img{
+    order: 1;
+}
+
+footer{
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--secondary);
+    margin-top: 2rem;
+    border-radius: .5rem;
+}
+
+footer p {
+    margin-bottom: 0;
 }

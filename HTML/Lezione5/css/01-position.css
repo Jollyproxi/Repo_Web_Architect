@@ -1,0 +1,69 @@
+/* Position ha 5 valori: static, relative, fixed, absolute, sticky
+
+- STATIC: è il valore di default
+- RELATIVE: gli elementi vengono posizionati in relazione alla loro posizione iniziale 
+- FIXED: questi elementi vengono posizionati rispetto alla finestra del browser
+- ABSOLUTE: posizionati rispetto al loro primo parent non static
+- STICKY: sono una miscela tra relative e fixed. Gli elementi diventano fixed quando raggiungono una determinata posizione nel flusso oppure durante lo scorrimento
+
+top: misura la distanza dal bordo superiore
+right: //                         destro
+left: //                          sinistro
+bottom: //                        inferiore
+
+*/
+
+main{
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 78px;
+    min-height: 300vh; /*Questa regola mi serve per mostrare lo sticky*/
+}
+
+.background{
+    background-color: rgb(219, 236, 251);
+}
+
+.box{
+    background-color: blueviolet;
+    border: 1px dashed black;
+}
+
+.relative{
+    position: relative;
+    top: 20px;
+    left: 20px;
+}
+
+.fixed{
+    position: fixed;
+    width: 100%;
+    /*top e left fanno riferimento alla finesta del browser perché fixed*/
+    top: 0;
+    left: 0;
+    text-align: center;
+    z-index: 1;
+}
+
+
+/* Il parent di absolute non deve essere static. Nel 95% dei casi utilizzerò relative per il parent */
+
+.parent-absolute{
+    position: relative;
+    height: 500px;
+    padding: 0.3rem 1rem;
+    margin: 3rem 0;
+    background-color: thistle;
+}
+
+.absolute{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.sticky{
+    position: sticky;
+    top: 180px;
+}
