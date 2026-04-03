@@ -112,4 +112,16 @@ console.log( auto.modificaGiri(2000) );
 console.log(auto.calcolaVel());
 
 
-//Esempio
+//Esempio for-in tipico per gli oggetti
+//Si riesce a scorrere un oggetto con un ciclo for pur non essendo della famiglia degli enumerabili (cioè che hanno un indice)
+
+
+//Att: la chiave è una string.
+for(const key in studente){
+    if(typeof studente[key] != "function"){
+        console.log(key + ": " + studente[key]);
+    }
+}
+
+
+//Oltre alla notazione studente.nome io posso risalire attraverso quest'altra notazione studente['nome']
