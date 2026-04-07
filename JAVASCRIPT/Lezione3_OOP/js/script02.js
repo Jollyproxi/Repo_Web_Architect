@@ -51,6 +51,7 @@ class Docente{
     }
 }
 
+
 let doc1 = new Docente("Maria", "Bruni", "m.bruni@docmail.com", "WSA");
 let doc2 = new Docente("Paolo", "Chiari", "p.chiari@docmail.com", "BID");
 let doc3 = new Docente("Marco", "Marchi", "m.marchi@docmail.com");
