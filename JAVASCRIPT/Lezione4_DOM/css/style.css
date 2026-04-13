@@ -1,7 +1,19 @@
+body{
+    display: block;
+}
+
 .red{
     color: red;
 }
 
 .blue{
     color: blue;
+}
+
+.upper{
+    text-transform: uppercase;
+}
+
+.under{
+    text-decoration: underline;
 }
