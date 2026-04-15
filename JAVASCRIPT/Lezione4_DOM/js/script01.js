@@ -46,7 +46,7 @@ let lisLibri = document.querySelectorAll("#listaLibri li");
 console.log(lisLibri);
 
 //voglio solo li rossi della lista libri
-console.log("==== LI rossi della lista libnri ====");
+console.log("==== LI rossi della lista libri ====");
 let lisLibriRossi = document.querySelectorAll("#listaLibri li.red");
 console.log(lisLibriRossi);
 

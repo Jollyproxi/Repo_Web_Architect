@@ -3,7 +3,7 @@
 
 // let libro1 = document.querySelectorAll("#listaLibri li")[0];
 
-let libro1 = document.querySelector("#listaLibri").firstElementChild; //TOP3
+let libro1 = document.querySelector("#listaLibri").firstElementChild; //TOP1
 
 // let libro1 = document.querySelector("#listaLibri").children[0];
 

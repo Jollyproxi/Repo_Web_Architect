@@ -26,6 +26,5 @@ btnAdd.addEventListener("click", function(){
         listaItems.innerHTML += `<li> ${todo} </li>`;
         
     })
-    
-    Geolocation
+ 
 })

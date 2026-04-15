@@ -15,5 +15,18 @@ body{
 }
 
 .under{
-    text-decoration: underline;
+    text-decoration: line-through;
+}
+
+.card{
+    border: 1px solid black;
+    width: 200px;
+    height: auto;
+    float: left;
+    padding: 15px;
+}
+
+.card img{
+    width: 100px;
+    height: auto;
 }
