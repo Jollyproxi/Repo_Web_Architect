@@ -1,0 +1,91 @@
+Index: JAVASCRIPT/Lezione0_Intro/js/script04.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>//Array: memorizzato sempre all'interno di una variabile, rappresenta un contenitore di elementi simili tra loro (tutti dello stesso tipo).\r\n//CARATTERISTICHE:\r\n//- 0-based\r\n//- Indicizzati\r\n//- Dimensione dinamica\r\n\r\n//Dichiaro un array\r\n// let nuovoArray = new Array(\"Ciao\", \"Come\", \"stai\"); //Dichiarazione con costruttore ormai desueta\r\n                //   0        1       2        3    \r\nlet arrayParole = [\"Ciao\", \"Dario\", \"Oggi\", \"Lunedì\"];\r\n\r\n//prop length\r\nconsole.log(arrayParole.length); // 4\r\n\r\n//Richiamo gli elementi\r\nconsole.log(arrayParole[0]);\r\nconsole.log(arrayParole[1]);\r\nconsole.log(arrayParole[2]);\r\nconsole.log(arrayParole[arrayParole.length - 1]);\r\n\r\n\r\n\r\n//Lavorare con gli array\r\n//aggiungere al fondo un elemento\r\narrayParole.push(\"Buongiorno\");\r\narrayParole.push(\"Buonasera\");\r\narrayParole.push(\"Arrivederci\");\r\n\r\n//Elimina l'ultimo elemento dell'array\r\narrayParole.pop();\r\n\r\nconsole.log(arrayParole);\r\n\r\narrayParole.sort(); //ordina l'array\r\narrayParole.reverse(); //inverte\r\n\r\nconsole.log(arrayParole);\r\n\r\n//Estraggo degli elementi\r\nconsole.log(arrayParole.slice(2,4)); //il valore finale non è compreso\r\n\r\n//Eliminare o sostituire degli elementi, in questo caso viene modificato direttamente l'array originale\r\nconsole.log(arrayParole.splice(0,1, \"ITS PIEMONTE\"));\r\nconsole.log(arrayParole);\r\n\r\n//Rimuovere il primo elemento\r\narrayParole.shift();\r\nconsole.log(arrayParole);\r\n\r\n//Unshift aggiunge all'inizio\r\narrayParole.unshift(\"Corso WSA\");\r\nconsole.log(arrayParole);\r\n\r\n//Metodi per la ricerca di elementi\r\nconsole.log(arrayParole.indexOf(\"Dario\")); //restituisce l'indice nel quale si trova quell'elemento alla prima occorrenza\r\nconsole.log(arrayParole.indexOf(\"Anna\")); //-1\r\n\r\nconsole.log(arrayParole.lastIndexOf(\"Dario\")); //ultima occorrenza\r\n\r\n\r\n//Il foreach è un metodo per gli array che mi permette di ciclare su di essi\r\narrayParole.forEach(parola => {\r\n    console.log(parola);\r\n});\r\n\r\nlet demo = document.getElementById(\"demo\");\r\n\r\narrayParole.forEach(parola =>{\r\n    demo.innerHTML += `<li> ${parola} </li>`;\r\n});\r\n\r\nlet filtro = arrayParole.filter(parola => parola.length > 7);\r\nconsole.log(filtro);\r\n\r\nlet trovato = arrayParole.find(parola => parola.length == 50);\r\nconsole.log(trovato);\r\n\r\n\r\nlet arrayStudenti = [\"Mirko\", \"Leonida\", \"Stefano\", \"Hussni\"];\r\n\r\n//Unire 2 array\r\n//... si chiama operatore spread. Serve a diffondere gli elementi di un array dentro l'altro\r\nlet arrayUnito = [...arrayParole, ...arrayStudenti];\r\nconsole.log(arrayUnito);\r\n\r\n//Unire gli elementi di un array. Al metodo posso passare un \"pattern\" separatore\r\nconsole.log(arrayStudenti.join(\" - \"));\r\n\r\n//Separare una stringa in un array\r\nlet miaStringa = \"ciao\";\r\n\r\n//Se a .split(\"\") passo una stringa vuota separà carattere per carattere\r\nconsole.log(miaStringa.split(\"\"));\r\n\r\nlet miaString2 = \"Ciao, come stai? Tutto bene grazie\";\r\nconsole.log(miaString2.split(\" \"));\r\n\r\nlet miaStringa3 = \"programmazione\";\r\nlet miaStringa3Rev = miaStringa3.split(\"\").reverse().join(\"\");\r\nconsole.log(miaStringa3Rev);\r\n\r\n\r\n//Posso avere array fatti con qualsiasi tipo di dato\r\nlet numeri = [4,7,22,1,10,9,2,4];\r\nlet booleani = [true, false, false, true, true];\r\n\r\n//Fattibile l'array misto ma non ha molto senso\r\nlet arrayMisto = [\"Dario\", 36, \"ITS\", true, 25.9];
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/JAVASCRIPT/Lezione0_Intro/js/script04.js b/JAVASCRIPT/Lezione0_Intro/js/script04.js
+--- a/JAVASCRIPT/Lezione0_Intro/js/script04.js	(revision 96c95a6ee6fb45100492d152887cbbcad57b53d6)
++++ b/JAVASCRIPT/Lezione0_Intro/js/script04.js	(date 1776413671740)
+@@ -105,4 +105,14 @@
+ let booleani = [true, false, false, true, true];
+ 
+ //Fattibile l'array misto ma non ha molto senso
+-let arrayMisto = ["Dario", 36, "ITS", true, 25.9];
+\ No newline at end of file
++let arrayMisto = ["Dario", 36, "ITS", true, 25.9];
++
++
++//Funzione con 3 parametri che stampa un messaggio in console
++function stampaTreValori(valore1, valore2, valore3){
++    console.log("I valori passati sono:", valore1, valore2, valore3);
++}
++
++stampaTreValori("Ciao", "Dario", "Buona programmazione");
++
++
+Index: HTML/Lezione6/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/HTML/Lezione6/index.html b/HTML/Lezione6/index.html
+new file mode 100644
+--- /dev/null	(date 1776417828879)
++++ b/HTML/Lezione6/index.html	(date 1776417828879)
+@@ -0,0 +1,20 @@
++<!DOCTYPE html>
++<html lang="it">
++    <head>
++        <meta charset="UTF-8">
++        <title>Title</title>
++        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
++        <link rel="stylesheet" href="./css/style.css">
++
++    </head>
++    <body>
++
++        <h1>Prima Lezione Bootstrap</h1>
++
++
++        <button class="btn btn-warning">Cliccami</button>
++
++        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
++        <script src="./js/script01.js"></script>
++    </body>
++</html>
+\ No newline at end of file
+Index: JAVASCRIPT/Dom test/js/script02.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/JAVASCRIPT/Dom test/js/script02.js b/JAVASCRIPT/Dom test/js/script02.js
+--- a/JAVASCRIPT/Dom test/js/script02.js	(revision 96c95a6ee6fb45100492d152887cbbcad57b53d6)
++++ b/JAVASCRIPT/Dom test/js/script02.js	(date 1775558600049)
+@@ -1,0 +1,20 @@
++
++let libro1 = document.querySelector("#listaLibri li.red");
++console.log(libro1.textContent);
++
++
++let libro2 = document.querySelectorAll("#listaLibri li.red")[0];  // è una Nodelist quindi posso
++console.log(libro2);
++
++let libro3 = document.querySelector("#listaLibri").firstElementChild;   //top 3 metodo
++console.log(libro3);
++
++let libro4 = document.querySelector("#listaLibri").children[0];   //top 3 metodo
++console.log(libro4);
++
++let libro5 = document.querySelector("#listaLibri").childNodes[1];// occhio agli spazi
++console.log(libro5);
++
++
++
++
+diff --git a/HTML/Lezione6/js/script01.js b/HTML/Lezione6/js/script01.js
+new file mode 100644
+diff --git a/HTML/Lezione6/css/style.css b/HTML/Lezione6/css/style.css
+new file mode 100644
