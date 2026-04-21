@@ -3,3 +3,20 @@
     color: aliceblue;
 }
 
+.mioDiv{
+    width: 250px;
+    background-color: bisque;
+    border: 1px solid grey;
+    border-radius: 5px;
+}
+
+.float-left{
+    float: left;
+}
+
+.dimDiv{
+    /* min-width: 50px ; */
+    min-height: 200px;
+    border: 1px solid black;
+    background-color: aquamarine;
+}

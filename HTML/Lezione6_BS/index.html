@@ -1,73 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
     <!-- Link al CSS Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <!-- Link al mio CSS -->
     <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
 
     <!-- NAVBAR -->
-   <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">LOGO</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#chiSiamo">Chi Siamo</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Shop</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Link utili
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Lavora Con noi</a></li>
-            <li><a class="dropdown-item" href="#">Scrivici</a></li>
-            <li><a class="dropdown-item" href="#">Controlla Ordine</a></li>
-            <li><a class="dropdown-item" href="#">Elimina Ordine</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">LOGO</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#chiSiamo">Chi Siamo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#shop">Shop</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Link utili
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Lavora Con noi</a></li>
+                            <li><a class="dropdown-item" href="#">Scrivici</a></li>
+                            <li><a class="dropdown-item" href="#">Controlla Ordine</a></li>
+                            <li><a class="dropdown-item" href="#">Elimina Ordine</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <!-- MAIN  -->
-<main>
-    
-    <section id="chiSiamo">
-        <div class="container">
-            <h1>Prima lezione con bootstrap</h1>
-            
-            <button class="btn btn-danger">Click Me!</button>
-            <button class="btn btn-warning">Click Me!</button>
-            <button class="btn btn-primary">Click Me!</button>
-            <button class="btn btn-purple">Click Me!</button>    
-        </div>
-    </section>
-    
-</main>
+    <main>
+
+        <section id="chiSiamo">
+            <div class="container mt-5">
+                <h1 class="text-center mb-5">Prima lezione con bootstrap</h1>
+                <!-- <h1 class="text-start">Prima lezione con bootstrap</h1> -->
+                <!-- <h1 class="text-end">Prima lezione con bootstrap</h1> -->
+
+                <!-- <div class="text-center">
+                <button class="btn btn-danger">Click Me!</button>
+                <button class="btn btn-warning">Click Me!</button>
+                <button class="btn btn-primary">Click Me!</button>
+                <button class="btn btn-purple">Click Me!</button>    
+            </div> -->
+
+                <!-- Justify content con breakpoints -->
+                <div
+                    class="d-flex justify-content-start justify-content-sm-center justify-content-md-between justify-content-lg-end">
+                    <button class="btn btn-danger">Click Me!</button>
+                    <button class="btn btn-warning">Click Me!</button>
+                    <button class="btn btn-primary">Click Me!</button>
+                    <button class="btn btn-purple">Click Me!</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="shop" class="mt-5">
+            <div class="container text-center">
+                <!-- <div class="mioDiv p-5 text-center mx-auto">
+                Elemento del div
+            </div> -->
+            <div class="row justify-content-between">
+
+                <div class="card col-4" style="width: 18rem;">
+                    <img src="https://t4.ftcdn.net/jpg/03/08/34/19/360_F_308341961_YB68XdEZZDkRQzFOSxfQRt09qgtWqhOE.jpg"
+                    class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Mole Antonelliana</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card’s content.</p>
+                            <a href="#" class="btn btn-primary">Compra</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card col-4" style="width: 18rem;">
+                        <img src="https://t4.ftcdn.net/jpg/03/08/34/19/360_F_308341961_YB68XdEZZDkRQzFOSxfQRt09qgtWqhOE.jpg"
+                        class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Mole Antonelliana</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card’s content.</p>
+                        <a href="#" class="btn btn-primary">Compra</a>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+        </section>
+
+        <section id="colonne" class="container text-center mb-5">
+            <h2 class="text-center">Come funzionano le colonne</h2>
+            <p>Bootstrap tratta tutto in funzione di una divisione dello spazio in 12 colonne</p>
+
+            <div class="row mb-5">
+                <!-- La regola col spazia in automatico -->
+                <div class="dimDiv col">Primo Div</div>
+                <div class="dimDiv col">Secondo Div</div>
+                <div class="dimDiv col">Terzo Div</div>
+                <div class="dimDiv col">Terzo Div</div>
+                <div class="dimDiv col">Terzo Div</div>
+            </div>
+
+            <div class="row justify-content-around">
+                <h2>Row con colonne numerate</h2>
+                <!-- in questo caso accanto al col inseriamo un numero. Questo numero indicherà il numero di colonne che occupa quell'elemento  -->      
+                <div class="dimDiv col-6">Div a 6 colonne</div>
+                <div class="dimDiv col-2">Div da 2 colonne</div>
+            </div>
+
+            <div class="row mt-5">
+                <h2>Row con div responsive</h2>
+                <!-- in questo caso accanto al col inseriamo un numero. Questo numero indicherà il numero di colonne che occupa quell'elemento  -->      
+                <div class="dimDiv col-12 col-md-6 col-lg-8">Primo Div</div>
+                <div class="dimDiv col-12 col-md-6 col-lg-2 offset-lg-2">Secondo Div</div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="row mt-5">
+                <h2>Row con wrapper</h2>
+                <!-- in questo caso accanto al col inseriamo un numero. Questo numero indicherà il numero di colonne che occupa quell'elemento  -->      
+                <div class="row col-6">
+                    <div class="dimDiv col-12 col-md-6 col-lg-8">Primo Div</div>
+                    <div class="dimDiv col-12 col-md-6 col-lg-4">Primo Div</div>
+                </div>
+                <div class="row col-4 offset-lg-2">
+                    <div class="dimDiv col-12 col-md-6 col-lg-8">Primo Div</div>
+                    <div class="dimDiv col-12 col-md-6 col-lg-4">Secondo Div</div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
 
 
     <!-- Link al JS di BOOTSTRAP -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
 
     <!-- Link al mio JS -->
     <script src="./js/script.js"></script>
 </body>
+
 </html>

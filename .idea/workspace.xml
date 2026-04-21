@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8c3f4d7a-e8ae-4586-9518-f48a3d069a70" name="Changes" comment="do it">
+      <change afterPath="$PROJECT_DIR$/HTML/Lezione7/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML/Lezione6/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/HTML/Lezione6/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HTML/Lezione7/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/HTML/Lezione7/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HTML/Lezione7/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/HTML/Lezione7/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HTML/Lezione7/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/HTML/Lezione7/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,7 +17,6 @@
     <persistenceIdMap>
       <entry key="_C:/Users/davide.GiOLIttI/Desktop/FrontEnd/repos/Repo_Web_Architect" value="3BCwi15V2aIYrzH9lWLv6cge9LF" />
       <entry key="_C:/Users/davide.GiOLIttI/OneDrive - ITS ICT Piemonte/Desktop/FrontEnd/repos/Repo_Web_Architect" value="3Bq2OGrOjaRZZ15JlDDJWc3ffKC" />
-      <entry key="_D:/davide/Documenti/its itc/frontend/Repo_Web_Architect" value="3CaljJn5cBou2cADkPMn7GzYlxv" />
     </persistenceIdMap>
   </component>
   <component name="CopilotUserSelectedChatMode">
@@ -29,8 +31,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
         <option value="CSS File" />
       </list>
     </option>
@@ -50,28 +52,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "JavaScript Debug.01_IntroObj.html.executor": "Run",
-    "JavaScript Debug.esercizio0.html.executor": "Run",
-    "JavaScript Debug.index.html.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/davide/Documenti/its itc/frontend/Repo_Web_Architect",
-    "list.type.of.created.stylesheet": "CSS",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "configurable.group.editor",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JavaScript Debug.01_IntroObj.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.esercizio0.html.executor&quot;: &quot;Run&quot;,
+    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/davide.GiOLIttI/OneDrive - ITS ICT Piemonte/Desktop/FrontEnd/repos/Repo_Web_Architect&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Repo_Web_Architect/HTML/Lezione4/index.html" useBuiltInWebServerPort="true">
       <method v="2" />
@@ -121,14 +124,13 @@
       <workItem from="1776416450990" duration="948000" />
       <workItem from="1776417427543" duration="1437000" />
       <workItem from="1776418883827" duration="33000" />
-      <workItem from="1776631691896" duration="383000" />
-      <workItem from="1776632629399" duration="26000" />
-      <workItem from="1776632888266" duration="63000" />
-      <workItem from="1776633322133" duration="219000" />
-      <workItem from="1776633549069" duration="42000" />
-      <workItem from="1776633598736" duration="85000" />
-      <workItem from="1776633692647" duration="80000" />
-      <workItem from="1776633780474" duration="59000" />
+      <workItem from="1776418999479" duration="3577000" />
+      <workItem from="1776422597803" duration="384000" />
+      <workItem from="1776633127757" duration="35000" />
+      <workItem from="1776633308256" duration="391000" />
+      <workItem from="1776756984120" duration="1165000" />
+      <workItem from="1776758903343" duration="754000" />
+      <workItem from="1776760128737" duration="2066000" />
     </task>
     <task id="LOCAL-00001" summary="do it">
       <option name="closed" value="true" />
@@ -138,7 +140,23 @@
       <option name="project" value="LOCAL" />
       <updated>1775557661610</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="do it">
+      <option name="closed" value="true" />
+      <created>1776759060621</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1776759060621</updated>
+    </task>
+    <task id="LOCAL-00003" summary="do it">
+      <option name="closed" value="true" />
+      <created>1776759151321</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1776759151321</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
