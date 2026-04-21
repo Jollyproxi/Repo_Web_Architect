@@ -1,0 +1,4 @@
+div{
+    min-height: 100px;
+    background-clip: content-box;
+}

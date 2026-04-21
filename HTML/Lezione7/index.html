@@ -4,13 +4,95 @@
         <meta charset="UTF-8">
         <title>Title</title>
         <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="./node_modules/leaflet/dist/leaflet.css">
+        <link rel="stylesheet" href="./css/style.css">
     </head>
     <body>
 
-        <h1>Ciao</h1>
-        <a name="Cliccami" id="" class="btn btn-primary" href="#" role="button">Cliccami!</a>
+        <!--        <h1>Ciao</h1>-->
+        <!--        <a name="Cliccami" id="" class="btn btn-primary" href="#" role="button">Cliccami!</a>-->
+
+        <header>
+
+
+        </header>
+
+        <main>
+            <div class="container">
+                <h1>Bootstrap</h1>
+                <h2>Recap</h2>
+                <div class="row gy-4">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                    </p>
+
+                    <div class="col-md-6 bg-primary s1"></div>
+                    <div class="col-md-6 bg-primary s1"></div>
+
+                    <div class="col-md-6 col-sm-4 col-lg-3 bg-primary s1"></div>
+                    <div class="col-md-6 col-sm-4 col-lg-3 bg-primary s1"></div>
+
+                    <div class="col-8 bg-primary s1"></div>
+                    <div class="col-4 bg-danger s1"></div>
+
+
+                    <div class="col-6">
+                        <form>
+                            <div class="mb3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password">
+                            </div>
+                            <button type=submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+
+
+
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button
+                                    class="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne"
+                                    aria-expanded="true"
+                                    aria-controls="collapseOne"
+                                >
+                                    Accordion Item #1
+                                </button>
+                            </h2>
+                            <div
+                                id="collapseOne"
+                                class="accordion-collapse collapse show"
+                                aria-labelledby="headingOne"
+                                data-bs-parent="#accordionExample"
+                            >
+                                <div class="accordion-body">
+                                    This is the first item's accordion body.
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+
+
+
+
+
+                </div>
+            </div>
+
+
+        </main>
 
 
         <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="./node_modules/leaflet/dist/leaflet.js"></script>
     </body>
 </html>
