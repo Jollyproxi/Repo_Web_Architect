@@ -2,24 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8c3f4d7a-e8ae-4586-9518-f48a3d069a70" name="Changes" comment="do it">
-      <change afterPath="$PROJECT_DIR$/HTML/Lezione6/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HTML/Lezione6/js/script01.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HTML/Lezione6_BS/css/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HTML/Lezione6_BS/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HTML/Lezione6_BS/js/script.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Repo_Web_Architect.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/copilot.data.migration.ask2agent.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AGENTS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML/Lezione2/project2/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/HTML/Lezione2/project2/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML/Lezione3/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/HTML/Lezione3/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML/Lezione4/img/logoipsum-413.svg" beforeDir="false" afterPath="$PROJECT_DIR$/HTML/Lezione4/img/logoipsum-413.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JAVASCRIPT/Dom test/js/script02.js" beforeDir="false" afterPath="$PROJECT_DIR$/JAVASCRIPT/Dom test/js/script02.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HTML/Lezione6/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/HTML/Lezione6/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +14,7 @@
     <persistenceIdMap>
       <entry key="_C:/Users/davide.GiOLIttI/Desktop/FrontEnd/repos/Repo_Web_Architect" value="3BCwi15V2aIYrzH9lWLv6cge9LF" />
       <entry key="_C:/Users/davide.GiOLIttI/OneDrive - ITS ICT Piemonte/Desktop/FrontEnd/repos/Repo_Web_Architect" value="3Bq2OGrOjaRZZ15JlDDJWc3ffKC" />
+      <entry key="_D:/davide/Documenti/its itc/frontend/Repo_Web_Architect" value="3CaljJn5cBou2cADkPMn7GzYlxv" />
     </persistenceIdMap>
   </component>
   <component name="CopilotUserSelectedChatMode">
@@ -65,28 +50,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;JavaScript Debug.01_IntroObj.html.executor&quot;: &quot;Run&quot;,
-    &quot;JavaScript Debug.esercizio0.html.executor&quot;: &quot;Run&quot;,
-    &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/davide.GiOLIttI/OneDrive - ITS ICT Piemonte/Desktop/FrontEnd/repos/Repo_Web_Architect&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.com.github.izhangzhihao.rainbow.brackets.settings.Ⴘୟ&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "JavaScript Debug.01_IntroObj.html.executor": "Run",
+    "JavaScript Debug.esercizio0.html.executor": "Run",
+    "JavaScript Debug.index.html.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.preferred.runtime.type.id": "node",
+    "last_opened_file_path": "D:/davide/Documenti/its itc/frontend/Repo_Web_Architect",
+    "list.type.of.created.stylesheet": "CSS",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "configurable.group.editor",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/Repo_Web_Architect/HTML/Lezione4/index.html" useBuiltInWebServerPort="true">
       <method v="2" />
@@ -136,6 +121,14 @@
       <workItem from="1776416450990" duration="948000" />
       <workItem from="1776417427543" duration="1437000" />
       <workItem from="1776418883827" duration="33000" />
+      <workItem from="1776631691896" duration="383000" />
+      <workItem from="1776632629399" duration="26000" />
+      <workItem from="1776632888266" duration="63000" />
+      <workItem from="1776633322133" duration="219000" />
+      <workItem from="1776633549069" duration="42000" />
+      <workItem from="1776633598736" duration="85000" />
+      <workItem from="1776633692647" duration="80000" />
+      <workItem from="1776633780474" duration="59000" />
     </task>
     <task id="LOCAL-00001" summary="do it">
       <option name="closed" value="true" />
