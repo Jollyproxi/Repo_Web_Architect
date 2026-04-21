@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c3f4d7a-e8ae-4586-9518-f48a3d069a70" name="Changes" comment="do it">
-      <change afterPath="$PROJECT_DIR$/HTML/Lezione7/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML/Lezione7/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/HTML/Lezione7/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML/Lezione7/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/HTML/Lezione7/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HTML/Lezione7/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/HTML/Lezione7/package.json" afterDir="false" />
-    </list>
+    <list default="true" id="8c3f4d7a-e8ae-4586-9518-f48a3d069a70" name="Changes" comment="do it" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -131,6 +125,7 @@
       <workItem from="1776756984120" duration="1165000" />
       <workItem from="1776758903343" duration="754000" />
       <workItem from="1776760128737" duration="2066000" />
+      <workItem from="1776766634170" duration="919000" />
     </task>
     <task id="LOCAL-00001" summary="do it">
       <option name="closed" value="true" />
