@@ -1,17 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="./node_modules/leaflet/dist/leaflet.css">
 </head>
+
 <body>
 
-    <h1>Ciao</h1>
-    <button class="btn btn-danger">Cliccami</button>
-    
+    <header class="mb-5">
+        <!-- Qui va la navbar -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <div class="container-fluid"> <a class="navbar-brand" href="#">Fixed navbar</a> <button
+                    class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"> <span
+                        class="navbar-toggler-icon"></span> </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="nav-link" href="#form">Form</a> 
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="nav-link" href="#card">Card</a> 
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./pages/contattaci.html">Contatti</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="my-5">
+        <div class="container">
+            <h1>Bootstrap</h1>
+
+            <h2>Recap Bootstrap</h2>
+
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat optio impedit quibusdam perferendis
+                saepe reprehenderit adipisci corrupti, cupiditate nulla maiores expedita repudiandae veniam atque nisi
+                sequi doloribus tempora quo earum, facilis quis cum error. Temporibus fugit blanditiis harum recusandae
+                sequi ullam molestiae dolorum tempora eum, dignissimos odio itaque alias minima.</p>
+
+            <!-- Con gy-4 imposto un po' di gutter tra le righe stesse di una row -->
+            <div class="row gy-4">
+
+                <!-- Non sto specificando il comportamento per viewport più piccole. Sotto la vieport md si comporteranno come col-12 -->
+                <div class="col-md-6 bg-primary" style="min-height: 100px; background-clip: content-box;"></div>
+                <div class="col-md-6 bg-primary" style="min-height: 100px; background-clip: content-box;"></div>
+
+
+
+                <div class="bg-primary col-sm-8 col-md-6 col-lg-3"
+                    style="min-height: 100px; background-clip: content-box;"></div>
+                <div class="bg-primary col-sm-4 col-md-6 col-lg-3"
+                    style="min-height: 100px; background-clip: content-box;"></div>
+
+
+                <div class="col-8 bg-primary" style="min-height: 100px; background-clip: content-box;"></div>
+                <div class="col-4 bg-primary" style="min-height: 100px; background-clip: content-box;"></div>
+
+                <div class="col-md-6">
+                    <form id="form">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+
+                <div class="col-sm-12 col-md-6 my-5">
+
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Accordion Item #1
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    This is the first item's accordion body.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                    Accordion Item #2
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    This is the second item's accordion body.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="container my-4 my-lg-5">
+
+            <div id="card" class="row gy-4">
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src=".." alt="Title" />
+                        <div class="card-body">
+                            <h4 class="card-title">Title</h4>
+                            <p class="card-text">Text</p>
+                        </div>
+                        <a href="#" class="btn btn-success">Go somewhere</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src=".." alt="Title" />
+                        <div class="card-body">
+                            <h4 class="card-title">Title</h4>
+                            <p class="card-text">Text</p>
+                        </div>
+                        <a href="#" class="btn btn-success">Go somewhere</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src=".." alt="Title" />
+                        <div class="card-body">
+                            <h4 class="card-title">Title</h4>
+                            <p class="card-text">Text</p>
+                        </div>
+                        <a href="#" class="btn btn-success">Go somewhere</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top" src=".." alt="Title" />
+                        <div class="card-body">
+                            <h4 class="card-title">Title</h4>
+                            <p class="card-text">Text</p>
+                        </div>
+                        <a href="#" class="btn btn-success">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    <footer class="footer mt-auto py-3 bg-body-tertiary">
+        <div class="container"> <span class="text-body-secondary">Place sticky footer content here.</span> </div>
+    </footer>
 
     <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="./node_modules/leaflet/dist/leaflet.js"></script>
+    <script src="./js/script.js"></script>
 </body>
+
 </html>
