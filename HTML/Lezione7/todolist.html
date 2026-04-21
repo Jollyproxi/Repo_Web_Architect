@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <!-- Meta base per codifica e responsive design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titolo mostrato nella tab del browser -->
+    <title>To Do List Ledger</title>
+    <!-- Bootstrap installato localmente tramite npm -->
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+    <!-- Stili personalizzati del progetto -->
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="ledger-bg">
+    <!-- Contenitore principale della pagina -->
+    <main class="container py-4 py-md-5"> <!-- py = padding verticale: 4 su mobile, 5 da md in poi -->
+        <!-- Scheda centrale stile ledger -->
+        <section class="ledger-sheet mx-auto p-3 p-md-4 shadow-sm">
+            <!-- Header con titolo e data corrente -->
+            <div class="row g-2 mb-3 align-items-md-center justify-content-between">
+                <div class="col-12 col-md">
+                    <h1 class="h3 mb-1">To Do Ledger</h1>
+                    <p class="text-secondary small mb-0">Registra, completa e traccia le tue attivita.</p>
+                </div>
+                <!-- Valorizzato via JavaScript -->
+                <div class="col-12 col-md-auto">
+                    <span id="todayDate" class="badge text-bg-light border"></span>
+                </div>
+            </div>
+
+            <!-- Form di inserimento nuova attivita -->
+            <form id="todoForm" class="row g-2 mb-3 align-items-end" autocomplete="off">
+                <div class="col-12 col-md-6">
+                    <label for="todoInput" class="form-label mb-1">Nome attivita</label>
+                    <input id="todoInput" class="form-control" type="text" maxlength="120" placeholder="Scrivi una nuova attivita..." required>
+                </div>
+                <div class="col-12 col-md-3">
+                    <label for="todoDeadline" class="form-label mb-1">Data di scadenza <span class="text-body-tertiary">(opzionale)</span></label>
+                    <input id="todoDeadline" class="form-control" type="date" aria-label="Scadenza opzionale">
+                </div>
+                <div class="col-12 col-md-3 d-grid">
+                    <!-- Submit del form -->
+                    <button type="submit" class="btn btn-primary">Aggiungi</button>
+                </div>
+            </form>
+
+            <!-- Pulsanti filtro stato attivita -->
+            <div id="filterTabs" class="btn-group btn-group-sm mb-3" role="group" aria-label="Filtri attivita">
+                <button type="button" class="btn btn-outline-secondary active" data-filter="all">Tutte</button>
+                <button type="button" class="btn btn-outline-secondary" data-filter="pending">Da fare</button>
+                <button type="button" class="btn btn-outline-secondary" data-filter="done">Completate</button>
+            </div>
+
+            <!-- Lista task renderizzata dinamicamente via JavaScript -->
+            <ul id="todoList" class="list-group ledger-list mb-3"></ul>
+
+            <!-- Barra statistiche aggiornata in tempo reale -->
+            <div id="statsBar" class="row row-cols-1 row-cols-md-3 g-2 small text-secondary">
+                <span id="totalTasks" class="col">Totale: 0</span>
+                <span id="pendingTasks" class="col">Da fare: 0</span>
+                <span id="doneTasks" class="col">Completate: 0</span>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bundle JS di Bootstrap (componenti interattivi) -->
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Logica applicativa della Todo List -->
+    <script src="./js/script01.js" defer></script>
+</body>
+</html>

@@ -1,4 +1,38 @@
-div{
-    min-height: 100px;
-    background-clip: content-box;
+.ledger-bg {
+    background: linear-gradient(180deg, #f8f9fa 0%, #eef2f7 100%);
+    min-height: 100vh;
+}
+
+.ledger-sheet {
+    max-width: 760px;
+    border: 1px solid #dde3ea;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.ledger-list .list-group-item {
+    border: 0;
+    border-bottom: 1px dashed #d8dee8;
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+}
+
+.ledger-list .list-group-item:last-child {
+    border-bottom: 0;
+}
+
+.todo-title.done {
+    text-decoration: line-through;
+    color: #6c757d;
+}
+
+.ledger-list .list-group-item.todo-overdue {
+    background: #fff5f5;
+    border-left: 3px solid #dc3545;
+}
+
+.empty-state {
+    color: #6c757d;
+    text-align: center;
+    padding: 1.5rem 0.5rem;
 }
