@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8c3f4d7a-e8ae-4586-9518-f48a3d069a70" name="Changes" comment="jon snow" />
+    <list default="true" id="8c3f4d7a-e8ae-4586-9518-f48a3d069a70" name="Changes" comment="jon snow">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -65,7 +67,7 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/davide.GiOLIttI/OneDrive - ITS ICT Piemonte/Desktop/FrontEnd/repos/Repo_Web_Architect&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -126,6 +128,10 @@
       <workItem from="1776758903343" duration="754000" />
       <workItem from="1776760128737" duration="2066000" />
       <workItem from="1776766634170" duration="2514000" />
+      <workItem from="1776793212326" duration="73000" />
+      <workItem from="1776793306023" duration="22000" />
+      <workItem from="1776793340664" duration="161000" />
+      <workItem from="1776793514703" duration="227000" />
     </task>
     <task id="LOCAL-00001" summary="do it">
       <option name="closed" value="true" />
