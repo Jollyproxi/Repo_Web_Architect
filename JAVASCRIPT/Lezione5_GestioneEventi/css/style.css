@@ -3,3 +3,7 @@
     min-height: 400px;
     background-color: teal;
 }
+
+.brdRed{
+    border: 3px solid red !important;
+}
