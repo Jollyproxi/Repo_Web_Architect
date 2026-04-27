@@ -1,7 +1,7 @@
 import {
     buildInternationalPhone, getPlaceholderInitial, isDuplicateContact, normalizeCountryCode, normalizeEmail, normalizeLocalPhone, resolveAvatarSource
 } from "./contact-utils.js";
-import { countries } from "../node_modules/country-codes-flags-phone-codes/dist/index.mjs";
+import { countries } from "https://cdn.jsdelivr.net/npm/country-codes-flags-phone-codes@1.1.1/dist/index.mjs";
 
 const STORAGE_KEY = "rubrica-giolitti-contacts";
 const THEME_KEY = "rubrica-theme";

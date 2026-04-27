@@ -21,15 +21,7 @@ Applicazione web per gestire contatti personali con persistenza su `localStorage
 
 ## Installazione
 
-```bash
-npm install
-```
-
-## Avvio locale
-
-```bash
-npm start
-```
+Nessuna installazione richiesta per l'uso dell'app: apri direttamente `index.html` nel browser.
 
 ## Test rapido logica (normalizzazione e doppioni)
 

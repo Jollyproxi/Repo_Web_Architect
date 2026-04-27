@@ -1,126 +1,132 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rubrica Personale</title>
-    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="./css/style.css">
-</head>
-<body class="bg-body-tertiary">
-<nav class="navbar navbar-expand-lg border-bottom sticky-top app-topbar">
-    <div class="container">
-        <span class="navbar-brand mb-0 h5">Rubrica Personale</span>
-        <button id="themeTglBtn" class="btn btn-sm btn-outline-secondary" type="button" title="Toggle tema scuro/chiaro">
-            <span id="themeIcon" aria-hidden="true">☀️</span>
-        </button>
-    </div>
-</nav>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rubrica Personale</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+              integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <link rel="stylesheet" href="./css/style.css">
+    </head>
+    <body class="bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg border-bottom sticky-top app-topbar">
+            <div class="container">
+                <span class="navbar-brand mb-0 h5">Rubrica Personale</span>
+                <button id="themeTglBtn" class="btn btn-sm btn-outline-secondary" type="button" title="Toggle tema scuro/chiaro">
+                    <span id="themeIcon" aria-hidden="true">☀️</span>
+                </button>
+            </div>
+        </nav>
 
-<div id="searchBar" class="border-bottom py-2 d-none app-searchbar">
-    <div class="container">
-        <input id="globalSearchInput" type="search" class="form-control form-control-sm" placeholder="Cerca nome, email, telefono o eta..." autocomplete="off">
-    </div>
-</div>
-
-<main class="container py-4">
-
-    <div class="mb-3">
-        <div class="mt-2">
-            <button id="showFormBtn" class="btn btn-outline-primary" type="button">Aggiungi Contatto</button>
-            <button id="showListBtn" class="btn btn-primary ms-2" type="button">Mostra Rubrica</button>
+        <div id="searchBar" class="border-bottom py-2 d-none app-searchbar">
+            <div class="container">
+                <label for="globalSearchInput" class="visually-hidden">Ricerca contatti</label>
+                <input id="globalSearchInput" type="search" class="form-control form-control-sm" placeholder="Cerca nome, email, telefono o eta..."
+                       autocomplete="off">
+            </div>
         </div>
-    </div>
 
-    <div id="alertBox" aria-live="polite"></div>
+        <main class="container py-4">
 
-    <section id="formView" class="card shadow-sm">
-        <div class="card-body">
-            <h2 id="formTitle" class="h5">Nuovo Contatto</h2>
-            <form id="contactForm" class="row g-3 mt-1">
-                <div class="col-md-6">
-                    <label for="fullName" class="form-label">Nome e Cognome</label>
-                    <input id="fullName" name="fullName" type="text" class="form-control" required>
+            <div class="mb-3">
+                <div class="mt-2">
+                    <button id="showFormBtn" class="btn btn-outline-primary" type="button">Aggiungi Contatto</button>
+                    <button id="showListBtn" class="btn btn-primary ms-2" type="button">Mostra Rubrica</button>
                 </div>
-                <div class="col-md-4">
-                    <span class="form-label d-block">Prefisso</span>
-                    <label for="countryCode" class="visually-hidden">Prefisso selezionato</label>
-                    <select id="countryCode" name="countryCode" class="visually-hidden" tabindex="-1" aria-hidden="true" required>
-                        <option value="+39" selected>+39</option>
-                    </select>
-                    <div class="dropdown">
-                        <button
-                            id="countryDropdownBtn"
-                            class="btn btn-outline-secondary dropdown-toggle w-100 text-start country-select"
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            aria-label="Seleziona prefisso internazionale"
-                            aria-expanded="false"
-                        >
-                            Caricamento paesi...
-                        </button>
-                        <div id="countryDropdownList" class="dropdown-menu w-100 country-dropdown-menu p-2">
-                            <div class="country-search-wrap">
-                                <label for="countrySearchInput" class="form-label small mb-1">Ricerca</label>
-                                <input
-                                    id="countrySearchInput"
-                                    name="countrySearch"
-                                    class="form-control form-control-sm"
-                                    type="search"
-                                    placeholder="Cerca paese o prefisso"
-                                    aria-label="Cerca paese o prefisso"
-                                    autocomplete="off"
-                                >
-                            </div>
-                            <div id="countryDropdownOptions" class="mt-2"></div>
-                            <div id="countryNoResults" class="small text-body-secondary px-2 py-1 d-none">Nessun paese trovato.</div>
+            </div>
+
+            <div id="alertBox" aria-live="polite"></div>
+
+            <section id="formView" class="card shadow-sm">
+                <div class="card-body">
+                    <h2 id="formTitle" class="h5">Nuovo Contatto</h2>
+                    <form id="contactForm" class="row g-3 mt-1">
+                        <div class="col-md-6">
+                            <label for="fullName" class="form-label">Nome e Cognome</label>
+                            <input id="fullName" name="fullName" type="text" class="form-control" required>
                         </div>
-                    </div>
+                        <div class="col-md-4">
+                            <span class="form-label d-block">Prefisso</span>
+                            <label for="countryCode" class="visually-hidden">Prefisso selezionato</label>
+                            <select id="countryCode" name="countryCode" class="visually-hidden" tabindex="-1" aria-hidden="true" required>
+                                <option value="+39" selected>+39</option>
+                            </select>
+                            <div class="dropdown">
+                                <button
+                                        id="countryDropdownBtn"
+                                        class="btn btn-outline-secondary dropdown-toggle w-100 text-start country-select"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-label="Seleziona prefisso internazionale"
+                                        aria-expanded="false"
+                                >
+                                    Caricamento paesi...
+                                </button>
+                                <div id="countryDropdownList" class="dropdown-menu w-100 country-dropdown-menu p-2">
+                                    <div class="country-search-wrap">
+                                        <label for="countrySearchInput" class="form-label small mb-1">Ricerca</label>
+                                        <input
+                                                id="countrySearchInput"
+                                                name="countrySearch"
+                                                class="form-control form-control-sm"
+                                                type="search"
+                                                placeholder="Cerca paese o prefisso"
+                                                aria-label="Cerca paese o prefisso"
+                                                autocomplete="off"
+                                        >
+                                    </div>
+                                    <div id="countryDropdownOptions" class="mt-2"></div>
+                                    <div id="countryNoResults" class="small text-body-secondary px-2 py-1 d-none">Nessun paese trovato.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <label for="phoneLocal" class="form-label">Numero di Telefono</label>
+                            <input id="phoneLocal" name="phoneLocal" type="tel" class="form-control" placeholder="3331234567" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email</label>
+                            <input id="email" name="email" type="email" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="age" class="form-label">Età (opzionale)</label>
+                            <input id="age" name="age" type="number" min="1" max="150" class="form-control" placeholder="30">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="avatarUrl" class="form-label">Avatar da URL (opzionale)</label>
+                            <input id="avatarUrl" name="avatarUrl" type="url" class="form-control" placeholder="https://esempio.it/avatar.jpg">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="avatarFile" class="form-label">Avatar da file (opzionale)</label>
+                            <input id="avatarFile" name="avatarFile" type="file" class="form-control" accept="image/*">
+                        </div>
+                        <div class="col-md-6 pt-md-4">
+                            <div id="avatarPreview" class="small text-body-secondary">Nessun avatar selezionato: verra usato il placeholder
+                                                                                      automatico.
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button id="submitBtn" class="btn btn-success" type="submit">Salva Contatto</button>
+                            <button id="cancelEditBtn" class="btn btn-outline-secondary d-none" type="button">Annulla modifica</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-md-8">
-                    <label for="phoneLocal" class="form-label">Numero di Telefono</label>
-                    <input id="phoneLocal" name="phoneLocal" type="tel" class="form-control" placeholder="3331234567" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="email" class="form-label">Email</label>
-                    <input id="email" name="email" type="email" class="form-control" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="age" class="form-label">Età (opzionale)</label>
-                    <input id="age" name="age" type="number" min="1" max="150" class="form-control" placeholder="30">
-                </div>
-                <div class="col-md-6">
-                    <label for="avatarUrl" class="form-label">Avatar da URL (opzionale)</label>
-                    <input id="avatarUrl" name="avatarUrl" type="url" class="form-control" placeholder="https://esempio.it/avatar.jpg">
-                </div>
-                <div class="col-md-6">
-                    <label for="avatarFile" class="form-label">Avatar da file (opzionale)</label>
-                    <input id="avatarFile" name="avatarFile" type="file" class="form-control" accept="image/*">
-                </div>
-                <div class="col-md-6 pt-md-4">
-                    <div id="avatarPreview" class="small text-body-secondary">Nessun avatar selezionato: verra usato il placeholder automatico.</div>
-                </div>
-                <div class="col-12">
-                    <button id="submitBtn" class="btn btn-success" type="submit">Salva Contatto</button>
-                    <button id="cancelEditBtn" class="btn btn-outline-secondary d-none" type="button">Annulla modifica</button>
-                </div>
-            </form>
-        </div>
-    </section>
+            </section>
 
-    <section id="listView" class="card shadow-sm d-none mt-3">
-        <div class="card-body">
-            <h2 class="h5">Contatti Salvati</h2>
-            <div id="contactsGrid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mt-2"></div>
-            <div id="noContactsMsg" class="text-body-secondary text-center py-5 d-none">Nessun contatto trovato.</div>
-            <nav id="paginationNav" class="mt-4" aria-label="Paginazione contatti">
-                <ul id="paginationList" class="pagination justify-content-center mb-0"></ul>
-            </nav>
-        </div>
-    </section>
-</main>
+            <section id="listView" class="card shadow-sm d-none mt-3">
+                <div class="card-body">
+                    <h2 class="h5">Contatti Salvati</h2>
+                    <div id="contactsGrid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mt-2"></div>
+                    <div id="noContactsMsg" class="text-body-secondary text-center py-5 d-none">Nessun contatto trovato.</div>
+                    <nav id="paginationNav" class="mt-4" aria-label="Paginazione contatti">
+                        <ul id="paginationList" class="pagination justify-content-center mb-0"></ul>
+                    </nav>
+                </div>
+            </section>
+        </main>
 
-<script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-<script type="module" src="./js/script01.js"></script>
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.js"
+                integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+        <script type="module" src="./js/script01.js"></script>
+    </body>
 </html>

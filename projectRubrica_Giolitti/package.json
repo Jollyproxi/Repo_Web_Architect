@@ -4,16 +4,10 @@
   "description": "Rubrica personale con LocalStorage e Bootstrap",
   "main": "index.html",
   "scripts": {
-    "test": "node ./tests/contact-utils.test.mjs",
-    "start": "npx http-server -c-1 ."
+    "test": "node ./tests/contact-utils.test.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
-  "dependencies": {
-    "bootstrap": "^5.3.8",
-    "country-codes-flags-phone-codes": "^1.1.1",
-    "flag-icons": "^7.5.0"
-  }
+  "type": "module"
 }
