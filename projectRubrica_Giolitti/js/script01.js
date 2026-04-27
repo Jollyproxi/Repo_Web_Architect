@@ -1,27 +1,99 @@
 import {countries} from "../node_modules/country-codes-flags-phone-codes/dist/index.mjs";
 
+/**
+ * @typedef {Object} Contact
+ * @property {string} id
+ * @property {string} fullName
+ * @property {string} countryCode
+ * @property {string=} countryIso
+ * @property {string=} countryName
+ * @property {string} phoneLocal
+ * @property {string} phoneInternational
+ * @property {string} email
+ * @property {number|null=} age
+ * @property {string} avatar
+ * @property {"file"|"url"|"placeholder"} avatarMode
+ * @property {string} placeholderInitial
+ */
+
+/**
+ * @typedef {Object} ContactCandidate
+ * @property {string} countryCode
+ * @property {string} phoneLocal
+ * @property {string} email
+ */
+
+/**
+ * @typedef {Object} CountryOption
+ * @property {string} dialCode
+ * @property {string} countryName
+ * @property {string} iso2
+ * @property {string} flag
+ * @property {string} code
+ * @property {string} searchable
+ */
+
+/**
+ * @typedef {Object} SelectedCountry
+ * @property {string} name
+ * @property {string} code
+ * @property {string} flag
+ * @property {string} dialCode
+ */
+
+/**
+ * @typedef {Object} AvatarInput
+ * @property {string=} avatarUrl
+ * @property {string=} avatarBase64
+ * @property {string=} fullName
+ */
+
+/**
+ * @typedef {Object} AvatarResult
+ * @property {string} avatar
+ * @property {"file"|"url"|"placeholder"} avatarMode
+ * @property {string} placeholderInitial
+ */
+
 // File unico dell'app: qui convivono normalizzazione dati, UI, persistenza, ricerca,
 // paginazione, tema e gestione della tendina paesi.
 
 // ============================================================================
 // Helper di normalizzazione e trasformazione dati
 // ============================================================================
+/**
+ * @param {unknown} value
+ * @returns {string}
+ */
 function normalizeEmail(value) {
     return String(value || "").trim().toLowerCase();
 }
 
 // Normalizza il prefisso internazionale, mantenendo solo le cifre e il simbolo + iniziale.
+/**
+ * @param {unknown} value
+ * @returns {string}
+ */
 function normalizeCountryCode(value) {
     const digits = String(value || "").replace(/\D/g, "");
     return digits ? `+${digits}` : "";
 }
 
 // Normalizza il numero locale rimuovendo ogni carattere non numerico.
+/**
+ * @param {unknown} value
+ * @returns {string}
+ */
 function normalizeLocalPhone(value) {
     return String(value || "").replace(/\D/g, "");
 }
 
 // Converte prefisso + numero locale in una stringa internazionale coerente per i controlli.
+/**
+ * @param {unknown} countryCode
+ * @param {unknown} phoneLocal
+ * @returns {string}
+ */
 function buildInternationalPhone(countryCode, phoneLocal) {
     const normalizedPrefix = normalizeCountryCode(countryCode);
     const normalizedLocal = normalizeLocalPhone(phoneLocal);
@@ -30,12 +102,20 @@ function buildInternationalPhone(countryCode, phoneLocal) {
 }
 
 // Ricava l'iniziale da mostrare come placeholder avatar quando non esiste un'immagine.
+/**
+ * @param {unknown} fullName
+ * @returns {string}
+ */
 function getPlaceholderInitial(fullName) {
     const value = String(fullName || "").trim();
     return value ? value.slice(0, 1).toUpperCase() : "?";
 }
 
 // Verifica se una stringa è una URL http/https valida.
+/**
+ * @param {unknown} value
+ * @returns {boolean}
+ */
 function isValidHttpUrl(value) {
     if (!value) {
         return false;
@@ -50,6 +130,10 @@ function isValidHttpUrl(value) {
 }
 
 // Seleziona la sorgente avatar corretta con priorità: file base64, URL valida, placeholder.
+/**
+ * @param {AvatarInput} input
+ * @returns {AvatarResult}
+ */
 function resolveAvatarSource({avatarUrl, avatarBase64, fullName}) {
     if (avatarBase64) {
         return {
@@ -76,6 +160,12 @@ function resolveAvatarSource({avatarUrl, avatarBase64, fullName}) {
 }
 
 // Controlla se il contatto candidato è già presente in rubrica per email o telefono.
+/**
+ * @param {Contact[]} contacts
+ * @param {ContactCandidate} candidate
+ * @param {{ignoreId?: string}=} options
+ * @returns {boolean}
+ */
 function isDuplicateContact(contacts, candidate, options = {}) {
     const ignoreId = options.ignoreId || null;
     const normalizedEmail = normalizeEmail(candidate.email);
@@ -213,6 +303,10 @@ function populateCountryCodeOptions() {
 }
 
 // Disegna la lista paesi/prefissi nella dropdown custom, riusando gli stessi dati filtrabili.
+/**
+ * @param {CountryOption[]} options
+ * @returns {void}
+ */
 function renderCountryOptions(options) {
     // Il rendering della lista è separato dalla preparazione dei dati per poter
     // riutilizzare lo stesso dataset sia completo sia filtrato dalla ricerca live.
@@ -247,6 +341,9 @@ function renderCountryOptions(options) {
 }
 
 // Applica il filtro live nella dropdown dei prefissi in base a nome paese o prefisso.
+/**
+ * @returns {void}
+ */
 function handleCountrySearch() {
     // Ricerca live: filtro per nome paese e prefisso, senza toccare il valore già selezionato.
     const query = countrySearchInput.value.trim().toLowerCase();
@@ -261,6 +358,10 @@ function handleCountrySearch() {
 }
 
 // Gestisce il click su una voce della dropdown dei prefissi.
+/**
+ * @param {MouseEvent} event
+ * @returns {void}
+ */
 function handleCountrySelection(event) {
     const button = event.target.closest("button[data-dial-code]");
     if (!button) {
@@ -272,12 +373,20 @@ function handleCountrySelection(event) {
 }
 
 // Ripristina la ricerca interna della dropdown e mostra di nuovo tutti i paesi.
+/**
+ * @returns {void}
+ */
 function resetCountrySearch() {
     countrySearchInput.value = "";
     renderCountryOptions(countryOptions);
 }
 
 // Aggiorna il prefisso selezionato sia nel campo nascosto sia nel bottone visibile.
+/**
+ * @param {string} dialCode
+ * @param {string=} iso2
+ * @returns {void}
+ */
 function setCountryDialCode(dialCode, iso2 = "") {
     // Allinea valore prefisso + nazione specifica per i casi con prefisso condiviso.
     const country = getCountryOptionBySelection(dialCode, iso2) || countryByDialCode.get(dialCode);
@@ -305,6 +414,11 @@ function setCountryDialCode(dialCode, iso2 = "") {
 }
 
 // Restituisce la nazione precisa in base a prefisso+iso; fallback al primo match per prefisso.
+/**
+ * @param {string} dialCode
+ * @param {string} iso2
+ * @returns {SelectedCountry|null}
+ */
 function getCountryOptionBySelection(dialCode, iso2) {
     const normalizedDialCode = String(dialCode || "").trim();
     const normalizedIso2 = String(iso2 || "").trim().toLowerCase();
@@ -338,11 +452,20 @@ function getCountryOptionBySelection(dialCode, iso2) {
 }
 
 // Costruisce il path SVG della bandiera locale a partire dal codice ISO2.
+/**
+ * @param {string} iso2LowerCase
+ * @returns {string}
+ */
 function getFlagIconPath(iso2LowerCase) {
     return `./node_modules/flag-icons/flags/4x3/${iso2LowerCase}.svg`;
 }
 
 // Ritorna un'emoji bandiera come fallback quando l'icona SVG non è disponibile.
+/**
+ * @param {unknown} flag
+ * @param {unknown} countryCode
+ * @returns {string}
+ */
 function getCountryFlagEmoji(flag, countryCode) {
     const cleanFlag = String(flag || "").trim();
     if (cleanFlag) {
@@ -360,6 +483,9 @@ function getCountryFlagEmoji(flag, countryCode) {
 }
 
 // Legge i contatti da localStorage e li normalizza nel formato corrente dell'app.
+/**
+ * @returns {Contact[]}
+ */
 function loadContacts() {
     // Carica i contatti da localStorage e normalizza il formato legacy.
     // Se il salvataggio precedente aveva campi vecchi o incompleti, li riporta
@@ -407,12 +533,20 @@ function loadContacts() {
 }
 
 // Salva l'intera rubrica in localStorage come JSON serializzato.
+/**
+ * @returns {void}
+ */
 function saveContacts() {
     // Persistenza unica: tutta la rubrica viene salvata come array JSON nel localStorage.
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.contacts));
 }
 
 // Mostra messaggi Bootstrap dismissibili per conferme, errori e avvisi.
+/**
+ * @param {string} message
+ * @param {"info"|"success"|"warning"|"danger"|"primary"|"secondary"} [type="info"]
+ * @returns {void}
+ */
 function showAlert(message, type = "info") {
     // Messaggi feedback all'utente tramite alert Bootstrap dismissibile.
     alertBox.innerHTML = `
@@ -424,6 +558,9 @@ function showAlert(message, type = "info") {
 }
 
 // Mostra il form di inserimento e nasconde la lista contatti.
+/**
+ * @returns {void}
+ */
 function showFormView() {
     // La vista form e la vista lista si escludono a vicenda.
     formView.classList.remove("d-none");
@@ -431,6 +568,9 @@ function showFormView() {
 }
 
 // Mostra la rubrica filtrata/paginata e nasconde il form di inserimento.
+/**
+ * @returns {void}
+ */
 function showListView() {
     // Quando apro la lista ricalcolo i risultati filtrati e riparto dalla pagina 1.
     listView.classList.remove("d-none");
@@ -440,6 +580,10 @@ function showListView() {
 }
 
 // Carica i dati del contatto nel form per permettere la modifica.
+/**
+ * @param {Contact} contact
+ * @returns {void}
+ */
 function setEditMode(contact) {
     // La modifica riusa il form di inserimento: precompila i campi e cambia il titolo/CTA.
     state.editingContactId = contact.id;
@@ -459,6 +603,9 @@ function setEditMode(contact) {
 }
 
 // Riporta il form alla modalità creazione e ripulisce lo stato di editing.
+/**
+ * @returns {void}
+ */
 function resetFormMode() {
     // Ripristina il form in modalita creazione e rimuove eventuali stati residui di editing.
     state.editingContactId = null;
@@ -472,6 +619,10 @@ function resetFormMode() {
 }
 
 // Gestisce modifica ed eliminazione tramite event delegation sulle card.
+/**
+ * @param {MouseEvent} event
+ * @returns {void}
+ */
 function handleListActions(event) {
     // Gestione delegata delle azioni sulle card: modifica o eliminazione del contatto scelto.
     const target = event.target.closest("button[data-action]");
@@ -508,6 +659,10 @@ function handleListActions(event) {
 }
 
 // Converte un file immagine in base64 per poterlo salvare nel localStorage.
+/**
+ * @param {File} file
+ * @returns {Promise<string>}
+ */
 function readFileAsDataUrl(file) {
     // Converte il file immagine selezionato in stringa base64 da salvare nel contatto.
     return new Promise((resolve, reject) => {
@@ -519,6 +674,11 @@ function readFileAsDataUrl(file) {
 }
 
 // Aggiorna il testo informativo sull'avatar selezionato nel form.
+/**
+ * @param {string=} modeOverride
+ * @param {string=} valueOverride
+ * @returns {void}
+ */
 function updateAvatarPreviewText(modeOverride, valueOverride) {
     // Piccolo testo di supporto sotto al form: aiuta a capire quale sorgente avatar verrà usata.
     const file = avatarFileInput.files?.[0];
@@ -548,6 +708,10 @@ function updateAvatarPreviewText(modeOverride, valueOverride) {
 }
 
 // Valida, normalizza e salva un contatto nuovo o modificato.
+/**
+ * @param {SubmitEvent} event
+ * @returns {Promise<void>}
+ */
 async function handleSubmit(event) {
     // Salvataggio contatto: valida, normalizza, verifica duplicati e costruisce il payload finale.
     event.preventDefault();
@@ -641,6 +805,9 @@ async function handleSubmit(event) {
 }
 
 // Legge il tema salvato e lo applica al caricamento della pagina.
+/**
+ * @returns {void}
+ */
 function initTheme() {
     // Tema iniziale letto da localStorage per mantenere la scelta dell'utente anche dopo il refresh.
     const saved = localStorage.getItem(THEME_KEY) || "light";
@@ -648,6 +815,10 @@ function initTheme() {
 }
 
 // Applica tema chiaro o scuro e aggiorna il toggle visivo corrispondente.
+/**
+ * @param {"light"|"dark"} theme
+ * @returns {void}
+ */
 function applyTheme(theme) {
     // Applica la modalità chiara/scura e aggiorna l'icona del toggle in base al tema attivo.
     const isDark = theme === "dark";
@@ -670,6 +841,9 @@ function applyTheme(theme) {
 }
 
 // Inverte il tema corrente tra modalità chiara e scura.
+/**
+ * @returns {void}
+ */
 function toggleTheme() {
     // Alterna tra light e dark senza perdere la preferenza memorizzata.
     const current = localStorage.getItem(THEME_KEY) || "light";
@@ -678,6 +852,9 @@ function toggleTheme() {
 }
 
 // Mostra la barra di ricerca globale quando l'utente entra nella vista lista.
+/**
+ * @returns {void}
+ */
 function showSearchBar() {
     // La barra di ricerca globale si mostra solo quando si entra nella vista lista.
     searchBar.classList.remove("d-none");
@@ -685,6 +862,9 @@ function showSearchBar() {
 }
 
 // Nasconde la barra di ricerca globale e azzera la query attiva.
+/**
+ * @returns {void}
+ */
 function hideSearchBar() {
     // Tornando al form, la ricerca viene azzerata per evitare filtri residui.
     searchBar.classList.add("d-none");
@@ -693,6 +873,10 @@ function hideSearchBar() {
 }
 
 // Aggiorna la query di ricerca globale e rilancia il filtro.
+/**
+ * @param {InputEvent} event
+ * @returns {void}
+ */
 function handleGlobalSearch(event) {
     // Ricerca testuale globale su nome, email, telefono ed età.
     searchState.searchQuery = String(event.target.value || "").trim().toLowerCase();
@@ -701,6 +885,9 @@ function handleGlobalSearch(event) {
 }
 
 // Filtra i contatti per nome, email, telefono ed età e aggiorna la paginazione.
+/**
+ * @returns {void}
+ */
 function applySearch() {
     // Filtra la lista completa e aggiorna la vista paginata in base alla query corrente.
     if (!searchState.searchQuery) {
@@ -721,6 +908,9 @@ function applySearch() {
 }
 
 // Renderizza la pagina corrente della rubrica filtrata come griglia di card.
+/**
+ * @returns {void}
+ */
 function renderContactsPage() {
     // Rendering card: la lista visualizzata è sempre una sotto-selezione della rubrica filtrata.
     contactsGrid.innerHTML = "";
@@ -795,6 +985,11 @@ function renderContactsPage() {
 }
 
 // Costruisce i controlli di paginazione Bootstrap per la lista contatti.
+/**
+ * @param {number} totalPages
+ * @param {number} currentPage
+ * @returns {void}
+ */
 function renderPagination(totalPages, currentPage) {
     // Paginazione Bootstrap: precedente, numeri pagina e successivo.
     paginationList.innerHTML = "";

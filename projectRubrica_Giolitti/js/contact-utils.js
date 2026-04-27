@@ -1,16 +1,72 @@
+/**
+ * @typedef {Object} Contact
+ * @property {string=} id
+ * @property {string} email
+ * @property {string} countryCode
+ * @property {string} phoneLocal
+ * @property {string=} phoneInternational
+ */
+
+/**
+ * @typedef {Object} ContactCandidate
+ * @property {string} email
+ * @property {string} countryCode
+ * @property {string} phoneLocal
+ */
+
+/**
+ * @typedef {Object} DuplicateOptions
+ * @property {string=} ignoreId
+ */
+
+/**
+ * @typedef {Object} AvatarInput
+ * @property {string=} avatarUrl
+ * @property {string=} avatarBase64
+ * @property {string=} fullName
+ */
+
+/**
+ * @typedef {Object} AvatarResult
+ * @property {string} avatar
+ * @property {"file"|"url"|"placeholder"} avatarMode
+ * @property {string} placeholderInitial
+ */
+
+/**
+ * Normalizza una email rendendola confrontabile (trim + lower case).
+ * @param {unknown} value
+ * @returns {string}
+ */
 export function normalizeEmail(value) {
     return String(value || "").trim().toLowerCase();
 }
 
+/**
+ * Estrae il prefisso internazionale numerico e lo restituisce come +NNN.
+ * @param {unknown} value
+ * @returns {string}
+ */
 export function normalizeCountryCode(value) {
     const digits = String(value || "").replace(/\D/g, "");
     return digits ? `+${digits}` : "";
 }
 
+/**
+ * Mantiene solo le cifre del numero locale.
+ * @param {unknown} value
+ * @returns {string}
+ */
 export function normalizeLocalPhone(value) {
     return String(value || "").replace(/\D/g, "");
 }
 
+/**
+ * Costruisce un numero internazionale normalizzato a partire da prefisso e numero locale.
+ * @param {unknown} countryCode
+ * @param {unknown} phoneLocal
+ * @returns {string}
+ */
 export function buildInternationalPhone(countryCode, phoneLocal) {
     const normalizedPrefix = normalizeCountryCode(countryCode);
     const normalizedLocal = normalizeLocalPhone(phoneLocal);
@@ -19,11 +75,21 @@ export function buildInternationalPhone(countryCode, phoneLocal) {
     return `${normalizedPrefix}${localNoTrunkZero}`;
 }
 
+/**
+ * Ricava l'iniziale da usare per il placeholder dell'avatar.
+ * @param {unknown} fullName
+ * @returns {string}
+ */
 export function getPlaceholderInitial(fullName) {
     const value = String(fullName || "").trim();
     return value ? value.slice(0, 1).toUpperCase() : "?";
 }
 
+/**
+ * Verifica se una stringa rappresenta una URL HTTP/HTTPS valida.
+ * @param {unknown} value
+ * @returns {boolean}
+ */
 function isValidHttpUrl(value) {
     if (!value) {
         return false;
@@ -37,6 +103,11 @@ function isValidHttpUrl(value) {
     }
 }
 
+/**
+ * Risolve la sorgente avatar finale con priorita: base64 > url valida > placeholder.
+ * @param {AvatarInput} input
+ * @returns {AvatarResult}
+ */
 export function resolveAvatarSource({ avatarUrl, avatarBase64, fullName }) {
     if (avatarBase64) {
         return {
@@ -62,6 +133,13 @@ export function resolveAvatarSource({ avatarUrl, avatarBase64, fullName }) {
     };
 }
 
+/**
+ * Verifica se un contatto è duplicato per email o telefono internazionale.
+ * @param {Contact[]} contacts
+ * @param {ContactCandidate} candidate
+ * @param {DuplicateOptions=} options
+ * @returns {boolean}
+ */
 export function isDuplicateContact(contacts, candidate, options = {}) {
     const ignoreId = options.ignoreId || null;
     const normalizedEmail = normalizeEmail(candidate.email);
