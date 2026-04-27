@@ -37,7 +37,7 @@ mioForm.addEventListener("submit", function (event) {
 
     mioForm.reset();
     validationWarns.innerHTML = "";
-    location.replace("./paginaRegistrato.html")
+    // location.replace("./paginaRegistrato.html")
     printInfoDemo(nome, email, eta, nazionalita);
 
 })
