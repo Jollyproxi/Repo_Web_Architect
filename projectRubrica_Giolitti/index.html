@@ -19,6 +19,7 @@
 
 <div id="searchBar" class="border-bottom py-2 d-none app-searchbar">
     <div class="container">
+        <label for="globalSearchInput" class="form-label small mb-1">Ricerca contatti</label>
         <input id="globalSearchInput" type="search" class="form-control form-control-sm" placeholder="Cerca nome, email, telefono o eta..." autocomplete="off">
     </div>
 </div>
@@ -48,6 +49,7 @@
                     <select id="countryCode" name="countryCode" class="visually-hidden" tabindex="-1" aria-hidden="true" required>
                         <option value="+39" selected>+39</option>
                     </select>
+                    <input id="countryIso" name="countryIso" type="hidden" value="it">
                     <div class="dropdown">
                         <button
                             id="countryDropdownBtn"

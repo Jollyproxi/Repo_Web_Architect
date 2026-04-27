@@ -27,9 +27,7 @@ npm install
 
 ## Avvio locale
 
-```bash
-npm start
-```
+Apri direttamente `index.html` nel browser (nessun server npm richiesto).
 
 ## Test rapido logica (normalizzazione e doppioni)
 

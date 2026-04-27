@@ -4,8 +4,7 @@
   "description": "Rubrica personale con LocalStorage e Bootstrap",
   "main": "index.html",
   "scripts": {
-    "test": "node ./tests/contact-utils.test.mjs",
-    "start": "npx http-server -c-1 ."
+    "test": "node ./tests/contact-utils.test.mjs"
   },
   "keywords": [],
   "author": "",
