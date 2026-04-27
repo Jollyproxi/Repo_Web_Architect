@@ -23,9 +23,32 @@ function creaBTNConferma(){
     let btn = document.createElement("button");
     btn.textContent = "Conferma la tua registrazione";
     btn.addEventListener("click", function(){
+        regConfermata.innerHTML = "<h3>Registrazione confermata!</h3>";
+        setTimeout(function(){
+            regConfermata.innerHTML = "";
+            contBtn.removeChild(btn);
+            creaBtnStampaListaUtenti();
+        },1500)
         
 
     }
     )
     return btn;
+}
+
+function creaBtnStampaListaUtenti(){
+    let btn = document.createElement("button");
+    btn.textContent = "Stampa lista utenti registrati";
+    btn.addEventListener("click", function(){
+        console.log("Sto stampando la lista degli utenti registrati");
+    })
+    boxUtenti.appendChild(btn);
+}
+
+
+let listaUtenti=[] ;
+function creaListaUtenti(){
+    let ultimoUtente = JSON.parse( localStorage.getItem("nuovoUser") );
+    listaUtenti.push(ultimoUtente);
+    localStorage.setItem("listaUtenti", JSON.stringify(listaUtenti));
 }
