@@ -189,9 +189,11 @@ const countryByDialCode = new Map();
 const countryOptions = [];
 let selectedCountry = null;
 
+// Variabili per la ricerca da tastiera (Convenzione standard)
+let typeSearchBuffer = "";
+let typeSearchTimeout = null;
 // 2. Dichiara gli elementi DOM (opzionale ma consigliato tenerli insieme)
-const contactForm = document.getElementById("contactForm");
-// ... tutti gli altri document.getElementById ...
+const contactForm = document.querySelector("#contactForm");
 
 // 3. SOLO ORA crea lo stato, così loadContacts() troverà le variabili pronte
 const state = {
@@ -201,6 +203,7 @@ const state = {
 const searchState = {
     searchQuery: "", currentPage: 1, filteredContacts: [...state.contacts] // Inizializza subito con i contatti caricati
 };
+
 //Utilizzo il metodo moderno che permette di usare css per cercare quearyselector
 const alertBox = document.querySelector("#alertBox");
 const formView = document.querySelector("#formView");
@@ -242,11 +245,10 @@ contactsGrid.addEventListener("click", handleListActions);
 avatarFileInput.addEventListener("change", updateAvatarPreviewText);
 avatarUrlInput.addEventListener("input", updateAvatarPreviewText);
 countryDropdownList.addEventListener("click", handleCountrySelection);
-countrySearchInput.addEventListener("input", handleCountrySearch);
-countrySearchInput.addEventListener("keydown", (event) => event.stopPropagation());
+countryDropdownList.addEventListener("keydown", handleCountryTypeSearch);
 countryDropdownBtn.addEventListener("shown.bs.dropdown", () => {
-    resetCountrySearch();
-    countrySearchInput.focus();
+    typeSearchBuffer = ""; // Reset buffer
+    countryDropdownList.focus(); // Porta il focus sulla lista per ascoltare i tasti
 });
 
 themeTglBtn.addEventListener("click", toggleTheme);
@@ -261,6 +263,45 @@ updateAvatarPreviewText();
 searchState.filteredContacts = [...state.contacts];
 renderContactsPage();
 showListView();
+
+
+/**
+ * Gestisce la ricerca tramite tastiera (type-to-select).
+ * Segue la convenzione: accumula caratteri digitati rapidamente per cercare il paese.
+ * @param {KeyboardEvent} event
+ */
+function handleCountryTypeSearch(event) {
+    // 1. Ignora i tasti di controllo
+    if (event.key.length !== 1 || event.ctrlKey || event.altKey || event.metaKey) {
+        return;
+    }
+
+    event.preventDefault();
+
+    // 2. Gestione Buffer
+    clearTimeout(typeSearchTimeout);
+    typeSearchBuffer += event.key.toLowerCase();
+    typeSearchTimeout = setTimeout(() => {
+        typeSearchBuffer = "";
+    }, 500);
+
+    // 3. Ricerca del match
+    const match = countryOptions.find(opt =>
+        opt.countryName.toLowerCase().startsWith(typeSearchBuffer)
+    );
+
+    if (match) {
+        const buttons = countryDropdownOptions.querySelectorAll("button");
+        const targetBtn = Array.from(buttons).find(btn =>
+            btn.dataset.dialCode === match.dialCode && btn.dataset.iso2 === match.iso2
+        );
+
+        if (targetBtn) {
+            targetBtn.focus(); // Importante: sposta il focus sul pulsante
+            targetBtn.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        }
+    }
+}
 
 function populateCountryCodeOptions() {
     // Il dataset del pacchetto npm viene ordinato e trasformato in una dropdown
@@ -343,18 +384,6 @@ function renderCountryOptions(options) {
 /**
  * @returns {void}
  */
-function handleCountrySearch() {
-    // Ricerca live: filtro per nome paese e prefisso, senza toccare il valore già selezionato.
-    const query = countrySearchInput.value.trim().toLowerCase();
-
-    if (!query) {
-        renderCountryOptions(countryOptions);
-        return;
-    }
-
-    const filtered = countryOptions.filter((optionData) => optionData.searchable.includes(query));
-    renderCountryOptions(filtered);
-}
 
 // Gestisce il click su una voce della dropdown dei prefissi.
 /**
@@ -368,16 +397,6 @@ function handleCountrySelection(event) {
     }
 
     setCountryDialCode(button.dataset.dialCode, button.dataset.iso2);
-    resetCountrySearch();
-}
-
-// Ripristina la ricerca interna della dropdown e mostra di nuovo tutti i paesi.
-/**
- * @returns {void}
- */
-function resetCountrySearch() {
-    countrySearchInput.value = "";
-    renderCountryOptions(countryOptions);
 }
 
 // Aggiorna il prefisso selezionato sia nel campo nascosto sia nel bottone visibile.
