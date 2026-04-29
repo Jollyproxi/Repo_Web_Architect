@@ -137,25 +137,19 @@ function isValidHttpUrl(value) {
 function resolveAvatarSource({avatarUrl, avatarBase64, fullName}) {
     if (avatarBase64) {
         return {
-            avatar: avatarBase64,
-            avatarMode: "file",
-            placeholderInitial: getPlaceholderInitial(fullName)
+            avatar: avatarBase64, avatarMode: "file", placeholderInitial: getPlaceholderInitial(fullName)
         };
     }
 
     const trimmedUrl = String(avatarUrl || "").trim();
     if (isValidHttpUrl(trimmedUrl)) {
         return {
-            avatar: trimmedUrl,
-            avatarMode: "url",
-            placeholderInitial: getPlaceholderInitial(fullName)
+            avatar: trimmedUrl, avatarMode: "url", placeholderInitial: getPlaceholderInitial(fullName)
         };
     }
 
     return {
-        avatar: "",
-        avatarMode: "placeholder",
-        placeholderInitial: getPlaceholderInitial(fullName)
+        avatar: "", avatarMode: "placeholder", placeholderInitial: getPlaceholderInitial(fullName)
     };
 }
 
@@ -185,51 +179,55 @@ function isDuplicateContact(contacts, candidate, options = {}) {
 // Stato applicazione
 // ============================================================================
 // Chiavi di persistenza e impostazioni generali dell'app.
+// 1. Prima dichiara tutte le variabili di supporto e le costanti
 const STORAGE_KEY = "rubrica-giolitti-contacts";
 const THEME_KEY = "rubrica-theme";
 const CONTACTS_PER_PAGE = 6;
 
+// Sposta qui su le variabili che servono a loadContacts
+const countryByDialCode = new Map();
+const countryOptions = [];
+let selectedCountry = null;
+
+// 2. Dichiara gli elementi DOM (opzionale ma consigliato tenerli insieme)
+const contactForm = document.getElementById("contactForm");
+// ... tutti gli altri document.getElementById ...
+
+// 3. SOLO ORA crea lo stato, così loadContacts() troverà le variabili pronte
 const state = {
     contacts: loadContacts(), editingContactId: null
 };
 
 const searchState = {
-    searchQuery: "",
-    currentPage: 1,
-    filteredContacts: []
+    searchQuery: "", currentPage: 1, filteredContacts: [...state.contacts] // Inizializza subito con i contatti caricati
 };
-
-const contactForm = document.getElementById("contactForm");
-const alertBox = document.getElementById("alertBox");
-const formView = document.getElementById("formView");
-const listView = document.getElementById("listView");
-const showFormBtn = document.getElementById("showFormBtn");
-const showListBtn = document.getElementById("showListBtn");
-const formTitle = document.getElementById("formTitle");
-const submitBtn = document.getElementById("submitBtn");
-const cancelEditBtn = document.getElementById("cancelEditBtn");
-const avatarPreview = document.getElementById("avatarPreview");
-const avatarFileInput = document.getElementById("avatarFile");
-const avatarUrlInput = document.getElementById("avatarUrl");
-const countryCodeSelect = document.getElementById("countryCode");
-const countryIsoInput = document.getElementById("countryIso");
-const countryDropdownBtn = document.getElementById("countryDropdownBtn");
-const countryDropdownList = document.getElementById("countryDropdownList");
-const countryDropdownOptions = document.getElementById("countryDropdownOptions");
-const countryNoResults = document.getElementById("countryNoResults");
-const countrySearchInput = document.getElementById("countrySearchInput");
-const countryByDialCode = new Map();
-const countryOptions = [];
-let selectedCountry = null;
-
-const themeTglBtn = document.getElementById("themeTglBtn");
-const themeIcon = document.getElementById("themeIcon");
-const searchBar = document.getElementById("searchBar");
-const globalSearchInput = document.getElementById("globalSearchInput");
-const contactsGrid = document.getElementById("contactsGrid");
-const noContactsMsg = document.getElementById("noContactsMsg");
-const paginationNav = document.getElementById("paginationNav");
-const paginationList = document.getElementById("paginationList");
+//Utilizzo il metodo moderno che permette di usare css per cercare quearyselector
+const alertBox = document.querySelector("#alertBox");
+const formView = document.querySelector("#formView");
+const listView = document.querySelector("#listView");
+const showFormBtn = document.querySelector("#showFormBtn");
+const showListBtn = document.querySelector("#showListBtn");
+const formTitle = document.querySelector("#formTitle");
+const submitBtn = document.querySelector("#submitBtn");
+const cancelEditBtn = document.querySelector("#cancelEditBtn");
+const avatarPreview = document.querySelector("#avatarPreview");
+const avatarFileInput = document.querySelector("#avatarFile");
+const avatarUrlInput = document.querySelector("#avatarUrl");
+const countryCodeSelect = document.querySelector("#countryCode");
+const countryIsoInput = document.querySelector("#countryIso");
+const countryDropdownBtn = document.querySelector("#countryDropdownBtn");
+const countryDropdownList = document.querySelector("#countryDropdownList");
+const countryDropdownOptions = document.querySelector("#countryDropdownOptions");
+const countryNoResults = document.querySelector("#countryNoResults");
+const countrySearchInput = document.querySelector("#countrySearchInput");
+const themeTglBtn = document.querySelector("#themeTglBtn");
+const themeIcon = document.querySelector("#themeIcon");
+const searchBar = document.querySelector("#searchBar");
+const globalSearchInput = document.querySelector("#globalSearchInput");
+const contactsGrid = document.querySelector("#contactsGrid");
+const noContactsMsg = document.querySelector("#noContactsMsg");
+const paginationNav = document.querySelector("#paginationNav");
+const paginationList = document.querySelector("#paginationList");
 
 // ============================================================================
 // Eventi UI
@@ -262,6 +260,7 @@ populateCountryCodeOptions();
 updateAvatarPreviewText();
 searchState.filteredContacts = [...state.contacts];
 renderContactsPage();
+showListView();
 
 function populateCountryCodeOptions() {
     // Il dataset del pacchetto npm viene ordinato e trasformato in una dropdown
@@ -430,10 +429,7 @@ function getCountryOptionBySelection(dialCode, iso2) {
 
         if (exact) {
             return {
-                name: exact.countryName,
-                code: exact.iso2,
-                flag: exact.flag,
-                dialCode: exact.dialCode
+                name: exact.countryName, code: exact.iso2, flag: exact.flag, dialCode: exact.dialCode
             };
         }
     }
@@ -444,10 +440,7 @@ function getCountryOptionBySelection(dialCode, iso2) {
     }
 
     return {
-        name: byDial.countryName,
-        code: byDial.iso2,
-        flag: byDial.flag,
-        dialCode: byDial.dialCode
+        name: byDial.countryName, code: byDial.iso2, flag: byDial.flag, dialCode: byDial.dialCode
     };
 }
 
@@ -497,6 +490,7 @@ function loadContacts() {
 
     try {
         const parsed = JSON.parse(raw);
+        console.log("Dati caricati correttamente:", parsed);
         if (!Array.isArray(parsed)) {
             return [];
         }
@@ -527,7 +521,10 @@ function loadContacts() {
                 placeholderInitial: entry.placeholderInitial || getPlaceholderInitial(fullName)
             };
         });
-    } catch (_error) {
+    } catch (error) {
+        console.error("Errore critico nel caricamento:", error);
+        // Invece di restituire [], potresti lanciare un errore o
+        // bloccare il salvataggio per non perdere i dati esistenti.
         return [];
     }
 }
@@ -565,6 +562,10 @@ function showFormView() {
     // La vista form e la vista lista si escludono a vicenda.
     formView.classList.remove("d-none");
     listView.classList.add("d-none");
+    showListBtn.classList.remove("btn-outline-primary");
+    showListBtn.classList.add("btn-primary");
+    showFormBtn.classList.remove("btn-primary");
+    showFormBtn.classList.add("btn-outline-primary");
 }
 
 // Mostra la rubrica filtrata/paginata e nasconde il form di inserimento.
@@ -575,6 +576,11 @@ function showListView() {
     // Quando apro la lista ricalcolo i risultati filtrati e riparto dalla pagina 1.
     listView.classList.remove("d-none");
     formView.classList.add("d-none");
+    showListBtn.classList.remove("btn-primary");
+    showListBtn.classList.add("btn-outline-primary");
+    showFormBtn.classList.remove("btn-outline-primary");
+    showFormBtn.classList.add("btn-primary");
+    showSearchBar();
     searchState.currentPage = 1;
     applySearch();
 }
@@ -820,7 +826,6 @@ function initTheme() {
  * @returns {void}
  */
 function applyTheme(theme) {
-    // Applica la modalità chiara/scura e aggiorna l'icona del toggle in base al tema attivo.
     const isDark = theme === "dark";
     const html = document.documentElement;
     const body = document.body;
@@ -829,12 +834,16 @@ function applyTheme(theme) {
         html.setAttribute("data-bs-theme", "dark");
         body.classList.add("bg-dark");
         body.classList.remove("bg-body-tertiary");
-        themeIcon.textContent = "🌙";
+        // Cambia l'icona in Luna
+        themeIcon.classList.remove("bi-sun-fill");
+        themeIcon.classList.add("bi-moon-stars-fill");
     } else {
         html.removeAttribute("data-bs-theme");
         body.classList.add("bg-body-tertiary");
         body.classList.remove("bg-dark");
-        themeIcon.textContent = "☀️";
+        // Cambia l'icona in Sole
+        themeIcon.classList.remove("bi-moon-stars-fill");
+        themeIcon.classList.add("bi-sun-fill");
     }
 
     localStorage.setItem(THEME_KEY, theme);
@@ -938,9 +947,7 @@ function renderContactsPage() {
         const cardBody = document.createElement("div");
         cardBody.className = "card-body d-flex flex-column";
 
-        const avatar = contact.avatar
-            ? `<img src="${contact.avatar}" alt="${contact.fullName}" class="rounded-circle mb-2" style="width:50px; height:50px; object-fit:cover;">`
-            : `<div class="rounded-circle mb-2 d-inline-flex align-items-center justify-content-center" style="width:50px; height:50px; background:#0d6efd; color:white; font-weight:700;">${getPlaceholderInitial(contact.fullName)}</div>`;
+        const avatar = contact.avatar ? `<img src="${contact.avatar}" alt="${contact.fullName}" class="rounded-circle mb-2" style="width:50px; height:50px; object-fit:cover;">` : `<div class="rounded-circle mb-2 d-inline-flex align-items-center justify-content-center" style="width:50px; height:50px; background:#0d6efd; color:white; font-weight:700;">${getPlaceholderInitial(contact.fullName)}</div>`;
 
         cardBody.innerHTML = `
             ${avatar}

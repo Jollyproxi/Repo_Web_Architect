@@ -108,7 +108,7 @@ function isValidHttpUrl(value) {
  * @param {AvatarInput} input
  * @returns {AvatarResult}
  */
-export function resolveAvatarSource({ avatarUrl, avatarBase64, fullName }) {
+export function resolveAvatarSource({avatarUrl, avatarBase64, fullName}) {
     if (avatarBase64) {
         return {
             avatar: avatarBase64,
