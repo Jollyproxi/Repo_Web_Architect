@@ -162,7 +162,9 @@ function handleToggleFavorite(contact) {
 }
 
 function applySearchAndRender() {
+    console.log("applySearchAndRender called, contactState.contacts:", contactState.contacts.length);
     applySearch(contactState.contacts);
+    console.log("After applySearch, searchState.filteredContacts:", searchState.filteredContacts.length);
     updateAllTags(contactState.contacts);
     renderTagFilters(tagFilterContainer, applySearchAndRender);
     renderContactsPageHelper();
@@ -187,6 +189,7 @@ function renderContactsPageHelper() {
 }
 
 function saveContact(contactPayload, isEdit) {
+    console.log("saveContact called:", { contactPayload, isEdit, contactsCount: contactState.contacts.length });
     if (isEdit) {
         contactState.contacts = contactState.contacts.map((entry) =>
             entry.id === contactState.editingContactId ? contactPayload : entry
@@ -197,12 +200,16 @@ function saveContact(contactPayload, isEdit) {
         showAlert(alertBox, "Contatto salvato con successo.", "success");
     }
 
+    console.log("After push/update:", { contactsCount: contactState.contacts.length });
     saveContacts();
     resetFormMode(resetForm, () => showFormView(formView, listView, showFormBtn, showListBtn));
     searchState.currentPage = 1;
     searchState.searchQuery = "";
     searchState.filteredContacts = [...contactState.contacts];
+    console.log("Before showListView:", { filteredCount: searchState.filteredContacts.length });
     showListView(formView, listView, showFormBtn, showListBtn, () => showSearchBar(searchBar, globalSearchInput));
+    applySearchAndRender();
+    console.log("After applySearchAndRender");
 }
 
 // ============================================================================
@@ -215,7 +222,10 @@ function handleAuthSubmitWrapper(event) {
         syncState,
         renderWorkspace,
         () => showAppView(authView, appShell),
-        () => showListView(formView, listView, showFormBtn, showListBtn, () => showSearchBar(searchBar, globalSearchInput)),
+        () => {
+            showListView(formView, listView, showFormBtn, showListBtn, () => showSearchBar(searchBar, globalSearchInput));
+            applySearchAndRender();
+        },
         (msg, type) => renderAuthHint(authHint, msg, type),
         (msg, type) => showAlert(alertBox, msg, type)
     );
@@ -315,6 +325,7 @@ function bootstrapApp() {
         renderWorkspace();
         showAppView(authView, appShell);
         showListView(formView, listView, showFormBtn, showListBtn, () => showSearchBar(searchBar, globalSearchInput));
+        applySearchAndRender();
         return;
     }
 

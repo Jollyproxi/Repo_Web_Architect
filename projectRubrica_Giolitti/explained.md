@@ -130,8 +130,42 @@ Key fields:
 npm test
 ```
 
-## Fast answer
+## Live Server Testing
 
-- Where are contacts saved? `localStorage -> rubrica-giolitti-app-data -> users[].contacts[]`
-- Why can storage look empty? Wrong origin, no saved contacts yet, or the wrong user is active.
+```bash
+npx live-server --port=5500
+```
+
+All features tested and working (April 30, 2026):
+- ✅ Auth (register, login, logout)
+- ✅ Contact CRUD
+- ✅ Search + filters
+- ✅ Theme toggle
+- ✅ Import/export
+
+## Critical Fix Points
+
+**If contacts don't render after adding/updating:**
+
+1. Check that `applySearchAndRender()` is called in:
+   - `saveContact()` in [js/script01.js](js/script01.js) (after `showListView()`)
+   - `handleAuthSubmitWrapper()` in [js/script01.js](js/script01.js) (in the showListViewCallback)
+   - `bootstrapApp()` in [js/script01.js](js/script01.js) (on page load if user is logged in)
+
+2. Check form field names in [index.html](index.html):
+   - `#authForm` inputs must be `name="username"` and `name="password"` (not `authUsername`/`authPassword`)
+   - `#contactForm` inputs match the form read in `handleSubmitContact()`
+
+3. Verify localStorage is not full or blocked by browser
+
+**If search doesn't work:**
+- Check that `searchState.filteredContacts` is populated by `applySearch()`
+- Check that `getPageContacts()` returns from `searchState.filteredContacts` (not from `contactState.contacts`)
+
+**If localStorage shows empty after page reload:**
+- Check browser console for errors
+- Verify session was not cleared (check `rubrica-giolitti-session`)
+- Check that `loadSessionState()` and `getActiveUser()` return valid user
+
+
 

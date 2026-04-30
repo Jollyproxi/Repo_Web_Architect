@@ -99,4 +99,69 @@ Run:
 npm test
 ```
 
+## Testing Report (April 30, 2026)
+
+Full live-server testing completed successfully with all features validated.
+
+### Test Results ✅
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| **Theme Toggle** | ✅ PASS | Light/dark mode, icon changes, localStorage persistence |
+| **Authentication** | ✅ PASS | Register, login, logout with credential validation |
+| **Contact Create** | ✅ PASS | New contacts saved and rendered with all fields |
+| **Contact Read** | ✅ PASS | Grid display with avatar, email, phone, age, tags |
+| **Contact Update** | ✅ PASS | Edit form pre-populated, changes persist |
+| **Contact Delete** | ✅ PASS | Confirmation dialog, deletion with success message |
+| **Search** | ✅ PASS | Search by name, email, phone working |
+| **Tag Filter** | ✅ PASS | Filter by tags, dynamic tag updates |
+| **Favorite Filter** | ✅ PASS | Toggle favorite, filter by favorites |
+| **Import/Export** | ✅ PASS | Export contacts JSON, import button ready |
+
+### Bug Fixes Applied
+
+1. **Auth Form Input Names** (index.html)
+   - Changed: `name="authUsername"` → `name="username"`
+   - Changed: `name="authPassword"` → `name="password"`
+   - **Issue**: Form submission handler was reading `event.target.username` but HTML had different names
+   - **Fix**: Updated to match expected form field names
+
+2. **Missing Render After Contact Save** (js/script01.js)
+   - Added: `applySearchAndRender()` in `saveContact()` function
+   - **Issue**: Contacts were saved to storage but not rendered in UI
+   - **Fix**: Calls search filter and pagination render after save
+
+3. **Missing Render After Login** (js/script01.js)
+   - Added: `applySearchAndRender()` in `handleAuthSubmitWrapper()` callback
+   - **Issue**: Existing contacts were not displayed after login
+   - **Fix**: Ensures contacts render immediately after authentication
+
+4. **Missing Render on App Bootstrap** (js/script01.js)
+   - Added: `applySearchAndRender()` in `bootstrapApp()` function
+   - **Issue**: Page reload with logged-in user showed empty contact list
+   - **Fix**: Renders persisted contacts on page load
+
+### How to Run Tests
+
+1. Start live-server:
+   ```bash
+   npx live-server --port=5500
+   ```
+
+2. Open browser at the provided URL
+
+3. Test sequence:
+   - Register new user or login with `admin/admin`
+   - Test theme toggle (sun/moon icon)
+   - Add/edit/delete contacts
+   - Test search and filters
+   - Test favorite toggle
+   - Test export feature
+
+### Test Data
+
+Created during testing:
+- User: `davide` / `test123`
+- Contacts: Mario Rossi (work, friend tags), Anna Bianchi (family tag)
+
 The current test suite focuses on contact normalization and duplicate handling in [tests/contact-utils.test.mjs](tests/contact-utils.test.mjs).
