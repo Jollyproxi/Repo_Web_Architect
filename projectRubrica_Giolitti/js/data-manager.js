@@ -175,6 +175,76 @@ export function getActiveUser() {
 }
 
 /**
+ * Ritorna i contatti visibili all'utente attivo.
+ * L'admin vede i contatti di tutti gli utenti.
+ * @returns {Contact[]}
+ */
+export function getVisibleContactsForCurrentUser() {
+    const activeUser = getActiveUser();
+    if (!activeUser) {
+        return [];
+    }
+
+    const cloneContact = (contact) => ({
+        ...normalizeStoredContact(contact),
+        tags: Array.isArray(contact?.tags) ? [...contact.tags] : []
+    });
+
+    if (!isCurrentUserAdmin()) {
+        return activeUser.contacts.map((contact) => cloneContact(contact));
+    }
+
+    return appData.users.flatMap((user) => user.contacts.map((contact) => cloneContact(contact)));
+}
+
+/**
+ * Salva i contatti visibili nell'account corretto.
+ * L'admin distribuisce i contatti in base a createdBy.
+ * @param {Contact[]} contacts
+ * @returns {void}
+ */
+export function saveContactsForCurrentUser(contacts) {
+    const activeUser = getActiveUser();
+    if (!activeUser) {
+        return;
+    }
+
+    const normalizedContacts = Array.isArray(contacts)
+        ? contacts.map((contact) => normalizeStoredContact(contact))
+        : [];
+
+    if (!isCurrentUserAdmin()) {
+        activeUser.contacts = normalizedContacts.map((contact) => ({
+            ...contact,
+            createdBy: contact.createdBy || activeUser.username,
+            tags: Array.isArray(contact.tags) ? [...contact.tags] : []
+        }));
+        saveAppData();
+        return;
+    }
+
+    const contactsByUsername = new Map(appData.users.map((user) => [user.username, []]));
+
+    normalizedContacts.forEach((contact) => {
+        const ownerUsername = normalizeAuthName(contact.createdBy) || activeUser.username;
+        const owner = appData.users.find((user) => user.username === ownerUsername) || activeUser;
+        const ownerContacts = contactsByUsername.get(owner.username) || [];
+        ownerContacts.push({
+            ...contact,
+            createdBy: owner.username,
+            tags: Array.isArray(contact.tags) ? [...contact.tags] : []
+        });
+        contactsByUsername.set(owner.username, ownerContacts);
+    });
+
+    appData.users.forEach((user) => {
+        user.contacts = contactsByUsername.get(user.username) || [];
+    });
+
+    saveAppData();
+}
+
+/**
  * Inizializza il database con un account superuser admin/admin se non esistono utenti.
  * @returns {void}
  */

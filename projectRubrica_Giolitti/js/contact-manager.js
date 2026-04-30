@@ -12,7 +12,7 @@ import {
     isDuplicateContact,
     normalizeTags
 } from "./contact-utils.js";
-import { getActiveUser, saveAppData } from "./data-manager.js";
+import { getActiveUser, getVisibleContactsForCurrentUser, saveContactsForCurrentUser } from "./data-manager.js";
 
 export const state = {
     contacts: [],
@@ -135,7 +135,9 @@ export async function handleSubmitContact(
         avatar: avatar.avatar,
         avatarMode: avatar.avatarMode,
         placeholderInitial: avatar.placeholderInitial,
-        createdBy: getActiveUser()?.username || "",
+        createdBy: state.editingContactId
+            ? (state.contacts.find((c) => c.id === state.editingContactId)?.createdBy || getActiveUser()?.username || "")
+            : (getActiveUser()?.username || ""),
         isFavorite: state.editingContactId
             ? (state.contacts.find((c) => c.id === state.editingContactId)?.isFavorite || false)
             : false,
@@ -199,13 +201,7 @@ export function handleListActions(event, editCallback, deleteCallback, toggleFav
  * @returns {void}
  */
 export function saveContacts() {
-    const activeUser = getActiveUser();
-    if (!activeUser) {
-        return;
-    }
-
-    activeUser.contacts = [...state.contacts];
-    saveAppData();
+    saveContactsForCurrentUser(state.contacts);
 }
 
 /**
@@ -214,8 +210,7 @@ export function saveContacts() {
  * @returns {void}
  */
 export function syncStateFromUser(updateTagsCallback) {
-    const user = getActiveUser();
-    state.contacts = user ? [...user.contacts] : [];
+    state.contacts = getVisibleContactsForCurrentUser();
     state.editingContactId = null;
     updateTagsCallback?.();
 }

@@ -14,10 +14,11 @@ let typeSearchTimeout = null;
  * Popola le opzioni di selezione dei paesi dalla libreria.
  * @param {HTMLElement} countryCodeSelect - Select elemento hidden
  * @param {HTMLElement} countryDropdownOptions - Container per i pulsanti
+ * @param {HTMLElement} countryDropdownBtn - Bottone che mostra il paese selezionato
  * @param {HTMLElement} countryNoResults - Elemento "no results"
  * @returns {void}
  */
-export function populateCountryCodeOptions(countryCodeSelect, countryDropdownOptions, countryNoResults) {
+export function populateCountryCodeOptions(countryCodeSelect, countryDropdownOptions, countryDropdownBtn, countryNoResults) {
     const sortedCountries = [...countries].sort((a, b) => a.name.localeCompare(b.name, "it"));
     countryOptions.length = 0;
     countryDropdownOptions.innerHTML = "";
@@ -51,7 +52,7 @@ export function populateCountryCodeOptions(countryCodeSelect, countryDropdownOpt
     });
 
     renderCountryOptions(countryOptions, countryDropdownOptions, countryNoResults);
-    setCountryDialCode("+39", "it", countryCodeSelect, countryDropdownOptions);
+    setCountryDialCode("+39", "it", countryCodeSelect, countryDropdownBtn);
 }
 
 /**

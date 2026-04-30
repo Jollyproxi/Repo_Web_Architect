@@ -374,7 +374,7 @@ exportBookBtn?.addEventListener("click", () => handleExport((msg, type) => showA
 importBookBtn?.addEventListener("click", () => handleImportClick(importFileInput));
 importFileInput?.addEventListener("change", (e) => handleImportFileChange(e, handleImportWrapper, (msg, type) => showAlert(alertBox, msg, type)));
 
-populateCountryCodeOptions(countryCodeSelect, countryDropdownOptions, countryNoResults);
+populateCountryCodeOptions(countryCodeSelect, countryDropdownOptions, countryDropdownBtn, countryNoResults);
 initTheme(themeIcon);
 bootstrapApp();
 updateAvatarPreviewText(avatarPreview, null, "");

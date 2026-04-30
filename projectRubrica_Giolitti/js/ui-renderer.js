@@ -3,6 +3,7 @@
  */
 
 import { getPlaceholderInitial } from "./contact-utils.js";
+import { sessionState } from "./data-manager.js";
 import { getPageContacts } from "./search-filter.js";
 
 /**
