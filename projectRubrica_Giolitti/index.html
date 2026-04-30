@@ -96,6 +96,51 @@
                     </div>
                 </div>
 
+                <!-- Contact Detail Modal -->
+                <div id="contactModal" class="modal fade" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 id="contactModalTitle" class="modal-title">Dettaglio Contatto</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="d-flex gap-3 align-items-start">
+                                    <div>
+                                        <img id="contactModalAvatar" src="" alt="avatar" class="rounded-circle" style="width:96px; height:96px; object-fit:cover;">
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <dl class="row mb-0">
+                                            <dt class="col-sm-4">Nome</dt>
+                                            <dd id="contactModalName" class="col-sm-8"></dd>
+
+                                            <dt class="col-sm-4">Email</dt>
+                                            <dd id="contactModalEmail" class="col-sm-8"></dd>
+
+                                            <dt class="col-sm-4">Telefono</dt>
+                                            <dd id="contactModalPhone" class="col-sm-8"></dd>
+
+                                            <dt class="col-sm-4">Età</dt>
+                                            <dd id="contactModalAge" class="col-sm-8"></dd>
+
+                                            <dt class="col-sm-4">Tag</dt>
+                                            <dd id="contactModalTags" class="col-sm-8"></dd>
+
+                                            <dt class="col-sm-4">Inserito da</dt>
+                                            <dd id="contactModalCreatedBy" class="col-sm-8"></dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="contactModalEditBtn" type="button" class="btn btn-primary">Modifica</button>
+                                <button id="contactModalDeleteBtn" type="button" class="btn btn-danger">Elimina</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Barra di ricerca -->
                 <div id="searchBar" class="border-bottom py-2 d-none">
                     <div class="d-flex gap-2 align-items-end mb-2">
@@ -204,6 +249,17 @@
                 </section>
             </section>
         </main>
+
+        <!-- Toast container per Undo elimina -->
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+            <div id="undoToast" class="toast align-items-center text-bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">Contatto eliminato.</div>
+                    <button id="undoToastBtn" type="button" class="btn btn-sm btn-light me-2">Annulla</button>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Chiudi"></button>
+                </div>
+            </div>
+        </div>
 
         <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
         <script type="module" src="./js/script01.js"></script>

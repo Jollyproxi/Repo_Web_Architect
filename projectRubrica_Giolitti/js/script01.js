@@ -93,6 +93,18 @@ const exportBookBtn = document.querySelector("#exportBookBtn");
 const importBookBtn = document.querySelector("#importBookBtn");
 const importFileInput = document.querySelector("#importFileInput");
 const tagFilterContainer = document.querySelector("#tagFilterContainer");
+const contactModal = document.querySelector("#contactModal");
+const contactModalAvatar = document.querySelector("#contactModalAvatar");
+const contactModalName = document.querySelector("#contactModalName");
+const contactModalEmail = document.querySelector("#contactModalEmail");
+const contactModalPhone = document.querySelector("#contactModalPhone");
+const contactModalAge = document.querySelector("#contactModalAge");
+const contactModalTags = document.querySelector("#contactModalTags");
+const contactModalCreatedBy = document.querySelector("#contactModalCreatedBy");
+const contactModalEditBtn = document.querySelector("#contactModalEditBtn");
+const contactModalDeleteBtn = document.querySelector("#contactModalDeleteBtn");
+const undoToastEl = document.querySelector("#undoToast");
+const undoToastBtn = document.querySelector("#undoToastBtn");
 
 // ============================================================================
 // Callback Functions (Adapters between modules and DOM)
@@ -139,19 +151,72 @@ function handleEditContact(contact) {
 
 function handleDeleteContact(contact) {
     const confirmed = window.confirm(`Eliminare il contatto ${contact.fullName}?`);
-    if (!confirmed) {
-        return;
-    }
+    if (!confirmed) return;
 
+    // rimuovi e salva copia temporanea in sessionStorage
     contactState.contacts = contactState.contacts.filter((entry) => entry.id !== contact.id);
     saveContacts();
+    sessionStorage.setItem("lastDeleted", JSON.stringify(contact));
+
+    // mostra toast con undo
+    try {
+        const toast = new bootstrap.Toast(undoToastEl, { delay: 5000 });
+        toast.show();
+    } catch (e) {
+        // ignore
+    }
+
     searchState.currentPage = 1;
     applySearchAndRender();
-    showAlert(alertBox, "Contatto eliminato.", "success");
+    showAlert(alertBox, "Contatto eliminato. Puoi annullare dall'alert.", "success");
 
     if (contactState.editingContactId === contact.id) {
         resetFormMode(resetForm, () => showFormView(formView, listView, showFormBtn, showListBtn));
     }
+}
+
+function handleUndoDelete() {
+    const raw = sessionStorage.getItem("lastDeleted");
+    if (!raw) return;
+    const contact = JSON.parse(raw);
+    // reinserisci in cima
+    contactState.contacts.unshift(contact);
+    saveContacts();
+    sessionStorage.removeItem("lastDeleted");
+    applySearchAndRender();
+    showAlert(alertBox, "Eliminazione annullata.", "success");
+}
+
+function openContactModalById(contactId) {
+    const contact = contactState.contacts.find((c) => c.id === contactId);
+    if (!contact) return;
+    // helper: genera placeholder SVG dataURL con iniziale
+    function placeholderDataUrl(initial, size = 192, bg = '#0d6efd', fg = '#ffffff') {
+        const fontSize = Math.round(size * 0.5);
+        const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${size}' height='${size}'><rect width='100%' height='100%' fill='${bg}'/><text x='50%' y='50%' dy='0.35em' text-anchor='middle' fill='${fg}' font-family='Arial, Helvetica, sans-serif' font-size='${fontSize}' font-weight='700'>${initial}</text></svg>`;
+        return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+    }
+
+    // popola modal
+    if (contact.avatar && contact.avatar.trim()) {
+        contactModalAvatar.src = contact.avatar;
+    } else {
+        const initial = contact.placeholderInitial || getPlaceholderInitial(contact.fullName || "");
+        contactModalAvatar.src = placeholderDataUrl(initial, 96);
+    }
+    contactModalName.textContent = contact.fullName || "-";
+    contactModalEmail.textContent = contact.email || "-";
+    contactModalPhone.textContent = contact.phoneInternational || "-";
+    contactModalAge.textContent = contact.age ? `${contact.age} anni` : "-";
+    contactModalTags.innerHTML = (contact.tags || []).map((t) => `<span class=\"badge bg-secondary me-1\">${t}</span>`).join("");
+    contactModalCreatedBy.textContent = contact.createdBy || "-";
+
+    // store id on buttons
+    contactModalEditBtn.dataset.id = contact.id;
+    contactModalDeleteBtn.dataset.id = contact.id;
+
+    const modal = new bootstrap.Modal(contactModal);
+    modal.show();
 }
 
 function handleToggleFavorite(contact) {
@@ -274,6 +339,8 @@ function handleDeleteAccountWrapper() {
 }
 
 async function handleSubmitWrapper(event) {
+    event.preventDefault();
+    event.stopPropagation();
     const formData = new FormData(contactForm);
     const tagsInput = String(formData.get("tags") || "").trim();
 
@@ -351,6 +418,16 @@ showFormBtn.addEventListener("click", () => showFormView(formView, listView, sho
 showListBtn.addEventListener("click", () => showListView(formView, listView, showFormBtn, showListBtn, () => showSearchBar(searchBar, globalSearchInput)));
 cancelEditBtn.addEventListener("click", () => resetFormMode(resetForm, () => showFormView(formView, listView, showFormBtn, showListBtn)));
 contactsGrid.addEventListener("click", handleListActionsWrapper);
+// Apri modal dettaglio quando si clicca la card (escludendo i bottoni)
+contactsGrid.addEventListener("click", (e) => {
+    const btn = e.target.closest("button[data-action]");
+    if (btn) return; // lascia gestire i bottoni
+    const card = e.target.closest(".card");
+    if (!card) return;
+    const id = card.dataset.id;
+    if (!id) return;
+    openContactModalById(id);
+});
 avatarFileInput.addEventListener("change", () => updateAvatarPreviewText(avatarPreview, avatarFileInput.files?.[0], avatarUrlInput.value));
 avatarUrlInput.addEventListener("input", () => updateAvatarPreviewText(avatarPreview, avatarFileInput.files?.[0], avatarUrlInput.value));
 countryDropdownList.addEventListener("click", (e) => handleCountrySelection(e, countryCodeSelect, countryDropdownBtn));
@@ -378,3 +455,38 @@ populateCountryCodeOptions(countryCodeSelect, countryDropdownOptions, countryDro
 initTheme(themeIcon);
 bootstrapApp();
 updateAvatarPreviewText(avatarPreview, null, "");
+
+// Toast undo listener
+undoToastBtn?.addEventListener("click", () => {
+    handleUndoDelete();
+    try {
+        const t = bootstrap.Toast.getInstance(undoToastEl);
+        if (t) t.hide();
+    } catch (e) {}
+});
+
+// Quando il toast viene nascosto (scaduto o chiuso), rimuoviamo la copia temporanea
+undoToastEl?.addEventListener("hidden.bs.toast", () => {
+    try {
+        sessionStorage.removeItem("lastDeleted");
+    } catch (e) {}
+});
+
+// Modal edit/delete buttons
+contactModalEditBtn?.addEventListener("click", (e) => {
+    const id = e.target.dataset.id;
+    const c = contactState.contacts.find((x) => x.id === id);
+    if (c) {
+        const modalInstance = bootstrap.Modal.getInstance(contactModal);
+        if (modalInstance) modalInstance.hide();
+        handleEditContact(c);
+    }
+});
+
+contactModalDeleteBtn?.addEventListener("click", (e) => {
+    const id = e.target.dataset.id;
+    const c = contactState.contacts.find((x) => x.id === id);
+    const modalInstance = bootstrap.Modal.getInstance(contactModal);
+    if (modalInstance) modalInstance.hide();
+    if (c) handleDeleteContact(c);
+});

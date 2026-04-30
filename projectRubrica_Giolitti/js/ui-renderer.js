@@ -4,7 +4,7 @@
 
 import { getPlaceholderInitial } from "./contact-utils.js";
 import { sessionState } from "./data-manager.js";
-import { getPageContacts } from "./search-filter.js";
+import { getPageContacts, searchState } from "./search-filter.js";
 
 /**
  * Aggiorna il testo di aiuto nel pannello di accesso.
@@ -166,26 +166,56 @@ export function renderContactsPage(
         const avatar = contact.avatar
             ? `<img src="${contact.avatar}" alt="${contact.fullName}" class="rounded-circle mb-2" style="width:50px; height:50px; object-fit:cover;">`
             : `<div class="rounded-circle mb-2 d-inline-flex align-items-center justify-content-center" style="width:50px; height:50px; background:#0d6efd; color:white; font-weight:700;">${getPlaceholderInitial(contact.fullName)}</div>`;
+        // helper: escape and highlight matches based on searchState.searchQuery
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function highlight(text, query) {
+            const t = String(text || "");
+            if (!query) return escapeHtml(t);
+            try {
+                const q = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+                const re = new RegExp(q, "ig");
+                return escapeHtml(t).replace(re, (m) => `<mark>${escapeHtml(m)}</mark>`);
+            } catch (e) {
+                return escapeHtml(t);
+            }
+        }
+
+        const q = searchState?.searchQuery || "";
+        const highlightedName = highlight(contact.fullName, q);
+        const highlightedEmail = highlight(contact.email, q);
+        const highlightedPhone = highlight(contact.phoneInternational, q);
+
+        card.dataset.id = contact.id;
+        card.dataset.action = "view";
+        card.style.cursor = "pointer";
 
         cardBody.innerHTML = `
             ${avatar}
             <div class="d-flex justify-content-between align-items-start mb-2">
-                <h5 class="card-title mb-0">${contact.fullName}</h5>
+                <h5 class="card-title mb-0">${highlightedName}</h5>
                 <button type="button" class="btn btn-sm" data-action="toggle-favorite" data-id="${contact.id}" style="padding: 0; background: none; border: none;">
                     <i class="bi ${contact.isFavorite ? "bi-star-fill" : "bi-star"}" style="font-size: 1.25rem; color: ${contact.isFavorite ? "#ffc107" : "#ccc"};"></i>
                 </button>
             </div>
             <p class="card-text small mb-2">
-                <strong>Email:</strong> ${contact.email}<br>
-                <strong>Telefono:</strong> ${contact.phoneInternational}
+                <strong>Email:</strong> ${highlightedEmail}<br>
+                <strong>Telefono:</strong> ${highlightedPhone}
                 ${contact.age ? `<br><strong>Età:</strong> ${contact.age} anni` : ""}
-                ${contact.createdBy ? `<br><strong>Inserito da:</strong> ${contact.createdBy}` : ""}
+                ${contact.createdBy ? `<br><strong>Inserito da:</strong> ${escapeHtml(contact.createdBy)}` : ""}
             </p>
             ${
                 contact.tags && contact.tags.length > 0
                     ? `
                 <div class="mb-2">
-                    ${contact.tags.map((tag) => `<span class="badge bg-secondary me-1">${tag}</span>`).join("")}
+                    ${contact.tags.map((tag) => `<span class="badge bg-secondary me-1">${escapeHtml(tag)}</span>`).join("")}
                 </div>
             `
                     : ""
