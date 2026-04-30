@@ -29,6 +29,33 @@ import { handleExport, handleImportClick, handleImportFileChange } from "./impor
 // Theme
 import { initTheme, toggleTheme } from "./theme-manager.js";
 
+// ============================================================================
+// Callback Functions (Adapters between modules and DOM)
+// ============================================================================
+
+import {
+    syncState,
+    renderWorkspace,
+    prepareFormForEdit,
+    resetForm,
+    handleEditContact,
+    handleDeleteContact,
+    handleToggleFavorite,
+    applySearchAndRender,
+    renderContactsPageHelper,
+    saveContact,
+    handleAuthSubmitWrapper,
+    handleLogoutWrapper,
+    handleChangePasswordWrapper,
+    handleDeleteAccountWrapper,
+    handleSubmitWrapper,
+    handleListActionsWrapper,
+    handleGlobalSearchWrapper,
+    handleImportWrapper,
+    openContactModalById,
+    handleUndoDelete
+} from "./app-logic.js";
+
 /**
  * @typedef {Object} Contact
  * @property {string} id
@@ -106,276 +133,7 @@ const contactModalDeleteBtn = document.querySelector("#contactModalDeleteBtn");
 const undoToastEl = document.querySelector("#undoToast");
 const undoToastBtn = document.querySelector("#undoToastBtn");
 
-// ============================================================================
-// Callback Functions (Adapters between modules and DOM)
-// ============================================================================
 
-function syncState() {
-    syncStateFromUser();
-}
-
-function renderWorkspace() {
-    const user = getActiveUser();
-    renderWorkspaceBar(activeUserLabel, accountSettingsBtn, logoutBtn, user, isCurrentUserAdmin());
-}
-
-function prepareFormForEdit(contact) {
-    formTitle.textContent = "Modifica Contatto";
-    submitBtn.textContent = "Salva Modifica";
-    cancelEditBtn.classList.remove("d-none");
-
-    document.getElementById("fullName").value = contact.fullName;
-    setCountryDialCode(contact.countryCode, contact.countryIso || "", countryCodeSelect, countryDropdownBtn, countryIsoInput);
-    document.getElementById("phoneLocal").value = contact.phoneLocal;
-    document.getElementById("email").value = contact.email;
-    document.getElementById("age").value = contact.age || "";
-    document.getElementById("avatarUrl").value = contact.avatarMode === "url" ? contact.avatar : "";
-    document.getElementById("avatarFile").value = "";
-    document.getElementById("tags").value = (contact.tags || []).join(", ");
-    updateAvatarPreviewText(avatarPreview, null, contact.avatar, contact.avatarMode, contact.avatar);
-}
-
-function resetForm() {
-    formTitle.textContent = "Nuovo Contatto";
-    submitBtn.textContent = "Salva Contatto";
-    cancelEditBtn.classList.add("d-none");
-    contactForm.reset();
-    setCountryDialCode("+39", "it", countryCodeSelect, countryDropdownBtn, countryIsoInput);
-    document.getElementById("tags").value = "";
-    updateAvatarPreviewText(avatarPreview, null, "", "placeholder", "");
-}
-
-function handleEditContact(contact) {
-    setEditMode(contact, prepareFormForEdit, () => showFormView(formView, listView, showFormBtn, showListBtn));
-}
-
-function handleDeleteContact(contact) {
-    const confirmed = window.confirm(`Eliminare il contatto ${contact.fullName}?`);
-    if (!confirmed) return;
-
-    // rimuovi e salva copia temporanea in sessionStorage
-    contactState.contacts = contactState.contacts.filter((entry) => entry.id !== contact.id);
-    saveContacts();
-    sessionStorage.setItem("lastDeleted", JSON.stringify(contact));
-
-    // mostra toast con undo
-    try {
-        const toast = new bootstrap.Toast(undoToastEl, { delay: 5000 });
-        toast.show();
-    } catch (e) {
-        // ignore
-    }
-
-    searchState.currentPage = 1;
-    applySearchAndRender();
-    showAlert(alertBox, "Contatto eliminato. Puoi annullare dall'alert.", "success");
-
-    if (contactState.editingContactId === contact.id) {
-        resetFormMode(resetForm, () => showFormView(formView, listView, showFormBtn, showListBtn));
-    }
-}
-
-function handleUndoDelete() {
-    const raw = sessionStorage.getItem("lastDeleted");
-    if (!raw) return;
-    const contact = JSON.parse(raw);
-    // reinserisci in cima
-    contactState.contacts.unshift(contact);
-    saveContacts();
-    sessionStorage.removeItem("lastDeleted");
-    applySearchAndRender();
-    showAlert(alertBox, "Eliminazione annullata.", "success");
-}
-
-function openContactModalById(contactId) {
-    const contact = contactState.contacts.find((c) => c.id === contactId);
-    if (!contact) return;
-    // helper: genera placeholder SVG dataURL con iniziale
-    function placeholderDataUrl(initial, size = 192, bg = '#0d6efd', fg = '#ffffff') {
-        const fontSize = Math.round(size * 0.5);
-        const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${size}' height='${size}'><rect width='100%' height='100%' fill='${bg}'/><text x='50%' y='50%' dy='0.35em' text-anchor='middle' fill='${fg}' font-family='Arial, Helvetica, sans-serif' font-size='${fontSize}' font-weight='700'>${initial}</text></svg>`;
-        return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
-    }
-
-    // popola modal
-    if (contact.avatar && contact.avatar.trim()) {
-        contactModalAvatar.src = contact.avatar;
-    } else {
-        const initial = contact.placeholderInitial || getPlaceholderInitial(contact.fullName || "");
-        contactModalAvatar.src = placeholderDataUrl(initial, 96);
-    }
-    contactModalName.textContent = contact.fullName || "-";
-    contactModalEmail.textContent = contact.email || "-";
-    contactModalPhone.textContent = contact.phoneInternational || "-";
-    contactModalAge.textContent = contact.age ? `${contact.age} anni` : "-";
-    contactModalTags.innerHTML = (contact.tags || []).map((t) => `<span class=\"badge bg-secondary me-1\">${t}</span>`).join("");
-    contactModalCreatedBy.textContent = contact.createdBy || "-";
-
-    // store id on buttons
-    contactModalEditBtn.dataset.id = contact.id;
-    contactModalDeleteBtn.dataset.id = contact.id;
-
-    const modal = new bootstrap.Modal(contactModal);
-    modal.show();
-}
-
-function handleToggleFavorite(contact) {
-    contact.isFavorite = !contact.isFavorite;
-    saveContacts();
-    applySearchAndRender();
-    showAlert(alertBox, contact.isFavorite ? "Aggiunto ai preferiti." : "Rimosso dai preferiti.", "success");
-}
-
-function applySearchAndRender() {
-    console.log("applySearchAndRender called, contactState.contacts:", contactState.contacts.length);
-    applySearch(contactState.contacts);
-    console.log("After applySearch, searchState.filteredContacts:", searchState.filteredContacts.length);
-    updateAllTags(contactState.contacts);
-    renderTagFilters(tagFilterContainer, applySearchAndRender);
-    renderContactsPageHelper();
-}
-
-function renderContactsPageHelper() {
-    renderContactsPage(
-        contactsGrid,
-        noContactsMsg,
-        paginationNav,
-        paginationList,
-        handleEditContact,
-        handleDeleteContact,
-        handleToggleFavorite,
-        (totalPages) => {
-            renderPagination(paginationList, totalPages, searchState.currentPage, (newPage) => {
-                searchState.currentPage = newPage;
-                renderContactsPageHelper();
-            });
-        }
-    );
-}
-
-function saveContact(contactPayload, isEdit) {
-    console.log("saveContact called:", { contactPayload, isEdit, contactsCount: contactState.contacts.length });
-    if (isEdit) {
-        contactState.contacts = contactState.contacts.map((entry) =>
-            entry.id === contactState.editingContactId ? contactPayload : entry
-        );
-        showAlert(alertBox, "Contatto modificato con successo.", "success");
-    } else {
-        contactState.contacts.push(contactPayload);
-        showAlert(alertBox, "Contatto salvato con successo.", "success");
-    }
-
-    console.log("After push/update:", { contactsCount: contactState.contacts.length });
-    saveContacts();
-    resetFormMode(resetForm, () => showFormView(formView, listView, showFormBtn, showListBtn));
-    searchState.currentPage = 1;
-    searchState.searchQuery = "";
-    searchState.filteredContacts = [...contactState.contacts];
-    console.log("Before showListView:", { filteredCount: searchState.filteredContacts.length });
-    showListView(formView, listView, showFormBtn, showListBtn, () => showSearchBar(searchBar, globalSearchInput));
-    applySearchAndRender();
-    console.log("After applySearchAndRender");
-}
-
-// ============================================================================
-// Event Handlers
-// ============================================================================
-
-function handleAuthSubmitWrapper(event) {
-    handleAuthSubmit(
-        event,
-        syncState,
-        renderWorkspace,
-        () => showAppView(authView, appShell),
-        () => {
-            showListView(formView, listView, showFormBtn, showListBtn, () => showSearchBar(searchBar, globalSearchInput));
-            applySearchAndRender();
-        },
-        (msg, type) => renderAuthHint(authHint, msg, type),
-        (msg, type) => showAlert(alertBox, msg, type)
-    );
-}
-
-function handleLogoutWrapper() {
-    handleLogout(
-        saveContacts,
-        renderWorkspace,
-        () => showAuthView(authView, appShell, authUsernameInput),
-        (msg, type) => renderAuthHint(authHint, msg, type),
-        () => {
-            contactState.contacts = [];
-            contactState.editingContactId = null;
-            searchState.searchQuery = "";
-            searchState.currentPage = 1;
-            searchState.filteredContacts = [];
-            globalSearchInput.value = "";
-        }
-    );
-}
-
-function handleChangePasswordWrapper() {
-    handleChangePassword(
-        accountNewPassword.value,
-        accountConfirmPassword.value,
-        (msg, type) => showAlert(alertBox, msg, type),
-        () => {
-            accountNewPassword.value = "";
-            accountConfirmPassword.value = "";
-            const modalInstance = bootstrap.Modal.getInstance(accountModal);
-            if (modalInstance) modalInstance.hide();
-        }
-    );
-}
-
-function handleDeleteAccountWrapper() {
-    handleDeleteAccount(
-        (msg, type) => showAlert(alertBox, msg, type),
-        handleLogoutWrapper,
-        () => {
-            const modalInstance = bootstrap.Modal.getInstance(accountModal);
-            if (modalInstance) modalInstance.hide();
-        }
-    );
-}
-
-async function handleSubmitWrapper(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    const formData = new FormData(contactForm);
-    const tagsInput = String(formData.get("tags") || "").trim();
-
-    await handleSubmitContact(
-        formData,
-        { selectedCountry: getSelectedCountry },
-        avatarFileInput.files?.[0] || null,
-        avatarUrlInput.value,
-        tagsInput,
-        (msg, type) => showAlert(alertBox, msg, type),
-        saveContact
-    );
-}
-
-function handleListActionsWrapper(event) {
-    handleListActions(event, handleEditContact, handleDeleteContact, handleToggleFavorite);
-}
-
-function handleGlobalSearchWrapper(event) {
-    handleGlobalSearch(event, applySearchAndRender);
-}
-
-function handleImportWrapper(normalized, contactsLength) {
-    const user = getActiveUser();
-    if (user) {
-        user.contacts = normalized;
-        contactState.contacts = [...normalized];
-        saveContacts();
-        searchState.currentPage = 1;
-        searchState.searchQuery = "";
-        globalSearchInput.value = "";
-        applySearchAndRender();
-        showAlert(alertBox, `${contactsLength} contatti importati con successo.`, "success");
-    }
-}
 
 // ============================================================================
 // Initialization
