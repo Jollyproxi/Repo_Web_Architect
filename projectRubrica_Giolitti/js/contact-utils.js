@@ -20,20 +20,6 @@
  */
 
 /**
- * @typedef {Object} AvatarInput
- * @property {string=} avatarUrl
- * @property {string=} avatarBase64
- * @property {string=} fullName
- */
-
-/**
- * @typedef {Object} AvatarResult
- * @property {string} avatar
- * @property {"file"|"url"|"placeholder"} avatarMode
- * @property {string} placeholderInitial
- */
-
-/**
  * Normalizza una email rendendola confrontabile (trim + lower case).
  * @param {unknown} value
  * @returns {string}

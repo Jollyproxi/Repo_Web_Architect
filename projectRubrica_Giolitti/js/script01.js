@@ -1,4 +1,13 @@
 import {countries} from "../node_modules/country-codes-flags-phone-codes/dist/index.mjs";
+import {
+    normalizeEmail,
+    normalizeCountryCode,
+    normalizeLocalPhone,
+    buildInternationalPhone,
+    getPlaceholderInitial,
+    resolveAvatarSource,
+    isDuplicateContact
+} from "./contact-utils.js";
 
 /**
  * @typedef {Object} Contact
@@ -54,126 +63,6 @@ import {countries} from "../node_modules/country-codes-flags-phone-codes/dist/in
  * @property {"file"|"url"|"placeholder"} avatarMode
  * @property {string} placeholderInitial
  */
-
-// File unico dell'app: qui convivono normalizzazione dati, UI, persistenza, ricerca,
-// paginazione, tema e gestione della tendina paesi.
-
-// ============================================================================
-// Helper di normalizzazione e trasformazione dati
-// ============================================================================
-/**
- * @param {unknown} value
- * @returns {string}
- */
-function normalizeEmail(value) {
-    return String(value || "").trim().toLowerCase();
-}
-
-// Normalizza il prefisso internazionale, mantenendo solo le cifre e il simbolo + iniziale.
-/**
- * @param {unknown} value
- * @returns {string}
- */
-function normalizeCountryCode(value) {
-    const digits = String(value || "").replace(/\D/g, "");
-    return digits ? `+${digits}` : "";
-}
-
-// Normalizza il numero locale rimuovendo ogni carattere non numerico.
-/**
- * @param {unknown} value
- * @returns {string}
- */
-function normalizeLocalPhone(value) {
-    return String(value || "").replace(/\D/g, "");
-}
-
-// Converte prefisso + numero locale in una stringa internazionale coerente per i controlli.
-/**
- * @param {unknown} countryCode
- * @param {unknown} phoneLocal
- * @returns {string}
- */
-function buildInternationalPhone(countryCode, phoneLocal) {
-    const normalizedPrefix = normalizeCountryCode(countryCode);
-    const normalizedLocal = normalizeLocalPhone(phoneLocal);
-    const localNoTrunkZero = normalizedLocal.replace(/^0+/, "") || normalizedLocal;
-    return `${normalizedPrefix}${localNoTrunkZero}`;
-}
-
-// Ricava l'iniziale da mostrare come placeholder avatar quando non esiste un'immagine.
-/**
- * @param {unknown} fullName
- * @returns {string}
- */
-function getPlaceholderInitial(fullName) {
-    const value = String(fullName || "").trim();
-    return value ? value.slice(0, 1).toUpperCase() : "?";
-}
-
-// Verifica se una stringa è una URL http/https valida.
-/**
- * @param {unknown} value
- * @returns {boolean}
- */
-function isValidHttpUrl(value) {
-    if (!value) {
-        return false;
-    }
-
-    try {
-        const parsed = new URL(value);
-        return parsed.protocol === "http:" || parsed.protocol === "https:";
-    } catch (_error) {
-        return false;
-    }
-}
-
-// Seleziona la sorgente avatar corretta con priorità: file base64, URL valida, placeholder.
-/**
- * @param {AvatarInput} input
- * @returns {AvatarResult}
- */
-function resolveAvatarSource({avatarUrl, avatarBase64, fullName}) {
-    if (avatarBase64) {
-        return {
-            avatar: avatarBase64, avatarMode: "file", placeholderInitial: getPlaceholderInitial(fullName)
-        };
-    }
-
-    const trimmedUrl = String(avatarUrl || "").trim();
-    if (isValidHttpUrl(trimmedUrl)) {
-        return {
-            avatar: trimmedUrl, avatarMode: "url", placeholderInitial: getPlaceholderInitial(fullName)
-        };
-    }
-
-    return {
-        avatar: "", avatarMode: "placeholder", placeholderInitial: getPlaceholderInitial(fullName)
-    };
-}
-
-// Controlla se il contatto candidato è già presente in rubrica per email o telefono.
-/**
- * @param {Contact[]} contacts
- * @param {ContactCandidate} candidate
- * @param {{ignoreId?: string}=} options
- * @returns {boolean}
- */
-function isDuplicateContact(contacts, candidate, options = {}) {
-    const ignoreId = options.ignoreId || null;
-    const normalizedEmail = normalizeEmail(candidate.email);
-    const normalizedPhone = buildInternationalPhone(candidate.countryCode, candidate.phoneLocal);
-
-    return contacts.some((contact) => {
-        if (ignoreId && contact.id === ignoreId) {
-            return false;
-        }
-
-        const contactPhone = contact.phoneInternational || buildInternationalPhone(contact.countryCode, contact.phoneLocal);
-        return normalizeEmail(contact.email) === normalizedEmail || contactPhone === normalizedPhone;
-    });
-}
 
 // ============================================================================
 // Stato applicazione
@@ -234,7 +123,6 @@ const countryDropdownBtn = document.querySelector("#countryDropdownBtn");
 const countryDropdownList = document.querySelector("#countryDropdownList");
 const countryDropdownOptions = document.querySelector("#countryDropdownOptions");
 const countryNoResults = document.querySelector("#countryNoResults");
-const countrySearchInput = document.querySelector("#countrySearchInput");
 const themeTglBtn = document.querySelector("#themeTglBtn");
 const themeIcon = document.querySelector("#themeIcon");
 const searchBar = document.querySelector("#searchBar");
@@ -956,11 +844,6 @@ function renderCountryOptions(options) {
     countryNoResults.classList.toggle("d-none", options.length > 0);
 }
 
-// Applica il filtro live nella dropdown dei prefissi in base a nome paese o prefisso.
-/**
- * @returns {void}
- */
-
 // Gestisce il click su una voce della dropdown dei prefissi.
 /**
  * @param {MouseEvent} event
@@ -1078,15 +961,6 @@ function getCountryFlagEmoji(flag, countryCode) {
     const first = iso2.codePointAt(0) + 127397;
     const second = iso2.codePointAt(1) + 127397;
     return String.fromCodePoint(first, second);
-}
-
-// Legge una lista di contatti legacy o già normalizzati e la riporta al formato corrente.
-/**
- * @param {Contact[]} entries
- * @returns {Contact[]}
- */
-function loadContacts(entries = []) {
-    return normalizeStoredContacts(entries);
 }
 
 // Salva la rubrica attiva dentro la struttura utenti/rubriche.
