@@ -64,14 +64,14 @@ export function prepareFormForEdit(contact) {
     submitBtn.textContent = "Salva Modifica";
     cancelEditBtn.classList.remove("d-none");
 
-    document.getElementById("fullName").value = contact.fullName;
+    document.querySelector("#fullName").value = contact.fullName;
     setCountryDialCode(contact.countryCode, contact.countryIso || "", countryCodeSelect, countryDropdownBtn, countryIsoInput);
-    document.getElementById("phoneLocal").value = contact.phoneLocal;
-    document.getElementById("email").value = contact.email;
-    document.getElementById("age").value = contact.age || "";
-    document.getElementById("avatarUrl").value = contact.avatarMode === "url" ? contact.avatar : "";
-    document.getElementById("avatarFile").value = "";
-    document.getElementById("tags").value = (contact.tags || []).join(", ");
+    document.querySelector("#phoneLocal").value = contact.phoneLocal;
+    document.querySelector("#email").value = contact.email;
+    document.querySelector("#age").value = contact.age || "";
+    document.querySelector("#avatarUrl").value = contact.avatarMode === "url" ? contact.avatar : "";
+    document.querySelector("#avatarFile").value = "";
+    document.querySelector("#tags").value = (contact.tags || []).join(", ");
     updateAvatarPreviewText(avatarPreview, null, contact.avatar, contact.avatarMode, contact.avatar);
 }
 
@@ -81,7 +81,7 @@ export function resetForm() {
     cancelEditBtn.classList.add("d-none");
     contactForm.reset();
     setCountryDialCode("+39", "it", countryCodeSelect, countryDropdownBtn, countryIsoInput);
-    document.getElementById("tags").value = "";
+    document.querySelector("#tags").value = "";
     updateAvatarPreviewText(avatarPreview, null, "", "placeholder", "");
 }
 
