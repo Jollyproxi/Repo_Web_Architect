@@ -8,16 +8,33 @@ main {
 }
 
 /* Evita che il bottone collassi se l'icona non carica subito */
-/* Theme-agnostic UI elements */
-.app-topbar, .app-searchbar {
-    background: var(--bs-light);
-    border-bottom: 1px solid var(--bs-border-color);
+.auth-shell {
+    min-height: calc(100vh - 90px);
+    display: flex;
+    align-items: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background:
+        radial-gradient(circle at top left, rgba(13, 110, 253, 0.14), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(32, 201, 151, 0.12), transparent 30%);
+}
+
+.auth-card {
+    backdrop-filter: blur(8px);
+}
+
+#workspaceBar select {
+    min-width: 220px;
 }
 
 #themeTglBtn {
     width: 42px;
     height: 38px;
     padding: 10px;
+}
+
+#searchBar {
+    background: transparent;
 }
 
 /* Cards & Avatars */
@@ -48,6 +65,17 @@ main {
 /* Country Selector */
 .country-select {
     font-family: "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow: hidden;
+}
+
+.country-select-label {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .country-flag {
     width: 20px;
@@ -80,7 +108,6 @@ main {
     --bs-border-color: #f2f2f2;
 }
 
-[data-bs-theme="dark"] .app-topbar .navbar-brand,
 [data-bs-theme="dark"] #themeIcon,
 [data-bs-theme="dark"] #themeTglBtn {
     color: #fff;
@@ -88,9 +115,9 @@ main {
 
 [data-bs-theme="dark"] #globalSearchInput,
 [data-bs-theme="dark"] #themeTglBtn {
-    background: #000;
+    background: var(--bs-body-bg);
     border-color: #f2f2f2;
-    color: #fff;
+    color: var(--bs-body-color);
 }
 
 [data-bs-theme="dark"] #themeTglBtn:hover {

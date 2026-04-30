@@ -10,7 +10,7 @@
     </head>
     <body class="bg-body-tertiary">
         <!-- Barra di navigazione/Cambio Tema-->
-        <nav class="navbar navbar-expand-lg border-bottom sticky-top app-topbar">
+        <nav class="navbar navbar-expand-lg border-bottom sticky-top bg-body-tertiary">
             <div class="container">
                 <span class="navbar-brand mb-0 h5">Rubrica Personale</span>
                 <button id="themeTglBtn" class="btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center" type="button" style="width: 40px; height: 40px;">
@@ -19,107 +19,178 @@
             </div>
         </nav>
 
-        <!-- Barra di ricerca -->
-        <div id="searchBar" class="border-bottom py-2 d-none app-searchbar">
-            <div class="container">
-                <label for="globalSearchInput" class="form-label small mb-1">Ricerca contatti</label>
-                <input id="globalSearchInput" type="search" class="form-control form-control-sm" placeholder="Cerca nome, email, telefono o eta..."
-                       autocomplete="off">
-            </div>
-        </div>
-
         <main class="container py-4">
-
-            <!-- Bottoni per mostrare il form o la lista -->
-            <div class="mb-3">
-                <div class="mt-2">
-                    <button id="showFormBtn" class="btn btn-outline-primary" type="button">Aggiungi Contatto</button>
-                    <button id="showListBtn" class="btn btn-primary ms-2" type="button">Mostra Rubrica</button>
-                </div>
-            </div>
-
-            <!-- Barra di alert -->
-            <div id="alertBox" aria-live="polite"></div>
-
-            <!-- Form per aggiungere/modificare contatti -->
-            <section id="formView" class="card d-done shadow-sm">
-                <div class="card-body">
-                    <h2 id="formTitle" class="h5">Nuovo Contatto</h2>
-                    <form id="contactForm" class="row g-3 mt-1" novalidate>
-                        <!--Nome e Cognome-->
-                        <div class="col-md-6">
-                            <label for="fullName" class="form-label">Nome e Cognome</label>
-                            <input id="fullName" name="fullName" type="text" class="form-control" required>
+            <section id="authView" class="auth-shell">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-9 col-lg-6">
+                        <div class="card auth-card shadow-lg border-0">
+                            <div class="card-body p-4 p-md-5">
+                                <p class="text-uppercase small text-primary fw-semibold mb-2">Accesso</p>
+                                <h1 class="h3 mb-2">Rubrica privata</h1>
+                                <p class="text-body-secondary mb-4">Accedi o crea un account per decidere chi può inserire i contatti e lavorare su rubriche separate.</p>
+                                <form id="authForm" class="row g-3" novalidate>
+                                    <div class="col-12">
+                                        <label for="authUsername" class="form-label">Nome utente</label>
+                                        <input id="authUsername" name="authUsername" type="text" class="form-control" autocomplete="username" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="authPassword" class="form-label">Password</label>
+                                        <input id="authPassword" name="authPassword" type="password" class="form-control" autocomplete="current-password" required>
+                                    </div>
+                                    <div class="col-12 d-flex flex-column flex-sm-row gap-2 mt-2">
+                                        <button id="authLoginBtn" class="btn btn-primary flex-grow-1" type="submit" data-action="login">Accedi</button>
+                                        <button id="authRegisterBtn" class="btn btn-outline-secondary flex-grow-1" type="submit" data-action="register">Crea account</button>
+                                    </div>
+                                </form>
+                                <div id="authHint" class="small text-body-secondary mt-3"></div>
+                            </div>
                         </div>
-                        <!--Menu a tendina prefissi-->
-                        <div class="col-8 col-sm-12 col-xs-12">
-                            <span class="form-label d-block">Prefisso</span>
-                            <label for="countryCode" class="visually-hidden">Prefisso selezionato</label>
-                            <select id="countryCode" name="countryCode" class="visually-hidden" tabindex="-1" aria-hidden="true" required>
-                                <option value="+39" selected>+39</option>
-                            </select>
-                            <input id="countryIso" name="countryIso" type="hidden" value="it">
-                            <div class="dropdown">
-                                <button
-                                        id="countryDropdownBtn"
-                                        class="btn btn-outline-secondary dropdown-toggle w-100 text-start country-select"
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-label="Seleziona prefisso internazionale"
-                                        aria-expanded="false"
-                                >
-                                    Caricamento paesi...
-                                </button>
-                                <div id="countryDropdownList" class="dropdown-menu w-100 country-dropdown-menu p-2" tabindex="-1">
-                                    <div id="countryDropdownOptions" class="mt-0"></div>
-                                    <div id="countryNoResults" class="small text-body-secondary px-2 py-1 d-none">Nessun paese trovato.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="appShell" class="d-none">
+                <div id="workspaceBar" class="card shadow-sm mb-3">
+                    <div class="card-body d-flex flex-column flex-lg-row gap-3 justify-content-between align-items-lg-center">
+                        <div>
+                            <div class="small text-body-secondary">Utente attivo</div>
+                            <div id="activeUserLabel" class="fw-semibold">-</div>
+                            <div class="small text-body-secondary mt-2">Rubrica attiva</div>
+                        </div>
+                        <div class="d-flex flex-column flex-sm-row gap-2 align-items-stretch align-items-sm-center">
+                            <select id="activeBookSelect" class="form-select form-select-sm"></select>
+                            <button id="newBookBtn" class="btn btn-outline-primary btn-sm" type="button">Nuova rubrica</button>
+                            <button id="accountSettingsBtn" class="btn btn-outline-secondary btn-sm" type="button">Impostazioni account</button>
+                            <button id="logoutBtn" class="btn btn-outline-danger btn-sm" type="button">Esci</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Account Settings -->
+                <div id="accountModal" class="modal fade" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Impostazioni account</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="accountForm" class="row g-3">
+                                    <div class="col-12">
+                                        <label for="accountNewPassword" class="form-label">Nuova password</label>
+                                        <input id="accountNewPassword" name="accountNewPassword" type="password" class="form-control" placeholder="Lascia vuoto per non cambiare">
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="accountConfirmPassword" class="form-label">Conferma password</label>
+                                        <input id="accountConfirmPassword" name="accountConfirmPassword" type="password" class="form-control" placeholder="Conferma la nuova password">
+                                    </div>
+                                    <div class="col-12">
+                                        <button id="changePasswordBtn" class="btn btn-primary" type="button">Cambia password</button>
+                                    </div>
+                                    <div class="col-12 border-top pt-3">
+                                        <button id="deleteAccountBtn" class="btn btn-danger w-100" type="button">Elimina account</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Barra di ricerca -->
+                <div id="searchBar" class="border-bottom py-2 d-none">
+                    <label for="globalSearchInput" class="form-label small mb-1">Ricerca contatti</label>
+                    <input id="globalSearchInput" type="search" class="form-control form-control-sm" placeholder="Cerca nome, email, telefono o eta..."
+                           autocomplete="off">
+                </div>
+
+                <!-- Bottoni per mostrare il form o la lista -->
+                <div class="mb-3">
+                    <div class="mt-2 d-flex flex-wrap gap-2">
+                        <button id="showFormBtn" class="btn btn-outline-primary" type="button">Aggiungi Contatto</button>
+                        <button id="showListBtn" class="btn btn-primary" type="button">Mostra Rubrica</button>
+                    </div>
+                </div>
+
+                <!-- Barra di alert -->
+                <div id="alertBox" aria-live="polite"></div>
+
+                <!-- Form per aggiungere/modificare contatti -->
+                <section id="formView" class="card d-none shadow-sm">
+                    <div class="card-body">
+                        <h2 id="formTitle" class="h5">Nuovo Contatto</h2>
+                        <form id="contactForm" class="row g-3 mt-1" novalidate>
+                            <!--Nome e Cognome-->
+                            <div class="col-md-6">
+                                <label for="fullName" class="form-label">Nome e Cognome</label>
+                                <input id="fullName" name="fullName" type="text" class="form-control" required>
+                            </div>
+                            <!--Menu a tendina prefissi-->
+                            <div class="col-8 col-sm-12 col-xs-12">
+                                <span class="form-label d-block">Prefisso</span>
+                                <label for="countryCode" class="visually-hidden">Prefisso selezionato</label>
+                                <select id="countryCode" name="countryCode" class="visually-hidden" tabindex="-1" aria-hidden="true" required>
+                                    <option value="+39" selected>+39</option>
+                                </select>
+                                <input id="countryIso" name="countryIso" type="hidden" value="it">
+                                <div class="dropdown">
+                                    <button
+                                            id="countryDropdownBtn"
+                                            class="btn btn-outline-secondary dropdown-toggle w-100 text-start country-select"
+                                            type="button"
+                                            data-bs-toggle="dropdown"
+                                            aria-label="Seleziona prefisso internazionale"
+                                            aria-expanded="false"
+                                    >
+                                        Caricamento paesi...
+                                    </button>
+                                    <div id="countryDropdownList" class="dropdown-menu w-100 country-dropdown-menu p-2" tabindex="-1">
+                                        <div id="countryDropdownOptions" class="mt-0"></div>
+                                        <div id="countryNoResults" class="small text-body-secondary px-2 py-1 d-none">Nessun paese trovato.</div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-8">
-                            <label for="phoneLocal" class="form-label">Numero di Telefono</label>
-                            <input id="phoneLocal" name="phoneLocal" type="tel" class="form-control" placeholder="3331234567" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="email" class="form-label">Email</label>
-                            <input id="email" name="email" type="email" class="form-control" required>
-                        </div>
-                        <div class="col-md-6">
-                            <label for="age" class="form-label">Età (opzionale)</label>
-                            <input id="age" name="age" type="number" min="1" max="150" class="form-control" placeholder="30">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="avatarUrl" class="form-label">Avatar da URL (opzionale)</label>
-                            <input id="avatarUrl" name="avatarUrl" type="url" class="form-control" placeholder="https://esempio.it/avatar.jpg">
-                        </div>
-                        <div class="col-md-6">
-                            <label for="avatarFile" class="form-label">Avatar da file (opzionale)</label>
-                            <input id="avatarFile" name="avatarFile" type="file" class="form-control" accept="image/*">
-                        </div>
-                        <div class="col-md-6 pt-md-4">
-                            <div id="avatarPreview" class="small text-body-secondary">Nessun avatar selezionato: verrà usato il placeholder
-                                                                                      automatico.
+                            <div class="col-md-8">
+                                <label for="phoneLocal" class="form-label">Numero di Telefono</label>
+                                <input id="phoneLocal" name="phoneLocal" type="tel" class="form-control" placeholder="3331234567" required>
                             </div>
-                        </div>
-                        <div class="col-12">
-                            <button id="submitBtn" class="btn btn-success" type="submit">Salva Contatto</button>
-                            <button id="cancelEditBtn" class="btn btn-outline-secondary d-none" type="button">Annulla modifica</button>
-                        </div>
-                    </form>
-                </div>
-            </section>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input id="email" name="email" type="email" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="age" class="form-label">Età (opzionale)</label>
+                                <input id="age" name="age" type="number" min="1" max="150" class="form-control" placeholder="30">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="avatarUrl" class="form-label">Avatar da URL (opzionale)</label>
+                                <input id="avatarUrl" name="avatarUrl" type="url" class="form-control" placeholder="https://esempio.it/avatar.jpg">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="avatarFile" class="form-label">Avatar da file (opzionale)</label>
+                                <input id="avatarFile" name="avatarFile" type="file" class="form-control" accept="image/*">
+                            </div>
+                            <div class="col-md-6 pt-md-4">
+                                <div id="avatarPreview" class="small text-body-secondary">Nessun avatar selezionato: verrà usato il placeholder automatico.</div>
+                            </div>
+                            <div class="col-12">
+                                <button id="submitBtn" class="btn btn-success" type="submit">Salva Contatto</button>
+                                <button id="cancelEditBtn" class="btn btn-outline-secondary d-none" type="button">Annulla modifica</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
 
-            <section id="listView" class="card shadow-sm d-done mt-3 ">
-                <div class="card-body">
-                    <h2 class="h5">Contatti Salvati</h2>
-                    <div id="contactsGrid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mt-2"></div>
-                    <div id="noContactsMsg" class="text-body-secondary text-center py-5 d-none">Nessun contatto trovato.</div>
-                    <nav id="paginationNav" class="mt-4" aria-label="Paginazione contatti">
-                        <ul id="paginationList" class="pagination justify-content-center mb-0"></ul>
-                    </nav>
-                </div>
+                <section id="listView" class="card shadow-sm d-none mt-3">
+                    <div class="card-body">
+                        <h2 class="h5">Contatti Salvati</h2>
+                        <div id="contactsGrid" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mt-2"></div>
+                        <div id="noContactsMsg" class="text-body-secondary text-center py-5 d-none">Nessun contatto trovato.</div>
+                        <nav id="paginationNav" class="mt-4" aria-label="Paginazione contatti">
+                            <ul id="paginationList" class="pagination justify-content-center mb-0"></ul>
+                        </nav>
+                    </div>
+                </section>
             </section>
-            <!---->
         </main>
 
         <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>

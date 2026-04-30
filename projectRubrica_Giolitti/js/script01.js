@@ -178,9 +178,8 @@ function isDuplicateContact(contacts, candidate, options = {}) {
 // ============================================================================
 // Stato applicazione
 // ============================================================================
-// Chiavi di persistenza e impostazioni generali dell'app.
-// 1. Prima dichiara tutte le variabili di supporto e le costanti
-const STORAGE_KEY = "rubrica-giolitti-contacts";
+const APP_DATA_KEY = "rubrica-giolitti-app-data";
+const SESSION_KEY = "rubrica-giolitti-session";
 const THEME_KEY = "rubrica-theme";
 const CONTACTS_PER_PAGE = 6;
 
@@ -192,19 +191,32 @@ let selectedCountry = null;
 // Variabili per la ricerca da tastiera (Convenzione standard)
 let typeSearchBuffer = "";
 let typeSearchTimeout = null;
-// 2. Dichiara gli elementi DOM (opzionale ma consigliato tenerli insieme)
-const contactForm = document.querySelector("#contactForm");
 
-// 3. SOLO ORA crea lo stato, così loadContacts() troverà le variabili pronte
+const appData = {users: []};
+let sessionState = {loggedInUserId: "", userId: "", bookId: ""};
+
 const state = {
-    contacts: loadContacts(), editingContactId: null
+    contacts: [],
+    editingContactId: null
 };
 
 const searchState = {
-    searchQuery: "", currentPage: 1, filteredContacts: [...state.contacts] // Inizializza subito con i contatti caricati
+    searchQuery: "",
+    currentPage: 1,
+    filteredContacts: []
 };
 
 //Utilizzo il metodo moderno che permette di usare css per cercare quearyselector
+const authView = document.querySelector("#authView");
+const authForm = document.querySelector("#authForm");
+const authUsernameInput = document.querySelector("#authUsername");
+const authPasswordInput = document.querySelector("#authPassword");
+const authHint = document.querySelector("#authHint");
+const appShell = document.querySelector("#appShell");
+const activeUserLabel = document.querySelector("#activeUserLabel");
+const activeBookSelect = document.querySelector("#activeBookSelect");
+const newBookBtn = document.querySelector("#newBookBtn");
+const logoutBtn = document.querySelector("#logoutBtn");
 const alertBox = document.querySelector("#alertBox");
 const formView = document.querySelector("#formView");
 const listView = document.querySelector("#listView");
@@ -231,12 +243,579 @@ const contactsGrid = document.querySelector("#contactsGrid");
 const noContactsMsg = document.querySelector("#noContactsMsg");
 const paginationNav = document.querySelector("#paginationNav");
 const paginationList = document.querySelector("#paginationList");
+const accountSettingsBtn = document.querySelector("#accountSettingsBtn");
+const accountModal = document.querySelector("#accountModal");
+const accountForm = document.querySelector("#accountForm");
+const accountNewPassword = document.querySelector("#accountNewPassword");
+const accountConfirmPassword = document.querySelector("#accountConfirmPassword");
+const changePasswordBtn = document.querySelector("#changePasswordBtn");
+const deleteAccountBtn = document.querySelector("#deleteAccountBtn");
+
+/**
+ * Normalizza un contatto salvato nel formato corrente.
+ * @param {Contact} entry
+ * @returns {Contact}
+ */
+function normalizeStoredContact(entry) {
+    const fullName = String(entry.fullName || "").trim();
+    const countryCode = normalizeCountryCode(entry.countryCode || "+39") || "+39";
+    const legacyPhone = String(entry.phone || "");
+    const phoneLocal = normalizeLocalPhone(entry.phoneLocal || legacyPhone);
+    const phoneInternational = entry.phoneInternational || buildInternationalPhone(countryCode, phoneLocal);
+    const email = normalizeEmail(entry.email || "");
+    const avatar = String(entry.avatar || "").trim();
+    const countryIso = String(entry.countryIso || "").trim().toLowerCase();
+    const fallbackCountry = getCountryOptionBySelection(countryCode, countryIso);
+
+    return {
+        id: entry.id || crypto.randomUUID(),
+        fullName,
+        countryCode,
+        countryIso: countryIso || fallbackCountry?.code || "",
+        countryName: String(entry.countryName || fallbackCountry?.name || ""),
+        phoneLocal,
+        phoneInternational,
+        email,
+        age: entry.age || null,
+        avatar,
+        avatarMode: entry.avatarMode || (avatar ? "url" : "placeholder"),
+        placeholderInitial: entry.placeholderInitial || getPlaceholderInitial(fullName),
+        createdBy: String(entry.createdBy || "")
+    };
+}
+
+/**
+ * Normalizza una lista di contatti salvati.
+ * @param {Contact[]} entries
+ * @returns {Contact[]}
+ */
+function normalizeStoredContacts(entries) {
+    return Array.isArray(entries) ? entries.map((entry) => normalizeStoredContact(entry)) : [];
+}
+
+/**
+ * Normalizza una rubrica salvata.
+ * @param {unknown} entry
+ * @returns {{id: string, name: string, contacts: Contact[]}}
+ */
+function normalizeBook(entry) {
+    return {
+        id: String(entry?.id || crypto.randomUUID()),
+        name: String(entry?.name || "Rubrica principale").trim() || "Rubrica principale",
+        contacts: normalizeStoredContacts(entry?.contacts || [])
+    };
+}
+
+/**
+ * Normalizza un account salvato.
+ * @param {unknown} entry
+ * @returns {{id: string, username: string, password: string, isAdmin?: boolean, books: Array<{id: string, name: string, contacts: Contact[]}>}}
+ */
+function normalizeUser(entry) {
+    const books = Array.isArray(entry?.books) && entry.books.length > 0 ? entry.books.map((book) => normalizeBook(book)) : [normalizeBook({name: "Rubrica principale", contacts: []})];
+    const isAdmin = Boolean(entry?.isAdmin === true);
+
+    return {
+        id: String(entry?.id || crypto.randomUUID()),
+        username: normalizeAuthName(entry?.username),
+        password: String(entry?.password || ""),
+        isAdmin,
+        books
+    };
+}
+
+/**
+ * Normalizza il nome utente per i confronti.
+ * @param {unknown} value
+ * @returns {string}
+ */
+function normalizeAuthName(value) {
+    return String(value || "").trim().toLowerCase();
+}
+
+/**
+ * Legge la struttura dati dell'app da localStorage.
+ * @returns {{users: Array<{id: string, username: string, password: string, books: Array<{id: string, name: string, contacts: Contact[]}>}>}}
+ */
+function loadAppData() {
+    const raw = localStorage.getItem(APP_DATA_KEY);
+    if (raw) {
+        try {
+            const parsed = JSON.parse(raw);
+            const users = Array.isArray(parsed?.users) ? parsed.users.map((entry) => normalizeUser(entry)) : [];
+            return {users};
+        } catch (error) {
+            console.error("Errore nel caricamento dei dati applicativi:", error);
+        }
+    }
+
+    return {users: []};
+}
+
+/**
+ * Salva la struttura dati dell'app in localStorage.
+ * @returns {void}
+ */
+function saveAppData() {
+    localStorage.setItem(APP_DATA_KEY, JSON.stringify({users: appData.users}));
+}
+
+/**
+ * Legge la sessione attiva dall'area di sessione del browser.
+ * @returns {{userId: string, bookId: string}}
+ */
+function loadSessionState() {
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    if (!raw) {
+        return {loggedInUserId: "", userId: "", bookId: ""};
+    }
+
+    try {
+        const parsed = JSON.parse(raw);
+        return {
+            loggedInUserId: String(parsed?.loggedInUserId || parsed?.userId || ""),
+            userId: String(parsed?.userId || ""),
+            bookId: String(parsed?.bookId || "")
+        };
+    } catch (error) {
+        console.error("Errore nel caricamento della sessione:", error);
+        return {loggedInUserId: "", userId: "", bookId: ""};
+    }
+}
+
+/**
+ * Salva la sessione corrente.
+ * @returns {void}
+ */
+function saveSessionState() {
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(sessionState));
+}
+
+/**
+ * Restituisce l'utente autenticato.
+ * @returns {{id: string, username: string, password: string, books: Array<{id: string, name: string, contacts: Contact[]}>}|null}
+ */
+function getActiveUser() {
+    return appData.users.find((user) => user.id === sessionState.userId) || null;
+}
+
+/**
+ * Restituisce la rubrica attiva dell'utente autenticato.
+ * @returns {{id: string, name: string, contacts: Contact[]}|null}
+ */
+function getActiveBook() {
+    const user = getActiveUser();
+    if (!user) {
+        return null;
+    }
+
+    return user.books.find((book) => book.id === sessionState.bookId) || user.books[0] || null;
+}
+
+/**
+ * Sincronizza lo stato locale con la rubrica attiva.
+ * @returns {void}
+ */
+function syncStateFromActiveBook() {
+    const activeBook = getActiveBook();
+    state.contacts = activeBook ? [...activeBook.contacts] : [];
+    state.editingContactId = null;
+    searchState.searchQuery = "";
+    searchState.currentPage = 1;
+    searchState.filteredContacts = [...state.contacts];
+    globalSearchInput.value = "";
+}
+
+/**
+ * Aggiorna il testo di aiuto nel pannello di accesso.
+ * @param {string} message
+ * @param {"secondary"|"info"|"warning"|"success"|"danger"} [type="secondary"]
+ * @returns {void}
+ */
+function renderAuthHint(message, type = "secondary") {
+    authHint.className = `small text-${type} mt-3`;
+    authHint.textContent = message;
+}
+
+/**
+ * Aggiorna il selettore delle rubriche e le etichette dell'area workspace.
+ * @returns {void}
+ */
+function renderWorkspaceBar() {
+    const user = getActiveUser();
+
+    if (!user) {
+        activeUserLabel.textContent = "-";
+        activeBookSelect.innerHTML = "";
+        activeBookSelect.disabled = true;
+        newBookBtn.disabled = true;
+        accountSettingsBtn.disabled = true;
+        logoutBtn.disabled = true;
+        return;
+    }
+
+    const isAdmin = isCurrentUserAdmin();
+    activeUserLabel.textContent = isAdmin ? `${user.username} (Admin)` : user.username;
+    activeBookSelect.innerHTML = "";
+
+    if (isAdmin) {
+        activeBookSelect.innerHTML = '<option value="">Seleziona utente/rubrica...</option>';
+        appData.users.forEach((u) => {
+            u.books.forEach((book) => {
+                const option = document.createElement("option");
+                option.value = `${u.id}|${book.id}`;
+                option.textContent = `${u.username} - ${book.name}`;
+                option.selected = u.id === sessionState.userId && book.id === sessionState.bookId;
+                activeBookSelect.appendChild(option);
+            });
+        });
+    } else {
+        user.books.forEach((book) => {
+            const option = document.createElement("option");
+            option.value = book.id;
+            option.textContent = book.name;
+            option.selected = book.id === sessionState.bookId;
+            activeBookSelect.appendChild(option);
+        });
+    }
+
+    activeBookSelect.disabled = activeBookSelect.options.length <= (isAdmin ? 1 : 0);
+    newBookBtn.disabled = isAdmin && sessionState.userId !== user.id ? true : false;
+    accountSettingsBtn.disabled = isAdmin && sessionState.userId !== user.id ? true : false;
+    logoutBtn.disabled = false;
+}
+
+/**
+ * Mostra l'area autenticata.
+ * @returns {void}
+ */
+function showAppView() {
+    authView.classList.add("d-none");
+    appShell.classList.remove("d-none");
+}
+
+/**
+ * Mostra il pannello di accesso.
+ * @returns {void}
+ */
+function showAuthView() {
+    appShell.classList.add("d-none");
+    authView.classList.remove("d-none");
+    authUsernameInput.focus();
+}
+
+/**
+ * Crea una rubrica vuota.
+ * @param {string} name
+ * @returns {{id: string, name: string, contacts: Contact[]}}
+ */
+function createEmptyBook(name) {
+    return {
+        id: crypto.randomUUID(),
+        name: String(name || "Rubrica principale").trim() || "Rubrica principale",
+        contacts: []
+    };
+}
+
+/**
+ * Inizializza lo stato dell'app dopo il caricamento della pagina.
+ * @returns {void}
+ */
+function bootstrapApp() {
+    Object.assign(appData, loadAppData());
+    seedAdminIfNeeded();
+    sessionState = loadSessionState();
+
+    const activeUser = getActiveUser();
+    if (sessionState.userId && activeUser) {
+        if (!activeUser.books.some((book) => book.id === sessionState.bookId)) {
+            sessionState.bookId = activeUser.books[0]?.id || "";
+        }
+
+        syncStateFromActiveBook();
+        renderWorkspaceBar();
+        showAppView();
+        showListView();
+
+        return;
+    }
+
+    renderWorkspaceBar();
+    showAuthView();
+
+    renderAuthHint("Crea un account per iniziare oppure accedi a uno già esistente.", "secondary");
+}
+
+/**
+ * Gestisce accesso e creazione account.
+ * @param {SubmitEvent} event
+ * @returns {void}
+ */
+function handleAuthSubmit(event) {
+    event.preventDefault();
+
+    const action = event.submitter?.dataset.action || "login";
+    const username = normalizeAuthName(authUsernameInput.value);
+    const password = String(authPasswordInput.value || "").trim();
+
+    if (!username || !password) {
+        renderAuthHint("Inserisci nome utente e password.", "warning");
+        return;
+    }
+
+    if (action === "register") {
+        if (appData.users.some((user) => user.username === username)) {
+            renderAuthHint("Questo nome utente è già in uso.", "danger");
+            return;
+        }
+
+        const newUser = {
+            id: crypto.randomUUID(),
+            username,
+            password,
+            books: [createEmptyBook("Rubrica principale")]
+        };
+
+        appData.users.push(newUser);
+        saveAppData();
+        sessionState = {loggedInUserId: newUser.id, userId: newUser.id, bookId: newUser.books[0].id};
+        saveSessionState();
+        syncStateFromActiveBook();
+        renderWorkspaceBar();
+        showAppView();
+        showListView();
+        renderAuthHint("Account creato con successo.", "success");
+        showAlert("Account creato e rubrica iniziale pronta.", "success");
+        return;
+    }
+
+    const user = appData.users.find((entry) => entry.username === username && entry.password === password);
+    if (!user) {
+        renderAuthHint("Credenziali non valide.", "danger");
+        return;
+    }
+
+    sessionState = {
+        loggedInUserId: user.id,
+        userId: user.id,
+        bookId: user.books[0]?.id || ""
+    };
+    saveSessionState();
+    syncStateFromActiveBook();
+    renderWorkspaceBar();
+    showAppView();
+    showListView();
+    renderAuthHint("Accesso effettuato.", "success");
+}
+
+/**
+ * Cambia la rubrica attiva (e l'utente per admin).
+ * @returns {void}
+ */
+function handleBookChange() {
+    const user = getActiveUser();
+    if (!user) {
+        return;
+    }
+
+    const isAdmin = isCurrentUserAdmin();
+    const selection = activeBookSelect.value;
+
+    if (!selection) {
+        return;
+    }
+
+    saveContacts();
+
+    if (isAdmin && selection.includes("|")) {
+        const [userId, bookId] = selection.split("|");
+        sessionState.userId = userId;
+        sessionState.bookId = bookId;
+    } else {
+        sessionState.userId = sessionState.loggedInUserId;
+        sessionState.bookId = selection;
+    }
+
+    saveSessionState();
+    syncStateFromActiveBook();
+    resetFormMode();
+    renderWorkspaceBar();
+    applySearch();
+    showListView();
+}
+
+/**
+ * Crea una nuova rubrica per l'utente attivo.
+ * @returns {void}
+ */
+function handleCreateBook() {
+    const user = getActiveUser();
+    if (!user) {
+        return;
+    }
+
+    const name = window.prompt("Nome della nuova rubrica:", "Nuova rubrica");
+    if (!name) {
+        return;
+    }
+
+    const trimmedName = String(name).trim();
+    if (!trimmedName) {
+        renderAuthHint("Inserisci un nome valido per la rubrica.", "warning");
+        return;
+    }
+
+    if (user.books.some((book) => book.name.toLowerCase() === trimmedName.toLowerCase())) {
+        renderAuthHint("Esiste già una rubrica con questo nome.", "danger");
+        return;
+    }
+
+    const newBook = createEmptyBook(trimmedName);
+    user.books.push(newBook);
+    sessionState.bookId = newBook.id;
+    saveAppData();
+    saveSessionState();
+    syncStateFromActiveBook();
+    renderWorkspaceBar();
+    resetFormMode();
+    showListView();
+    showAlert(`Rubrica ${newBook.name} creata con successo.`, "success");
+}
+
+/**
+ * Chiude la sessione corrente.
+ * @returns {void}
+ */
+function handleLogout() {
+    saveContacts();
+    sessionState = {loggedInUserId: "", userId: "", bookId: ""};
+    sessionStorage.removeItem(SESSION_KEY);
+    state.contacts = [];
+    state.editingContactId = null;
+    searchState.searchQuery = "";
+    searchState.currentPage = 1;
+    searchState.filteredContacts = [];
+    globalSearchInput.value = "";
+    renderWorkspaceBar();
+    showAuthView();
+    renderAuthHint("Sessione chiusa. Effettua di nuovo l'accesso per continuare.", "secondary");
+}
+
+/**
+ * Cambia la password dell'utente attivo.
+ * @returns {void}
+ */
+function handleChangePassword() {
+    const user = getActiveUser();
+    if (!user) {
+        showAlert("Nessun utente autenticato.", "danger");
+        return;
+    }
+
+    const newPassword = String(accountNewPassword.value || "").trim();
+    const confirmPassword = String(accountConfirmPassword.value || "").trim();
+
+    if (!newPassword || !confirmPassword) {
+        showAlert("Inserisci la nuova password e la conferma.", "warning");
+        return;
+    }
+
+    if (newPassword !== confirmPassword) {
+        showAlert("Le password non corrispondono.", "danger");
+        return;
+    }
+
+    if (newPassword.length < 3) {
+        showAlert("La password deve avere almeno 3 caratteri.", "warning");
+        return;
+    }
+
+    user.password = newPassword;
+    saveAppData();
+    accountNewPassword.value = "";
+    accountConfirmPassword.value = "";
+    showAlert("Password cambiata con successo.", "success");
+    const modalInstance = bootstrap.Modal.getInstance(accountModal);
+    if (modalInstance) modalInstance.hide();
+}
+
+/**
+ * Elimina l'account dell'utente attivo.
+ * @returns {void}
+ */
+function handleDeleteAccount() {
+    const user = getActiveUser();
+    if (!user) {
+        showAlert("Nessun utente autenticato.", "danger");
+        return;
+    }
+
+    const confirmed = window.confirm(
+        `Sei sicuro di voler eliminare l'account ${user.username}? Questa azione è irreversibile e tutti i dati verranno persi.`
+    );
+    if (!confirmed) {
+        return;
+    }
+
+    appData.users = appData.users.filter((u) => u.id !== user.id);
+    saveAppData();
+    sessionState = {loggedInUserId: "", userId: "", bookId: ""};
+    sessionStorage.removeItem(SESSION_KEY);
+    state.contacts = [];
+    state.editingContactId = null;
+    searchState.searchQuery = "";
+    searchState.currentPage = 1;
+    searchState.filteredContacts = [];
+    globalSearchInput.value = "";
+    renderWorkspaceBar();
+    showAuthView();
+    renderAuthHint("Account eliminato. Puoi crearne un nuovo.", "info");
+    const modalInstance = bootstrap.Modal.getInstance(accountModal);
+    if (modalInstance) modalInstance.hide();
+}
+
+/**
+ * Inizializza il database con un account superuser admin/admin se non esistono utenti.
+ * @returns {void}
+ */
+function seedAdminIfNeeded() {
+    if (appData.users.length === 0) {
+        const adminUser = {
+            id: crypto.randomUUID(),
+            username: "admin",
+            password: "admin",
+            isAdmin: true,
+            books: [createEmptyBook("Rubrica principale")]
+        };
+        appData.users.push(adminUser);
+        saveAppData();
+    }
+}
+
+/**
+ * Verifica se l'utente autenticato è un amministratore.
+ * @returns {boolean}
+ */
+function isCurrentUserAdmin() {
+    const loggedInUser = appData.users.find((user) => user.id === sessionState.loggedInUserId);
+    return Boolean(loggedInUser?.isAdmin === true);
+}
 
 // ============================================================================
 // Eventi UI
 // ============================================================================
 // Tutti gli eventi vengono collegati una sola volta all'avvio, così la logica
 // rimane centralizzata e non si disperde in più file.
+authForm.addEventListener("submit", handleAuthSubmit);
+activeBookSelect.addEventListener("change", handleBookChange);
+newBookBtn.addEventListener("click", handleCreateBook);
+accountSettingsBtn.addEventListener("click", () => {
+    const modal = new bootstrap.Modal(accountModal);
+    modal.show();
+});
+changePasswordBtn.addEventListener("click", handleChangePassword);
+deleteAccountBtn.addEventListener("click", handleDeleteAccount);
+logoutBtn.addEventListener("click", handleLogout);
 contactForm.addEventListener("submit", handleSubmit);
 showFormBtn.addEventListener("click", showFormView);
 showListBtn.addEventListener("click", showListView);
@@ -256,13 +835,10 @@ globalSearchInput.addEventListener("input", handleGlobalSearch);
 showListBtn.addEventListener("click", showSearchBar);
 showFormBtn.addEventListener("click", hideSearchBar);
 
-initTheme();
-
 populateCountryCodeOptions();
+initTheme();
+bootstrapApp();
 updateAvatarPreviewText();
-searchState.filteredContacts = [...state.contacts];
-renderContactsPage();
-showListView();
 
 
 /**
@@ -413,7 +989,13 @@ function setCountryDialCode(dialCode, iso2 = "") {
     selectedCountry = country || null;
 
     if (!country) {
-        countryDropdownBtn.textContent = `Prefisso ${dialCode}`;
+        countryDropdownBtn.replaceChildren();
+
+        const label = document.createElement("span");
+        label.className = "country-select-label";
+        label.textContent = `Prefisso ${dialCode}`;
+
+        countryDropdownBtn.append(label);
         return;
     }
 
@@ -428,7 +1010,11 @@ function setCountryDialCode(dialCode, iso2 = "") {
         flag.replaceWith(document.createTextNode(getCountryFlagEmoji(country.flag, country.code)));
     });
 
-    countryDropdownBtn.append(flag, document.createTextNode(` ${country.name} (${dialCode})`));
+    const label = document.createElement("span");
+    label.className = "country-select-label";
+    label.textContent = `${country.name} (${dialCode})`;
+
+    countryDropdownBtn.append(flag, label);
 }
 
 // Restituisce la nazione precisa in base a prefisso+iso; fallback al primo match per prefisso.
@@ -494,67 +1080,29 @@ function getCountryFlagEmoji(flag, countryCode) {
     return String.fromCodePoint(first, second);
 }
 
-// Legge i contatti da localStorage e li normalizza nel formato corrente dell'app.
+// Legge una lista di contatti legacy o già normalizzati e la riporta al formato corrente.
 /**
+ * @param {Contact[]} entries
  * @returns {Contact[]}
  */
-function loadContacts() {
-    // Carica i contatti da localStorage e normalizza il formato legacy.
-    // Se il salvataggio precedente aveva campi vecchi o incompleti, li riporta
-    // al formato attuale senza interrompere la lettura dell'elenco.
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) {
-        return [];
-    }
-
-    try {
-        const parsed = JSON.parse(raw);
-        console.log("Dati caricati correttamente:", parsed);
-        if (!Array.isArray(parsed)) {
-            return [];
-        }
-
-        return parsed.map((entry) => {
-            const fullName = String(entry.fullName || "").trim();
-            const countryCode = normalizeCountryCode(entry.countryCode || "+39") || "+39";
-            const legacyPhone = String(entry.phone || "");
-            const phoneLocal = normalizeLocalPhone(entry.phoneLocal || legacyPhone);
-            const phoneInternational = entry.phoneInternational || buildInternationalPhone(countryCode, phoneLocal);
-            const email = normalizeEmail(entry.email || "");
-            const avatar = String(entry.avatar || "").trim();
-            const countryIso = String(entry.countryIso || "").trim().toLowerCase();
-            const fallbackCountry = getCountryOptionBySelection(countryCode, countryIso);
-
-            return {
-                id: entry.id || crypto.randomUUID(),
-                fullName,
-                countryCode,
-                countryIso: countryIso || fallbackCountry?.code || "",
-                countryName: String(entry.countryName || fallbackCountry?.name || ""),
-                phoneLocal,
-                phoneInternational,
-                email,
-                age: entry.age || null,
-                avatar,
-                avatarMode: entry.avatarMode || (avatar ? "url" : "placeholder"),
-                placeholderInitial: entry.placeholderInitial || getPlaceholderInitial(fullName)
-            };
-        });
-    } catch (error) {
-        console.error("Errore critico nel caricamento:", error);
-        // Invece di restituire [], potresti lanciare un errore o
-        // bloccare il salvataggio per non perdere i dati esistenti.
-        return [];
-    }
+function loadContacts(entries = []) {
+    return normalizeStoredContacts(entries);
 }
 
-// Salva l'intera rubrica in localStorage come JSON serializzato.
+// Salva la rubrica attiva dentro la struttura utenti/rubriche.
 /**
  * @returns {void}
  */
 function saveContacts() {
-    // Persistenza unica: tutta la rubrica viene salvata come array JSON nel localStorage.
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.contacts));
+    const activeUser = getActiveUser();
+    const activeBook = getActiveBook();
+
+    if (!activeUser || !activeBook) {
+        return;
+    }
+
+    activeBook.contacts = [...state.contacts];
+    saveAppData();
 }
 
 // Mostra messaggi Bootstrap dismissibili per conferme, errori e avvisi.
@@ -808,7 +1356,8 @@ async function handleSubmit(event) {
         age,
         avatar: avatar.avatar,
         avatarMode: avatar.avatarMode,
-        placeholderInitial: avatar.placeholderInitial
+        placeholderInitial: avatar.placeholderInitial,
+        createdBy: getActiveUser()?.username || ""
     };
 
     if (state.editingContactId) {
@@ -975,6 +1524,7 @@ function renderContactsPage() {
                 <strong>Email:</strong> ${contact.email}<br>
                 <strong>Telefono:</strong> ${contact.phoneInternational}
                 ${contact.age ? `<br><strong>Età:</strong> ${contact.age} anni` : ""}
+                ${contact.createdBy ? `<br><strong>Inserito da:</strong> ${contact.createdBy}` : ""}
             </p>
         `;
 

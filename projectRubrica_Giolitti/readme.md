@@ -1,36 +1,64 @@
-# Rubrica personale (LocalStorage + Bootstrap)
+# Rubrica Personale
 
-Applicazione web per gestire contatti personali con persistenza su `localStorage`.
+Client-side contact manager with multi-account support, per-account address books, and browser-only storage.
 
-## Funzionalita
+## Features
 
-- Form con campi: nome/cognome, prefisso internazionale, numero locale, email
-- Campo opzionale **Età** per ogni contatto
-- Tendina prefisso custom Bootstrap con tutti i paesi + bandierina SVG locale (pacchetti `country-codes-flags-phone-codes` e `flag-icons`)
-- Ricerca live nella tendina prefissi (filtro per nome paese e codice telefonico)
-- Avatar opzionale con 3 modalita: URL immagine, upload file convertito in base64, placeholder automatico
-- Toggle tra vista form (`Aggiungi Contatto`) e vista lista (`Mostra Rubrica`)
-- Blocco doppioni basato su telefono internazionale normalizzato o email normalizzata
-- **Vista rubrica come card** (layout grid responsive)
-- **Paginazione** (6 contatti per pagina)
-- **Ricerca globale** (Nome, Email, Telefono, Età)
-- **Toggle Dark/Light Mode** con sprite sole (☀️) / luna (🌙) in navbar
-- CRUD completo: aggiunta, modifica, eliminazione contatti
-- Avvisi utente tramite alert Bootstrap
-- Salvataggio e ricarica automatica contatti da `localStorage`
+- **Multi-account**: separate login + independent address books per user.
+- **Account management**: change password, delete account.
+- **Superuser**: `admin/admin` seeded on first run. Admin can view/access all users' books while retaining privileges.
+- **Admin viewing**: dropdown shows all users' books; admin can switch between accounts; read-only when viewing others.
+- **Contacts**: full name, international prefix + local number, email, optional age, optional avatar.
+- **Prefix picker**: country dropdown with live search and flag icons.
+- **Avatar modes**: upload (base64), URL, or automatic placeholder from initials.
+- **Duplicate blocking**: by normalised email or international phone.
+- **Search + pagination**: 6 per page, global search on name/email/phone/age.
+- **Dark mode**: high-contrast theme toggle, persisted.
+- **CRUD**: add, edit, delete, full form validation.
+- **Persistence**: browser `localStorage` only, no server.
 
-## Installazione
+## Setup
 
 ```bash
 npm install
+npm test         # runs normalisation and duplicate tests
 ```
 
-## Avvio locale
+## Run
 
-Apri direttamente `index.html` nel browser (nessun server npm richiesto).
+Open `index.html` directly in a browser (no server needed).
 
-## Test rapido logica (normalizzazione e doppioni)
+## Data
 
-```bash
-npm test
+Stored in `localStorage` key `rubrica-giolitti-app-data`:
+
+```json
+{
+  "users": [
+    {
+      "id": "...",
+      "username": "admin",
+      "password": "admin",
+      "isAdmin": true,
+      "books": [
+        {
+          "id": "...",
+          "name": "Rubrica principale",
+          "contacts": [
+            { "id": "...", "fullName": "...", "email": "...", "phoneInternational": "...", ... }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "...",
+      "username": "testuser",
+      "password": "...",
+      "isAdmin": false,
+      "books": []
+    }
+  ]
+}
 ```
+
+See [explained.md](explained.md) for quick code reference and storage layout.

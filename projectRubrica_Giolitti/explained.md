@@ -1,247 +1,141 @@
-# Explained - Rubrica Personale
+# Rubrica Personale - Quick Reference
 
-Questo documento spiega nel dettaglio il funzionamento interno dell'app `projectRubrica_Giolitti`.
+Short guide for fast codebase navigation.
 
-## 1) Obiettivo dell'app
+## What this app is
 
-L'applicazione e una rubrica personale lato client (front-end puro) che permette di:
+Client-only contact manager with Bootstrap UI, one JS entry file, no backend, and browser storage only.
 
-- inserire contatti con nome, telefono, email, eta e avatar;
-- scegliere il prefisso internazionale da una tendina con bandiere;
-- evitare duplicati (email o telefono internazionale);
-- visualizzare i contatti in card con paginazione;
-- cercare rapidamente i contatti;
-- modificare/eliminare contatti;
-- salvare tutto in `localStorage`;
-- usare tema chiaro/scuro ad alto contrasto.
+## Main files
 
-## 2) File principali
+- [index.html](index.html): structure and controls.
+- [css/style.css](css/style.css): theme and layout overrides.
+- [js/script01.js](js/script01.js): all behaviour, state, storage, rendering.
+- [tests/contact-utils.test.mjs](tests/contact-utils.test.mjs): utility tests.
 
-- `index.html`: struttura UI (navbar, form, lista card, paginazione, dropdown prefissi).
-- `css/style.css`: stile custom e tema scuro ad alto contrasto.
-- `js/script01.js`: tutta la logica applicativa (file unico JS).
-- `tests/contact-utils.test.mjs`: test della logica utility (normalizzazione e deduplica).
+## Storage
 
-## 3) Architettura generale
+- Contacts and users: `localStorage` key `rubrica-giolitti-app-data`.
+- Session: `sessionStorage` key `rubrica-giolitti-session`.
+- Theme: `localStorage` key `rubrica-theme`.
+- Contacts are not stored directly at the top level. They live at `users[].books[].contacts`.
 
-L'app usa un approccio "single-page" senza framework:
-
-- **HTML** fornisce i contenitori e i controlli;
-- **JavaScript** gestisce stato, eventi, rendering e persistenza;
-- **CSS** applica look & feel, inclusa modalita high-contrast dark.
-
-Non c'e backend: i dati restano nel browser tramite `localStorage`.
-
-## 4) Stato applicazione (in `script01.js`)
-
-### 4.1 Stato contatti
+## Current data shape
 
 ```js
-const state = {
-  contacts: loadContacts(),
-  editingContactId: null
-};
+{
+  users: [
+    {
+      id,
+      username,
+      password,
+      isAdmin,          // true only for admin/admin superuser
+      books: [
+        {
+          id,
+          name,
+          contacts: [contact]
+        }
+      ]
+    }
+  ]
+}
 ```
 
-- `contacts`: array dei contatti caricati da storage.
-- `editingContactId`: id del contatto in modifica (o `null` in inserimento).
+## Session tracking
 
-### 4.2 Stato ricerca/paginazione
+Dual-field session state allows admin to view other users' books while retaining superuser privileges:
 
 ```js
-const searchState = {
-  searchQuery: "",
-  currentPage: 1,
-  filteredContacts: []
-};
+sessionStorage: {
+  loggedInUserId,   // actual authenticated user (never changes)
+  userId,           // user being viewed (changes when admin switches)
+  bookId            // book being viewed
+}
 ```
 
-- `searchQuery`: testo filtro globale.
-- `currentPage`: pagina visualizzata.
-- `filteredContacts`: risultato della ricerca globale.
+For regular users: `loggedInUserId` === `userId`. For admin viewing others: they differ.
 
-### 4.3 Stato nazione selezionata
+## Contact shape
 
-- `countryOptions`: dataset completo paesi/prefissi pronto per UI.
-- `countryByDialCode`: mappa di fallback per prefisso.
-- `selectedCountry`: paese attualmente selezionato (importante per prefissi condivisi, es. `+1`).
-
-## 5) Modello dati contatto
-
-Ogni contatto salva (in sintesi):
+Important fields:
 
 - `id`
 - `fullName`
-- `countryCode` (es. `+39`)
-- `countryIso` (es. `it`)
-- `countryName` (es. `Italy`)
+- `countryCode`
+- `countryIso`
+- `countryName`
 - `phoneLocal`
 - `phoneInternational`
 - `email`
 - `age`
 - `avatar`
-- `avatarMode` (`file | url | placeholder`)
+- `avatarMode`
 - `placeholderInitial`
+- `createdBy`
 
-## 6) Flusso di inizializzazione
+## Main flow in `script01.js`
 
-All'avvio (`script01.js`):
+1. Load app data and session.
+2. Resolve active user and active book.
+3. Sync `state.contacts` from `activeBook.contacts`.
+4. Render auth or app view.
+5. On submit, validate and normalise input.
+6. Prevent duplicates by normalised email or international phone.
+7. Push or replace the contact in `state.contacts`.
+8. Save back through `saveContacts()` -> `saveAppData()`.
 
-1. collega tutti gli event listener;
-2. inizializza tema (`initTheme`);
-3. popola tendina prefissi (`populateCountryCodeOptions`);
-4. aggiorna testo preview avatar (`updateAvatarPreviewText`);
-5. inizializza lista filtrata con tutti i contatti;
-6. renderizza la prima pagina (`renderContactsPage`).
+## Key functions
 
-## 7) Gestione prefissi e paesi
+- `loadAppData()`: reads `rubrica-giolitti-app-data`.
+- `saveAppData()`: writes `appData.users` to `localStorage`.
+- `loadSessionState()` / `saveSessionState()`: manage active user/book.
+- `syncStateFromActiveBook()`: copies active book contacts into UI state.
+- `handleSubmit()`: add/edit contact.
+- `saveContacts()`: copies `state.contacts` back into the active book.
+- `handleBookChange()`: switches active book.
+- `handleChangePassword()`: changes active user password.
+- `handleDeleteAccount()`: deletes active user and all their data.
+- `seedAdminIfNeeded()`: seeds `admin/admin` superuser on first run with `isAdmin: true`.
+- `isCurrentUserAdmin()`: checks if logged-in user has admin privileges (checks `loggedInUserId`).
+- `handleBookChange()`: switches active book; if admin and value contains pipe (`|`), parses as `userId|bookId` for cross-user viewing.
+- `handleLogout()`: clears session and UI state.
 
-### 7.1 Popolamento dropdown
+## Superuser (admin) capabilities
 
-`populateCountryCodeOptions()`:
+- On first run, if no users exist, `admin/admin` is seeded with `isAdmin: true`.
+- Admin sees `(Admin)` label next to username in workspace bar.
+- Admin dropdown shows all users' books: `username - bookname`.
+- Admin can select any user's book to view their contacts.
+- Admin retains superuser rights while viewing other users (dual session tracking).
+- New Book and Account Settings buttons disabled when viewing other users (read-only mode).
+- Regular users see only their own books in dropdown.
 
-- legge i paesi da `countries`;
-- ordina alfabeticamente;
-- costruisce `countryOptions` con metadati utili alla ricerca;
-- popola il campo hidden `countryCode`;
-- imposta default Italia (`+39`, `it`).
+## UI notes
 
-### 7.2 Ricerca live nella tendina
+- Auth screen is `#authView`.
+- App screen is `#appShell`.
+- Search bar is `#searchBar` and is transparent.
+- Dark mode is high contrast and handled in `css/style.css`.
 
-`handleCountrySearch()` filtra `countryOptions` per:
+## Behaviour worth knowing
 
-- nome paese;
-- prefisso con e senza `+`.
+- No backend exists.
+- No cloud sync exists.
+- Data is per browser/device/origin.
+- `sessionStorage` does not hold contacts.
+- If DevTools shows an empty `contacts` array, nothing has been saved for that book yet.
 
-### 7.3 Gestione prefissi condivisi (fix importante)
+## Tests
 
-`setCountryDialCode(dialCode, iso2)` + `getCountryOptionBySelection(...)` risolvono i casi in cui lo stesso prefisso e condiviso da piu nazioni:
-
-- la selezione usa **prefisso + ISO**;
-- vengono salvati anche `countryIso` e `countryName`;
-- in edit/reload viene ripristinata la nazione corretta.
-
-## 8) Inserimento e modifica contatto
-
-`handleSubmit(event)`:
-
-1. legge i campi form;
-2. valida obbligatori (`fullName`, `countryCode`, `phoneLocal`, `email`);
-3. normalizza dati (`normalizeCountryCode`, `normalizeLocalPhone`, `normalizeEmail`);
-4. blocca duplicati (`isDuplicateContact`);
-5. risolve avatar (`resolveAvatarSource`);
-6. costruisce `contactPayload`;
-7. crea o aggiorna contatto in `state.contacts`;
-8. salva in `localStorage`;
-9. resetta form e aggiorna lista.
-
-### 8.1 Deduplica
-
-`isDuplicateContact(...)` considera duplicato se coincide:
-
-- email normalizzata, oppure
-- telefono internazionale normalizzato.
-
-In modifica usa `ignoreId` per non auto-bloccarsi.
-
-## 9) Avatar: priorita sorgente
-
-`resolveAvatarSource(...)` usa questa priorita:
-
-1. file upload (base64);
-2. URL valida `http/https`;
-3. placeholder con iniziale.
-
-`updateAvatarPreviewText(...)` informa sempre l'utente su quale sorgente e attiva.
-
-## 10) Ricerca globale e paginazione
-
-### 10.1 Ricerca globale
-
-`applySearch()` filtra i contatti su:
-
-- nome
-- email
-- telefono internazionale
-- eta
-
-### 10.2 Paginazione
-
-- costante `CONTACTS_PER_PAGE = 6`;
-- `renderContactsPage()` renderizza solo la pagina corrente;
-- `renderPagination(totalPages, currentPage)` crea i controlli prev/next + numeri pagina.
-
-## 11) Rendering lista come card
-
-`renderContactsPage()` crea card Bootstrap dinamiche con:
-
-- avatar (immagine o placeholder);
-- nome;
-- email/telefono/eta;
-- pulsanti azione `Modifica` / `Elimina`.
-
-Gli eventi dei pulsanti sono gestiti con delegation in `handleListActions(event)`.
-
-## 12) Tema chiaro/scuro
-
-- `initTheme()` legge da `localStorage` (`THEME_KEY`);
-- `applyTheme(theme)` applica classi/attributi e icona toggle;
-- `toggleTheme()` alterna `light <-> dark`.
-
-Il CSS in `style.css` definisce una variante dark high-contrast ispirata a VS Code (topbar/searchbar/input/toggle).
-
-## 13) Persistenza dati
-
-- Chiave contatti: `rubrica-giolitti-contacts`
-- Chiave tema: `rubrica-theme`
-
-`loadContacts()` gestisce anche dati legacy (campi vecchi/non presenti) con fallback robusti.
-
-## 14) Eventi principali mappati
-
-- Form submit: `handleSubmit`
-- Toggle viste: `showFormView`, `showListView`
-- Azioni card: `handleListActions`
-- Ricerca globale: `handleGlobalSearch`
-- Tema: `toggleTheme`
-- Dropdown prefissi: `handleCountrySelection`, `handleCountrySearch`
-
-## 15) Styling custom (estratto)
-
-`style.css` include:
-
-- topbar/searchbar custom;
-- tema dark high-contrast;
-- hover card;
-- avatar/placeholder;
-- dropdown prefissi con header sticky e bandierine.
-
-## 16) Test
-
-Test disponibili:
-
-- `tests/contact-utils.test.mjs`
-
-Coprono in particolare:
-
-- normalizzazione email/telefono/prefisso;
-- gestione avatar mode;
-- deduplica contatti (incluso caso edit con `ignoreId`).
-
-Esecuzione:
+Run:
 
 ```bash
 npm test
 ```
 
-## 17) Limiti noti / possibili miglioramenti
+## If you need the fast answer
 
-- i dati restano locali al browser/dispositivo;
-- nessuna autenticazione o sync cloud;
-- nessuna validazione server-side;
-- migliorabile il supporto tastiera nella tendina paesi (eventuale step successivo).
-
-## 18) Conclusione
-
-L'app e progettata per essere didattica ma completa: file JS unico, stato chiaro, rendering dinamico, persistenza locale, UX moderna (ricerca + paginazione + tema), e logica robusta su normalizzazione/deduplica/gestione prefissi condivisi.
+- Where are contacts saved? `localStorage -> rubrica-giolitti-app-data -> users[].books[].contacts`
+- Why can storage look empty? Wrong origin, no saved contact yet, or wrong book/user.
 
