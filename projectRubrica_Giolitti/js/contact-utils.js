@@ -5,6 +5,8 @@
  * @property {string} countryCode
  * @property {string} phoneLocal
  * @property {string=} phoneInternational
+ * @property {boolean=} isFavorite
+ * @property {string[]=} tags
  */
 
 /**
@@ -45,6 +47,20 @@ export function normalizeCountryCode(value) {
  */
 export function normalizeLocalPhone(value) {
     return String(value || "").replace(/\D/g, "");
+}
+
+/**
+ * Normalizza un array di tag (trim, lowercase, remove duplicates).
+ * @param {unknown} value
+ * @returns {string[]}
+ */
+export function normalizeTags(value) {
+    if (!Array.isArray(value)) {
+        return [];
+    }
+    return [...new Set(
+        value.map((tag) => String(tag || "").trim().toLowerCase()).filter((tag) => tag.length > 0)
+    )];
 }
 
 /**
@@ -140,3 +156,4 @@ export function isDuplicateContact(contacts, candidate, options = {}) {
         return normalizeEmail(contact.email) === normalizedEmail || contactPhone === normalizedPhone;
     });
 }
+``
