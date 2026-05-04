@@ -2,54 +2,58 @@
  * app-logic.js - Application logic moved out of script01.js
  * Exports functions used by the orchestrator.
  */
-import { getPlaceholderInitial, resolveAvatarSource } from "./contact-utils.js";
-import { appData, sessionState, updateSessionState, loadAppData, saveAppData, loadSessionState, getActiveUser, seedAdminIfNeeded, isCurrentUserAdmin } from "./data-manager.js";
+import { getPlaceholderInitial } from "./contact-utils.js";
+import { getActiveUser, isCurrentUserAdmin } from "./data-manager.js";
 import { handleAuthSubmit, handleLogout, handleChangePassword, handleDeleteAccount } from "./auth-manager.js";
 import { selectedCountry as getSelectedCountry, setCountryDialCode } from "./country-selector.js";
 import { state as contactState, setEditMode, resetFormMode, handleListActions, saveContacts, syncStateFromUser } from "./contact-manager.js";
-import { searchState, handleGlobalSearch, updateAllTags, applySearch, renderTagFilters } from "./search-filter.js";
-import { renderWorkspaceBar, showAppView, showAuthView, showFormView, showListView, showSearchBar, hideSearchBar, renderContactsPage, renderPagination, showAlert, updateAvatarPreviewText, renderAuthHint } from "./ui-renderer.js";
+import { searchState, handleGlobalSearch, updateAllTags, applySearch, renderTagFilters, resetSearchState } from "./search-filter.js";
+import { renderWorkspaceBar, showAppView, showAuthView, showFormView, showListView, showSearchBar, renderContactsPage, renderPagination, showAlert, updateAvatarPreviewText, renderAuthHint } from "./ui-renderer.js";
 import { handleSubmitContact } from "./contact-manager.js";
-import { handleExport, handleImportClick, handleImportFileChange } from "./import-export.js";
+import { getDomRefs } from "./dom-refs.js";
 
-// DOM refs (query locally to avoid relying on external file)
-const alertBox = document.querySelector("#alertBox");
-const formView = document.querySelector("#formView");
-const listView = document.querySelector("#listView");
-const showFormBtn = document.querySelector("#showFormBtn");
-const showListBtn = document.querySelector("#showListBtn");
-const formTitle = document.querySelector("#formTitle");
-const submitBtn = document.querySelector("#submitBtn");
-const cancelEditBtn = document.querySelector("#cancelEditBtn");
-const contactForm = document.querySelector("#contactForm");
-const avatarPreview = document.querySelector("#avatarPreview");
-const avatarFileInput = document.querySelector("#avatarFile");
-const avatarUrlInput = document.querySelector("#avatarUrl");
-const countryCodeSelect = document.querySelector("#countryCode");
-const countryIsoInput = document.querySelector("#countryIso");
-const countryDropdownBtn = document.querySelector("#countryDropdownBtn");
-const globalSearchInput = document.querySelector("#globalSearchInput");
-const contactsGrid = document.querySelector("#contactsGrid");
-const noContactsMsg = document.querySelector("#noContactsMsg");
-const paginationNav = document.querySelector("#paginationNav");
-const paginationList = document.querySelector("#paginationList");
-const tagFilterContainer = document.querySelector("#tagFilterContainer");
-const authHint = document.querySelector("#authHint");
-const contactModal = document.querySelector("#contactModal");
-const contactModalAvatar = document.querySelector("#contactModalAvatar");
-const contactModalName = document.querySelector("#contactModalName");
-const contactModalEmail = document.querySelector("#contactModalEmail");
-const contactModalPhone = document.querySelector("#contactModalPhone");
-const contactModalAge = document.querySelector("#contactModalAge");
-const contactModalTags = document.querySelector("#contactModalTags");
-const contactModalCreatedBy = document.querySelector("#contactModalCreatedBy");
-const contactModalEditBtn = document.querySelector("#contactModalEditBtn");
-const contactModalDeleteBtn = document.querySelector("#contactModalDeleteBtn");
-const undoToastEl = document.querySelector("#undoToast");
+// DOM refs centralized in dom-refs.js
+const {
+    alertBox,
+    authForm,
+    authHint,
+    formView,
+    listView,
+    showFormBtn,
+    showListBtn,
+    formTitle,
+    submitBtn,
+    cancelEditBtn,
+    contactForm,
+    avatarPreview,
+    avatarFileInput,
+    avatarUrlInput,
+    countryCodeSelect,
+    countryIsoInput,
+    countryDropdownBtn,
+    globalSearchInput,
+    contactsGrid,
+    noContactsMsg,
+    paginationNav,
+    paginationList,
+    tagFilterContainer,
+    contactModal,
+    contactModalAvatar,
+    contactModalName,
+    contactModalEmail,
+    contactModalPhone,
+    contactModalAge,
+    contactModalTags,
+    contactModalCreatedBy,
+    contactModalEditBtn,
+    contactModalDeleteBtn,
+    undoToastEl,
+    authView,
+    appShell,
+    authUsernameInput,
+    searchBar
+} = getDomRefs();
 
-export function syncState() {
-    syncStateFromUser();
-}
 
 export function renderWorkspace() {
     const activeUserLabel = document.querySelector('#activeUserLabel');
@@ -130,27 +134,6 @@ export function handleUndoDelete() {
     return true;
 }
 
-// helper per evidenziazione
-function escapeHtml(str) {
-    return String(str)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-}
-
-function highlight(text, query) {
-    const t = String(text || "");
-    if (!query) return escapeHtml(t);
-    try {
-        const q = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        const re = new RegExp(q, "ig");
-        return escapeHtml(t).replace(re, (m) => `<mark>${escapeHtml(m)}</mark>`);
-    } catch (e) {
-        return escapeHtml(t);
-    }
-}
 
 export function applySearchAndRender() {
     applySearch(contactState.contacts);
@@ -195,25 +178,24 @@ export function saveContact(contactPayload, isEdit) {
 
     saveContacts();
     resetFormMode(resetForm, () => showFormView(formView, listView, showFormBtn, showListBtn));
-    searchState.currentPage = 1;
-    searchState.searchQuery = "";
-    searchState.filteredContacts = [...contactState.contacts];
-    showListView(formView, listView, showFormBtn, showListBtn, () => showSearchBar(document.querySelector('#searchBar'), globalSearchInput));
+    resetSearchState({ contacts: contactState.contacts });
+    showListView(formView, listView, showFormBtn, showListBtn, () => showSearchBar(searchBar, globalSearchInput));
     applySearchAndRender();
 }
 
 export function handleAuthSubmitWrapper(event) {
     handleAuthSubmit(
         event,
-        syncState,
+        syncStateFromUser,
         () => renderWorkspace(),
-        () => showAppView(document.querySelector('#authView'), document.querySelector('#appShell')),
+        () => showAppView(authView, appShell),
         () => {
-            showListView(formView, listView, showFormBtn, showListBtn, () => showSearchBar(document.querySelector('#searchBar'), globalSearchInput));
+            showListView(formView, listView, showFormBtn, showListBtn, () => showSearchBar(searchBar, globalSearchInput));
             applySearchAndRender();
         },
         (msg, type) => renderAuthHint(authHint, msg, type),
-        (msg, type) => showAlert(alertBox, msg, type)
+        (msg, type) => showAlert(alertBox, msg, type),
+        () => authForm?.reset()
     );
 }
 
@@ -221,14 +203,12 @@ export function handleLogoutWrapper() {
     handleLogout(
         saveContacts,
         () => {},
-        () => showAuthView(document.querySelector('#authView'), document.querySelector('#appShell'), document.querySelector('#authUsername')),
+        () => showAuthView(authView, appShell, authUsernameInput),
         (msg, type) => showAlert(alertBox, msg, type),
         () => {
             contactState.contacts = [];
             contactState.editingContactId = null;
-            searchState.searchQuery = "";
-            searchState.currentPage = 1;
-            searchState.filteredContacts = [];
+            resetSearchState({ contacts: [] });
             if (globalSearchInput) globalSearchInput.value = "";
         }
     );

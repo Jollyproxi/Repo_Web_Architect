@@ -120,9 +120,10 @@ export function renderTagFilters(tagFilterContainer, onTagSelectCallback) {
  * @returns {{pageContacts: Contact[], totalPages: number}}
  */
 export function getPageContacts() {
-    const totalPages = Math.ceil(searchState.filteredContacts.length / CONTACTS_PER_PAGE);
-    const start = (searchState.currentPage - 1) * CONTACTS_PER_PAGE;
-    const end = start + CONTACTS_PER_PAGE;
+    const perPage = getContactsPerPage();
+    const totalPages = Math.ceil(searchState.filteredContacts.length / perPage);
+    const start = (searchState.currentPage - 1) * perPage;
+    const end = start + perPage;
     const pageContacts = searchState.filteredContacts.slice(start, end);
 
     return { pageContacts, totalPages };
@@ -137,13 +138,22 @@ export function getContactsPerPage() {
 }
 
 /**
- * Resetta lo stato della ricerca.
+ * Resetta lo stato di ricerca con opzioni di controllo.
+ * @param {{contacts?: Contact[], clearFavorites?: boolean, clearTags?: boolean}} options
  * @returns {void}
  */
-export function resetSearch() {
+export function resetSearchState(options = {}) {
+    const { contacts = [], clearFavorites = false, clearTags = false } = options;
     searchState.searchQuery = "";
     searchState.currentPage = 1;
-    searchState.selectedTags = [];
-    searchState.filteredContacts = [];
-    searchState.showFavoritesOnly = false;
+    searchState.filteredContacts = Array.isArray(contacts) ? [...contacts] : [];
+
+    if (clearFavorites) {
+        searchState.showFavoritesOnly = false;
+    }
+
+    if (clearTags) {
+        searchState.selectedTags = [];
+    }
 }
+

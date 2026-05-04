@@ -4,12 +4,10 @@
 
 import {
     appData,
-    sessionState,
     updateSessionState,
     saveAppData,
     normalizeAuthName,
-    getActiveUser,
-    isCurrentUserAdmin
+    getActiveUser
 } from "./data-manager.js";
 
 /**
@@ -21,6 +19,7 @@ import {
  * @param {Function} showListViewCallback - Callback per mostrare la lista
  * @param {Function} renderAuthHintCallback - Callback per mostrare hint di auth
  * @param {Function} showAlertCallback - Callback per mostrare alert
+ * @param {Function=} resetAuthFormCallback - Callback opzionale per svuotare il form auth
  * @returns {void}
  */
 export function handleAuthSubmit(
@@ -30,7 +29,8 @@ export function handleAuthSubmit(
     showAppViewCallback,
     showListViewCallback,
     renderAuthHintCallback,
-    showAlertCallback
+    showAlertCallback,
+    resetAuthFormCallback
 ) {
     event.preventDefault();
 
@@ -63,6 +63,7 @@ export function handleAuthSubmit(
         renderWorkspaceCallback();
         showAppViewCallback();
         showListViewCallback();
+        resetAuthFormCallback?.();
         renderAuthHintCallback("Account creato con successo.", "success");
         showAlertCallback("Account creato con successo.", "success");
         return;
@@ -82,6 +83,7 @@ export function handleAuthSubmit(
     renderWorkspaceCallback();
     showAppViewCallback();
     showListViewCallback();
+    resetAuthFormCallback?.();
     renderAuthHintCallback("Accesso effettuato.", "success");
 }
 

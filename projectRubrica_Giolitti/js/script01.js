@@ -3,47 +3,74 @@
  * Imports modular components and coordinates between them
  */
 
-import { normalizeEmail, normalizeCountryCode, normalizeLocalPhone, buildInternationalPhone, getPlaceholderInitial, resolveAvatarSource, isDuplicateContact, normalizeTags } from "./contact-utils.js";
-
 // Data management
-import { appData, sessionState, updateSessionState, loadAppData, saveAppData, loadSessionState, getActiveUser, seedAdminIfNeeded, isCurrentUserAdmin } from "./data-manager.js";
-
-// Authentication
-import { handleAuthSubmit, handleLogout, handleChangePassword, handleDeleteAccount } from "./auth-manager.js";
+import {
+    appData,
+    sessionState,
+    loadAppData,
+    loadSessionState,
+    getActiveUser,
+    seedAdminIfNeeded
+} from "./data-manager.js";
 
 // Country/Phone handling
-import { populateCountryCodeOptions, handleCountrySelection, setCountryDialCode, getCountryOptionBySelection, handleCountryTypeSearch, selectedCountry as getSelectedCountry } from "./country-selector.js";
+import {
+    populateCountryCodeOptions,
+    handleCountrySelection,
+    handleCountryTypeSearch
+} from "./country-selector.js";
 
 // Contact management
-import { state as contactState, setEditMode, resetFormMode, handleListActions, saveContacts, syncStateFromUser, handleSubmitContact } from "./contact-manager.js";
+import { state as contactState,
+    resetFormMode,
+    syncStateFromUser
+} from "./contact-manager.js";
 
 // Search/Filter
-import { searchState, handleGlobalSearch, updateAllTags, applySearch, renderTagFilters, resetSearch as resetSearchState } from "./search-filter.js";
+import {
+    searchState
+} from "./search-filter.js";
 
 // UI Rendering
-import { renderAuthHint, renderWorkspaceBar, showAppView, showAuthView, showFormView, showListView, showSearchBar, hideSearchBar, renderContactsPage, renderPagination, showAlert, updateAvatarPreviewText } from "./ui-renderer.js";
+import { renderAuthHint,
+    showAppView,
+    showAuthView,
+    showFormView,
+    showListView,
+    showSearchBar,
+    hideSearchBar,
+    showAlert,
+    updateAvatarPreviewText
+} from "./ui-renderer.js";
 
 // Import/Export
-import { handleExport, handleImportClick, handleImportFileChange } from "./import-export.js";
+import {
+    handleExport,
+    handleImportClick,
+    handleImportFileChange
+} from "./import-export.js";
 
 // Theme
-import { initTheme, toggleTheme } from "./theme-manager.js";
+import {
+    initTheme,
+    toggleTheme
+} from "./theme-manager.js";
+
+// DOM refs (centralizzati)
+import {
+    getDomRefs
+} from "./dom-refs.js";
 
 // ============================================================================
 // Callback Functions (Adapters between modules and DOM)
 // ============================================================================
 
 import {
-    syncState,
     renderWorkspace,
-    prepareFormForEdit,
     resetForm,
     handleEditContact,
     handleDeleteContact,
-    handleToggleFavorite,
     applySearchAndRender,
-    renderContactsPageHelper,
-    saveContact,
     handleAuthSubmitWrapper,
     handleLogoutWrapper,
     handleChangePasswordWrapper,
@@ -72,67 +99,51 @@ import {
  * @property {string} placeholderInitial
  */
 
-// ============================================================================
-// DOM References
-// ============================================================================
-const authView = document.querySelector("#authView");
-const authForm = document.querySelector("#authForm");
-const authUsernameInput = document.querySelector("#authUsername");
-const authPasswordInput = document.querySelector("#authPassword");
-const authHint = document.querySelector("#authHint");
-const appShell = document.querySelector("#appShell");
-const activeUserLabel = document.querySelector("#activeUserLabel");
-const logoutBtn = document.querySelector("#logoutBtn");
-const alertBox = document.querySelector("#alertBox");
-const formView = document.querySelector("#formView");
-const listView = document.querySelector("#listView");
-const showFormBtn = document.querySelector("#showFormBtn");
-const showListBtn = document.querySelector("#showListBtn");
-const formTitle = document.querySelector("#formTitle");
-const submitBtn = document.querySelector("#submitBtn");
-const cancelEditBtn = document.querySelector("#cancelEditBtn");
-const contactForm = document.querySelector("#contactForm");
-const avatarPreview = document.querySelector("#avatarPreview");
-const avatarFileInput = document.querySelector("#avatarFile");
-const avatarUrlInput = document.querySelector("#avatarUrl");
-const countryCodeSelect = document.querySelector("#countryCode");
-const countryIsoInput = document.querySelector("#countryIso");
-const countryDropdownBtn = document.querySelector("#countryDropdownBtn");
-const countryDropdownList = document.querySelector("#countryDropdownList");
-const countryDropdownOptions = document.querySelector("#countryDropdownOptions");
-const countryNoResults = document.querySelector("#countryNoResults");
-const themeTglBtn = document.querySelector("#themeTglBtn");
-const themeIcon = document.querySelector("#themeIcon");
-const searchBar = document.querySelector("#searchBar");
-const globalSearchInput = document.querySelector("#globalSearchInput");
-const contactsGrid = document.querySelector("#contactsGrid");
-const noContactsMsg = document.querySelector("#noContactsMsg");
-const paginationNav = document.querySelector("#paginationNav");
-const paginationList = document.querySelector("#paginationList");
-const accountSettingsBtn = document.querySelector("#accountSettingsBtn");
-const accountModal = document.querySelector("#accountModal");
-const accountNewPassword = document.querySelector("#accountNewPassword");
-const accountConfirmPassword = document.querySelector("#accountConfirmPassword");
-const changePasswordBtn = document.querySelector("#changePasswordBtn");
-const deleteAccountBtn = document.querySelector("#deleteAccountBtn");
-const favoriteFilterBtn = document.querySelector("#favoriteFilterBtn");
-const exportBookBtn = document.querySelector("#exportBookBtn");
-const importBookBtn = document.querySelector("#importBookBtn");
-const importFileInput = document.querySelector("#importFileInput");
-const tagFilterContainer = document.querySelector("#tagFilterContainer");
-const contactModal = document.querySelector("#contactModal");
-const contactModalAvatar = document.querySelector("#contactModalAvatar");
-const contactModalName = document.querySelector("#contactModalName");
-const contactModalEmail = document.querySelector("#contactModalEmail");
-const contactModalPhone = document.querySelector("#contactModalPhone");
-const contactModalAge = document.querySelector("#contactModalAge");
-const contactModalTags = document.querySelector("#contactModalTags");
-const contactModalCreatedBy = document.querySelector("#contactModalCreatedBy");
-const contactModalEditBtn = document.querySelector("#contactModalEditBtn");
-const contactModalDeleteBtn = document.querySelector("#contactModalDeleteBtn");
-const undoToastEl = document.querySelector("#undoToast");
-const undoToastBtn = document.querySelector("#undoToastBtn");
-
+/**
+ * DOM refs centralized in dom-refs.js
+ * Per evitare ogni volta di fare getDomRefs().qualcosa e per accedere agli elementi, estraiamo direttamente le refs in costanti locali.
+ */
+const {
+    authView,
+    authForm,
+    authUsernameInput,
+    authHint,
+    appShell,
+    logoutBtn,
+    alertBox,
+    formView,
+    listView,
+    showFormBtn,
+    showListBtn,
+    cancelEditBtn,
+    contactForm,
+    avatarPreview,
+    avatarFileInput,
+    avatarUrlInput,
+    countryCodeSelect,
+    countryDropdownBtn,
+    countryDropdownList,
+    countryDropdownOptions,
+    countryNoResults,
+    themeTglBtn,
+    themeIcon,
+    searchBar,
+    globalSearchInput,
+    contactsGrid,
+    accountSettingsBtn,
+    accountModal,
+    changePasswordBtn,
+    deleteAccountBtn,
+    favoriteFilterBtn,
+    exportBookBtn,
+    importBookBtn,
+    importFileInput,
+    contactModal,
+    contactModalEditBtn,
+    contactModalDeleteBtn,
+    undoToastEl,
+    undoToastBtn
+} = getDomRefs();
 
 
 // ============================================================================
@@ -146,7 +157,7 @@ function bootstrapApp() {
 
     const activeUser = getActiveUser();
     if (sessionState.userId && activeUser) {
-        syncState();
+        syncStateFromUser();
         renderWorkspace();
         showAppView(authView, appShell);
         showListView(formView, listView, showFormBtn, showListBtn, () => showSearchBar(searchBar, globalSearchInput));
@@ -165,6 +176,7 @@ function bootstrapApp() {
 
 authForm.addEventListener("submit", handleAuthSubmitWrapper);
 accountSettingsBtn.addEventListener("click", () => {
+    //uso la classe Modal di bootstrap per i setting
     const modal = new bootstrap.Modal(accountModal);
     modal.show();
 });
@@ -172,14 +184,20 @@ changePasswordBtn.addEventListener("click", handleChangePasswordWrapper);
 deleteAccountBtn.addEventListener("click", handleDeleteAccountWrapper);
 logoutBtn.addEventListener("click", handleLogoutWrapper);
 contactForm.addEventListener("submit", handleSubmitWrapper);
-showFormBtn.addEventListener("click", () => showFormView(formView, listView, showFormBtn, showListBtn));
+showFormBtn.addEventListener("click", () => {
+    showFormView(formView, listView, showFormBtn, showListBtn);
+    hideSearchBar(searchBar);
+});
 showListBtn.addEventListener("click", () => showListView(formView, listView, showFormBtn, showListBtn, () => showSearchBar(searchBar, globalSearchInput)));
 cancelEditBtn.addEventListener("click", () => resetFormMode(resetForm, () => showFormView(formView, listView, showFormBtn, showListBtn)));
-contactsGrid.addEventListener("click", handleListActionsWrapper);
-// Apri modal dettaglio quando si clicca la card (escludendo i bottoni)
 contactsGrid.addEventListener("click", (e) => {
     const btn = e.target.closest("button[data-action]");
-    if (btn) return; // lascia gestire i bottoni
+    if (btn) {
+        handleListActionsWrapper(e);
+        return;
+    }
+
+    // Apri il modal dettaglio quando si clicca la card.
     const card = e.target.closest(".card");
     if (!card) return;
     const id = card.dataset.id;
@@ -193,11 +211,9 @@ countryDropdownList.addEventListener("keydown", (e) => handleCountryTypeSearch(e
 countryDropdownBtn.addEventListener("shown.bs.dropdown", () => {
     countryDropdownList.focus();
 });
-
 themeTglBtn.addEventListener("click", () => toggleTheme(themeIcon));
 globalSearchInput.addEventListener("input", handleGlobalSearchWrapper);
-showListBtn.addEventListener("click", () => showSearchBar(searchBar, globalSearchInput));
-showFormBtn.addEventListener("click", () => hideSearchBar(searchBar));
+// Listener filtro preferiti: `?.` evita errori se il bottone non e' presente nella vista.
 favoriteFilterBtn?.addEventListener("click", () => {
     searchState.showFavoritesOnly = !searchState.showFavoritesOnly;
     favoriteFilterBtn.classList.toggle("btn-primary");
@@ -206,7 +222,10 @@ favoriteFilterBtn?.addEventListener("click", () => {
     applySearchAndRender();
 });
 exportBookBtn?.addEventListener("click", () => handleExport((msg, type) => showAlert(alertBox, msg, type)));
-importBookBtn?.addEventListener("click", () => handleImportClick(importFileInput));
+importBookBtn?.addEventListener("click", () => {
+    if (!importFileInput) return;
+    handleImportClick(importFileInput);
+});
 importFileInput?.addEventListener("change", (e) => handleImportFileChange(e, handleImportWrapper, (msg, type) => showAlert(alertBox, msg, type)));
 
 populateCountryCodeOptions(countryCodeSelect, countryDropdownOptions, countryDropdownBtn, countryNoResults);

@@ -7,7 +7,6 @@ import {
     normalizeCountryCode,
     normalizeLocalPhone,
     buildInternationalPhone,
-    getPlaceholderInitial,
     resolveAvatarSource,
     isDuplicateContact,
     normalizeTags
@@ -206,11 +205,10 @@ export function saveContacts() {
 
 /**
  * Sincronizza lo stato locale con i contatti dell'utente attivo.
- * @param {Function} updateTagsCallback - Callback per aggiornare i tag
  * @returns {void}
  */
-export function syncStateFromUser(updateTagsCallback) {
+export function syncStateFromUser() {
     state.contacts = getVisibleContactsForCurrentUser();
     state.editingContactId = null;
-    updateTagsCallback?.();
+
 }

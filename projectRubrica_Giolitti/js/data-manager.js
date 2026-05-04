@@ -8,9 +8,9 @@ import {
     normalizeLocalPhone,
     buildInternationalPhone,
     getPlaceholderInitial,
-    isDuplicateContact,
     normalizeTags
 } from "./contact-utils.js";
+import { getCountryOptionBySelection } from "./country-selector.js";
 
 const APP_DATA_KEY = "rubrica-giolitti-app-data";
 const SESSION_KEY = "rubrica-giolitti-session";
@@ -271,26 +271,3 @@ export function isCurrentUserAdmin() {
     return Boolean(loggedInUser?.isAdmin === true);
 }
 
-// Placeholder per gestire country options (sarà importato da country-selector.js)
-export let countryByDialCode = new Map();
-
-/**
- * Imposta la mappa dei paesi per la normalizzazione.
- * @param {Map} countryMap
- * @returns {void}
- */
-export function setCountryByDialCode(countryMap) {
-    countryByDialCode = countryMap;
-}
-
-/**
- * Placeholder per getCountryOptionBySelection.
- * @param {string} dialCode
- * @param {string} iso2
- * @returns {*|null}
- */
-export function getCountryOptionBySelection(dialCode, iso2) {
-    // Questo sarà implementato in country-selector.js e richiamato qui
-    // Per ora ritorniamo null per evitare errori
-    return null;
-}

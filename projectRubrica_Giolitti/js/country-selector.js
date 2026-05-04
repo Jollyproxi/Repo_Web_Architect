@@ -157,7 +157,7 @@ export function setCountryDialCode(dialCode, iso2 = "", countryCodeSelect, count
  * Restituisce la nazione precisa in base a prefisso+iso.
  * @param {string} dialCode
  * @param {string} iso2
- * @returns {SelectedCountry|null}
+ * @returns {{name: string, code: string, flag: string, dialCode: string}|null}
  */
 export function getCountryOptionBySelection(dialCode, iso2) {
     const normalizedDialCode = String(dialCode || "").trim();

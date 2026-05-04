@@ -13,35 +13,45 @@
         <nav class="navbar navbar-expand-lg border-bottom sticky-top bg-body-tertiary">
             <div class="container">
                 <span class="navbar-brand mb-0 h5">Rubrica Personale</span>
-                <button id="themeTglBtn" class="btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center" type="button" style="width: 40px; height: 40px;">
+                <button id="themeTglBtn" class="btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center" type="button"
+                        style="width: 40px; height: 40px;">
                     <i id="themeIcon" class="bi bi-sun-fill"></i>
                 </button>
             </div>
         </nav>
 
         <main class="container py-4">
+            <!-- Inserisco la classe auth-shell per gestire lo stato di accesso -->
             <section id="authView" class="auth-shell">
                 <div class="row justify-content-center">
+                    <!--Gestione del Dom per il form di login/registrazione-->
                     <div class="col-12 col-md-9 col-lg-6">
+                        <!-- Card di bootstrap con le classi per gestire il form di accesso
+                             Shadow-lg per un'ombra più pronunciata, border-0 per rimuovere il bordo standard della card -->
                         <div class="card auth-card shadow-lg border-0">
                             <div class="card-body p-4 p-md-5">
                                 <p class="text-uppercase small text-primary fw-semibold mb-2">Accesso</p>
-                                <h1 class="h3 mb-2">Rubrica privata</h1>
-                                <p class="text-body-secondary mb-4">Accedi o crea un account per decidere chi può inserire i contatti e lavorare su rubriche separate.</p>
-                                    <form id="authForm" class="row g-3" novalidate>
-                                        <div class="col-12">
-                                            <label for="authUsername" class="form-label">Nome utente</label>
-                                            <input id="authUsername" name="username" type="text" class="form-control" autocomplete="username" required>
-                                        </div>
-                                        <div class="col-12">
-                                            <label for="authPassword" class="form-label">Password</label>
-                                            <input id="authPassword" name="password" type="password" class="form-control" autocomplete="current-password" required>
-                                        </div>
-                                        <div class="col-12 d-flex flex-column flex-sm-row gap-2 mt-2">
-                                            <button id="authLoginBtn" class="btn btn-primary flex-grow-1" type="submit" data-action="login">Accedi</button>
-                                            <button id="authRegisterBtn" class="btn btn-outline-secondary flex-grow-1" type="submit" data-action="register">Crea account</button>
-                                        </div>
-                                    </form>
+                                <h3 class="mb-2">Rubrica privata</h3>
+                                <p class="text-body-secondary mb-4">Accedi o crea un account per decidere chi può inserire i contatti e lavorare su
+                                                                    rubriche separate.</p>
+                                <form id="authForm" class="row g-3" novalidate>
+                                    <div class="col-12">
+                                        <label for="authUsername" class="form-label">Nome utente</label>
+                                        <input id="authUsername" name="username" type="text" class="form-control" autocomplete="username" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="authPassword" class="form-label">Password</label>
+                                        <input id="authPassword" name="password" type="password" class="form-control" autocomplete="current-password"
+                                               required>
+                                    </div>
+                                    <div class="col-12 d-flex flex-column flex-sm-row gap-2 mt-2">
+                                        <button id="authLoginBtn" class="btn btn-primary flex-grow-1" type="submit" data-action="login">Accedi
+                                        </button>
+                                        <button id="authRegisterBtn" class="btn btn-outline-secondary flex-grow-1" type="submit"
+                                                data-action="register">Crea account
+                                        </button>
+                                    </div>
+                                </form>
                                 <div id="authHint" class="small text-body-secondary mt-3"></div>
                             </div>
                         </div>
@@ -78,11 +88,13 @@
                                 <form id="accountForm" class="row g-3">
                                     <div class="col-12">
                                         <label for="accountNewPassword" class="form-label">Nuova password</label>
-                                        <input id="accountNewPassword" name="accountNewPassword" type="password" class="form-control" placeholder="Lascia vuoto per non cambiare">
+                                        <input id="accountNewPassword" name="accountNewPassword" type="password" class="form-control"
+                                               placeholder="Lascia vuoto per non cambiare">
                                     </div>
                                     <div class="col-12">
                                         <label for="accountConfirmPassword" class="form-label">Conferma password</label>
-                                        <input id="accountConfirmPassword" name="accountConfirmPassword" type="password" class="form-control" placeholder="Conferma la nuova password">
+                                        <input id="accountConfirmPassword" name="accountConfirmPassword" type="password" class="form-control"
+                                               placeholder="Conferma la nuova password">
                                     </div>
                                     <div class="col-12">
                                         <button id="changePasswordBtn" class="btn btn-primary" type="button">Cambia password</button>
@@ -107,7 +119,8 @@
                             <div class="modal-body">
                                 <div class="d-flex gap-3 align-items-start">
                                     <div>
-                                        <img id="contactModalAvatar" src="" alt="avatar" class="rounded-circle" style="width:96px; height:96px; object-fit:cover;">
+                                        <img id="contactModalAvatar" src="" alt="avatar" class="rounded-circle"
+                                             style="width:96px; height:96px; object-fit:cover;">
                                     </div>
                                     <div class="flex-grow-1">
                                         <dl class="row mb-0">
@@ -146,7 +159,8 @@
                     <div class="d-flex gap-2 align-items-end mb-2">
                         <div class="flex-grow-1">
                             <label for="globalSearchInput" class="form-label small mb-1">Ricerca contatti</label>
-                            <input id="globalSearchInput" type="search" class="form-control form-control-sm" placeholder="Cerca nome, email, telefono o eta..."
+                            <input id="globalSearchInput" type="search" class="form-control form-control-sm"
+                                   placeholder="Cerca nome, email, telefono o eta..."
                                    autocomplete="off">
                         </div>
                         <button id="favoriteFilterBtn" class="btn btn-outline-primary btn-sm" type="button" style="white-space: nowrap;">
@@ -223,11 +237,14 @@
                                 <input id="avatarFile" name="avatarFile" type="file" class="form-control" accept="image/*">
                             </div>
                             <div class="col-md-6 pt-md-4">
-                                <div id="avatarPreview" class="small text-body-secondary">Nessun avatar selezionato: verrà usato il placeholder automatico.</div>
+                                <div id="avatarPreview" class="small text-body-secondary">Nessun avatar selezionato: verrà usato il placeholder
+                                                                                          automatico.
+                                </div>
                             </div>
                             <div class="col-12">
                                 <label for="tags" class="form-label">Tag (separati da virgola, opzionale)</label>
-                                <input id="tags" name="tags" type="text" class="form-control" placeholder="es: lavoro, famiglia, amico, emergenza, ecc...">
+                                <input id="tags" name="tags" type="text" class="form-control"
+                                       placeholder="es: lavoro, famiglia, amico, emergenza, ecc...">
                             </div>
                             <div class="col-12">
                                 <button id="submitBtn" class="btn btn-success" type="submit">Salva Contatto</button>

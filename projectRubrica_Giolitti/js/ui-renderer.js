@@ -6,6 +6,27 @@ import { getPlaceholderInitial } from "./contact-utils.js";
 import { sessionState } from "./data-manager.js";
 import { getPageContacts, searchState } from "./search-filter.js";
 
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function highlight(text, query) {
+    const t = String(text || "");
+    if (!query) return escapeHtml(t);
+    try {
+        const q = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const re = new RegExp(q, "ig");
+        return escapeHtml(t).replace(re, (m) => `<mark>${escapeHtml(m)}</mark>`);
+    } catch (_error) {
+        return escapeHtml(t);
+    }
+}
+
 /**
  * Aggiorna il testo di aiuto nel pannello di accesso.
  * @param {HTMLElement} authHint - Elemento hint
@@ -36,7 +57,7 @@ export function renderWorkspaceBar(activeUserLabel, accountSettingsBtn, logoutBt
     }
 
     activeUserLabel.textContent = isAdmin ? `${user.username} (Admin)` : user.username;
-    accountSettingsBtn.disabled = isAdmin && sessionState?.userId !== user.id ? true : false;
+    accountSettingsBtn.disabled = isAdmin && sessionState?.userId !== user.id;
     logoutBtn.disabled = false;
 }
 
@@ -166,27 +187,6 @@ export function renderContactsPage(
         const avatar = contact.avatar
             ? `<img src="${contact.avatar}" alt="${contact.fullName}" class="rounded-circle mb-2" style="width:50px; height:50px; object-fit:cover;">`
             : `<div class="rounded-circle mb-2 d-inline-flex align-items-center justify-content-center" style="width:50px; height:50px; background:#0d6efd; color:white; font-weight:700;">${getPlaceholderInitial(contact.fullName)}</div>`;
-        // helper: escape and highlight matches based on searchState.searchQuery
-        function escapeHtml(str) {
-            return String(str)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#39;");
-        }
-
-        function highlight(text, query) {
-            const t = String(text || "");
-            if (!query) return escapeHtml(t);
-            try {
-                const q = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-                const re = new RegExp(q, "ig");
-                return escapeHtml(t).replace(re, (m) => `<mark>${escapeHtml(m)}</mark>`);
-            } catch (e) {
-                return escapeHtml(t);
-            }
-        }
 
         const q = searchState?.searchQuery || "";
         const highlightedName = highlight(contact.fullName, q);

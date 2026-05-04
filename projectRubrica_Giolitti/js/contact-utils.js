@@ -107,8 +107,8 @@ function isValidHttpUrl(value) {
 
 /**
  * Risolve la sorgente avatar finale con priorita: base64 > url valida > placeholder.
- * @param {AvatarInput} input
- * @returns {AvatarResult}
+ * @param {{avatarUrl?: string, avatarBase64?: string, fullName: unknown}} input
+ * @returns {{avatar: string, avatarMode: "file"|"url"|"placeholder", placeholderInitial: string}}
  */
 export function resolveAvatarSource({avatarUrl, avatarBase64, fullName}) {
     if (avatarBase64) {
