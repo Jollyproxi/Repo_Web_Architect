@@ -71,15 +71,6 @@ export function normalizeUser(entry) {
     const contacts = normalizeStoredContacts(entry?.contacts || []);
     const isAdmin = Boolean(entry?.isAdmin === true);
 
-    // Supporto legacy: se entry ha books, estrai i contatti dal primo libro
-    if (Array.isArray(entry?.books) && entry.books.length > 0) {
-        entry.books[0].contacts?.forEach((contact) => {
-            const normalized = normalizeStoredContact(contact);
-            if (!contacts.some((c) => c.id === normalized.id)) {
-                contacts.push(normalized);
-            }
-        });
-    }
 
     return {
         id: String(entry?.id || crypto.randomUUID()),

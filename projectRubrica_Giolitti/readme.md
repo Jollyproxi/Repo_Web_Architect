@@ -34,6 +34,7 @@ Il file principale `js/script01.js` ha il ruolo di orchestratore: inizializza lâ
 - **Tema chiaro/scuro** salvato nel browser.
 - **Import/export JSON** dei contatti.
 - **Persistenza locale** senza server esterno.
+- **Dettaglio contatto**: click sulla card per visualizzare i dati completi.
 
 ## Struttura del progetto
 
@@ -84,7 +85,6 @@ I dati principali vengono salvati con la seguente struttura:
 }
 ```
 
-Durante il caricamento dellâ€™app, eventuali vecchi dati con struttura `books[]` vengono migrati automaticamente alla nuova struttura `users[].contacts[]`.
 
 ## Installazione e test
 

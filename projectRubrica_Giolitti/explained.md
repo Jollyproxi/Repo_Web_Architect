@@ -1,38 +1,43 @@
-# Rubrica Personale - Quick Reference
+# Rubrica Personale - Quick Reference (Current State)
 
-Assistant-first reference for fast codebase navigation.
+Riferimento rapido allineato al codice attuale.
 
 ## What this app is
 
-Client-only contact manager with Bootstrap UI, modular ES modules, no backend, and browser storage only.
+Rubrica client-side (solo browser) con UI Bootstrap, moduli ES, multi-account e persistenza locale (`localStorage` + `sessionStorage`). Nessun backend.
 
 ## Main files
 
-- [index.html](index.html): UI structure and controls.
-- [css/style.css](css/style.css): theme and layout overrides.
-- [js/script01.js](js/script01.js): bootstrap, DOM wiring, orchestration.
-- [js/data-manager.js](js/data-manager.js): data loading, saving, migration, session.
-- [js/contact-manager.js](js/contact-manager.js): CRUD and form handling.
-- [js/search-filter.js](js/search-filter.js): search, tags, favorites, pagination.
-- [tests/contact-utils.test.mjs](tests/contact-utils.test.mjs): utility tests.
+- [index.html](index.html): struttura UI (auth, shell app, modali, form, lista, toast undo).
+- [js/script01.js](js/script01.js): orchestratore, bootstrap, binding eventi DOM.
+- [js/app-logic.js](js/app-logic.js): coordinamento applicativo (render/search/save/auth wrappers/modal).
+- [js/data-manager.js](js/data-manager.js): normalizzazione dati, sessione, persistenza, regole admin/non-admin.
+- [js/contact-manager.js](js/contact-manager.js): validazione contatto, deduplica, CRUD state.
+- [js/search-filter.js](js/search-filter.js): ricerca, filtri tag/preferiti, paginazione.
+- [js/ui-renderer.js](js/ui-renderer.js): rendering card/paginazione/hint/alert/view-state.
+- [js/auth-manager.js](js/auth-manager.js): login/register/logout/change password/delete account.
+- [js/country-selector.js](js/country-selector.js): selezione prefisso + bandiera + type-to-select.
+- [js/import-export.js](js/import-export.js): export/import JSON.
+- [js/theme-manager.js](js/theme-manager.js): tema chiaro/scuro persistito.
+- [js/dom-refs.js](js/dom-refs.js): riferimenti DOM centralizzati.
 
-## Storage
+## Storage keys
 
-- `rubrica-giolitti-app-data`: users and contacts in localStorage.
-- `rubrica-giolitti-session`: active session in sessionStorage.
-- `rubrica-theme`: theme preference in localStorage.
-- Contacts live under `users[].contacts[]`.
+- `rubrica-giolitti-app-data` (`localStorage`): database utenti + contatti.
+- `rubrica-giolitti-session` (`sessionStorage`): sessione con `loggedInUserId` e `userId`.
+- `rubrica-theme` (`localStorage`): preferenza tema.
+- `lastDeleted` (`sessionStorage`): backup temporaneo per undo eliminazione contatto.
 
-## Current data shape
+## Data shape (current)
 
 ```js
 {
   users: [
     {
       id,
-      username,
+      username,       // normalized lowercase
       password,
-      isAdmin,
+      isAdmin,        // true solo per superuser
       contacts: [
         {
           id,
@@ -45,10 +50,11 @@ Client-only contact manager with Bootstrap UI, modular ES modules, no backend, a
           email,
           age,
           avatar,
-          avatarMode,
+          avatarMode,          // "file" | "url" | "placeholder"
           placeholderInitial,
-          tags,
-          isFavorite
+          createdBy,           // username owner/logged user at create time
+          isFavorite,
+          tags                 // normalized lowercase unique array
         }
       ]
     }
@@ -56,116 +62,78 @@ Client-only contact manager with Bootstrap UI, modular ES modules, no backend, a
 }
 ```
 
-Legacy `books[]` data is migrated into `contacts[]` on load.
+Session object:
 
-## Session tracking
+```js
+{ loggedInUserId: string, userId: string }
+```
 
-Session state now tracks the active authenticated user only. There is no separate address-book layer anymore. `admin/admin` is still the seeded superuser.
+## Runtime flow (`js/script01.js` + `js/app-logic.js`)
 
-## Contact shape
+1. Carica `appData` e seed `admin/admin` se non esistono utenti.
+2. Carica `sessionState` e risolve utente attivo.
+3. Se autenticato: sincronizza `contactState.contacts`, render workspace, mostra lista, applica ricerca/render.
+4. Se non autenticato: mostra auth view + hint.
+5. Event listeners delegano ai wrapper in `js/app-logic.js`.
+6. Submit contatto: validazione + normalizzazione + deduplica (email/telefono internazionale).
+7. Salvataggio via `saveContactsForCurrentUser()` con logica diversa admin/non-admin.
+8. Dopo mutazioni: reset paging/search secondo caso e rerender completo.
 
-Key fields:
+## Admin behavior (important)
 
-- `id`
-- `fullName`
-- `countryCode`
-- `countryIso`
-- `countryName`
-- `phoneLocal`
-- `phoneInternational`
-- `email`
-- `age`
-- `avatar`
-- `avatarMode`
-- `placeholderInitial`
-- `tags`
-- `isFavorite`
+- `admin/admin` viene creato automaticamente solo a DB vuoto.
+- Utente normale: vede/salva solo `activeUser.contacts`.
+- Admin: vede contatti di tutti gli utenti (`flatMap`).
+- Quando admin salva, i contatti vengono redistribuiti sugli account in base a `createdBy`; fallback all'admin se owner non trovato.
 
-## Main flow in `script01.js`
+## Search/filter behavior
 
-1. Load app data and session state.
-2. Resolve the active user.
-3. Sync `contactState.contacts` from the user.
-4. Render auth or app view.
-5. Validate and normalize contact input.
-6. Block duplicates by normalized email or international phone.
-7. Save through `saveContacts()` and `saveAppData()`.
-8. Re-render search, tags, and pagination.
+- Query globale su `fullName`, `email`, `phoneInternational`, `age`.
+- Filtro preferiti (`showFavoritesOnly`).
+- Filtro tag con selezione multipla OR (`some`).
+- Paginazione a 6 contatti per pagina.
+- Render sempre da `searchState.filteredContacts`.
 
-## Key functions
+## UI behavior highlights
 
-- `loadAppData()`: read persisted app data.
-- `saveAppData()`: write current app data.
-- `loadSessionState()` / `updateSessionState()`: manage session state.
-- `getActiveUser()`: resolve the current user.
-- `seedAdminIfNeeded()`: seed `admin/admin` once.
-- `isCurrentUserAdmin()`: check admin status.
-- `syncStateFromUser()`: copy active user contacts into UI state.
-- `handleSubmitContact()`: add or edit a contact.
-- `saveContacts()`: persist contact state back to the user.
-- `handleAuthSubmit()`: login and account creation.
-- `handleLogout()`: clear session and UI state.
-- `handleChangePassword()`: update the current password.
-- `handleDeleteAccount()`: delete the current user.
-
-## UI notes
-
-- `#authView`: auth screen.
-- `#appShell`: app shell.
-- `#searchBar`: global search.
-- `#tagFilterContainer`: tag filters.
-- Theme code: [js/theme-manager.js](js/theme-manager.js).
-
-## Behaviour worth knowing
-
-- No backend exists.
-- No cloud sync exists.
-- Data is per browser, device, and origin.
-- `sessionStorage` does not hold contacts.
-- Empty `contacts[]` means nothing has been saved for that user yet.
+- Click su card apre modal dettaglio (`#contactModal`).
+- Pulsanti nel modal: modifica/elimina contatto corrente.
+- Delete mostra toast undo (`#undoToast`) con finestra temporale (delay bootstrap 5s).
+- Theme toggle persiste su `rubrica-theme`.
+- Country selector custom con icone bandiere SVG e fallback emoji.
+- Import JSON sostituisce i contatti correnti dell'utente attivo dopo conferma.
 
 ## Tests
 
-```bash
-npm test
-```
+- Script disponibile: `npm test`.
+- File test: [tests/contact-utils.test.mjs](tests/contact-utils.test.mjs).
+- Copertura attuale: utility pure (`normalize*`, `buildInternationalPhone`, `resolveAvatarSource`, `isDuplicateContact`).
+- Verifica eseguita: `npm test` OK in data 2026-05-04 (`Test contatti: OK`).
 
-## Live Server Testing
+## Known constraints
 
-```bash
-npx live-server --port=5500
-```
+- Nessuna sincronizzazione cloud/backend.
+- Dati legati a browser + origin.
+- Password in chiaro nel browser (scelta didattica).
+- Import/export agisce sui contatti dell'utente attivo.
 
-All features tested and working (April 30, 2026):
-- ✅ Auth (register, login, logout)
-- ✅ Contact CRUD
-- ✅ Search + filters
-- ✅ Theme toggle
-- ✅ Import/export
+## Quick troubleshooting
 
-## Critical Fix Points
+**Se la lista non si aggiorna dopo create/edit/delete:**
 
-**If contacts don't render after adding/updating:**
+1. Verifica che venga chiamato `applySearchAndRender()` dopo il save/mutate in [js/app-logic.js](js/app-logic.js).
+2. Verifica la coerenza tra campi form in [index.html](index.html) e lettura `FormData` in [js/contact-manager.js](js/contact-manager.js).
+3. Verifica che `syncStateFromUser()` venga chiamato correttamente dopo login/bootstrap.
 
-1. Check that `applySearchAndRender()` is called in:
-   - `saveContact()` in [js/script01.js](js/script01.js) (after `showListView()`)
-   - `handleAuthSubmitWrapper()` in [js/script01.js](js/script01.js) (in the showListViewCallback)
-   - `bootstrapApp()` in [js/script01.js](js/script01.js) (on page load if user is logged in)
+**Se admin vede dati incoerenti dopo salvataggio:**
 
-2. Check form field names in [index.html](index.html):
-   - `#authForm` inputs must be `name="username"` and `name="password"` (not `authUsername`/`authPassword`)
-   - `#contactForm` inputs match the form read in `handleSubmitContact()`
+1. Controlla `createdBy` su ogni contatto.
+2. Controlla la redistribuzione in `saveContactsForCurrentUser()` in [js/data-manager.js](js/data-manager.js).
 
-3. Verify localStorage is not full or blocked by browser
+**Se import fallisce:**
 
-**If search doesn't work:**
-- Check that `searchState.filteredContacts` is populated by `applySearch()`
-- Check that `getPageContacts()` returns from `searchState.filteredContacts` (not from `contactState.contacts`)
-
-**If localStorage shows empty after page reload:**
-- Check browser console for errors
-- Verify session was not cleared (check `rubrica-giolitti-session`)
-- Check that `loadSessionState()` and `getActiveUser()` return valid user
+1. Il JSON deve contenere `contacts` come array.
+2. Controlla eventuali errori parse mostrati in alert.
 
 
 
