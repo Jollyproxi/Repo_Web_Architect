@@ -10,8 +10,6 @@ main {
 /* Evita che il bottone collassi se l'icona non carica subito */
 .auth-shell {
     min-height: calc(100vh - 90px);
-    display: flex;
-    align-items: center;
     padding-top: 1rem;
     padding-bottom: 1rem;
     background:
@@ -54,9 +52,6 @@ main {
 }
 
 .avatar-placeholder {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     background: var(--bs-primary);
     color: #fff;
     font-weight: 700;
@@ -65,10 +60,12 @@ main {
 /* Country Selector */
 .country-select {
     font-family: "Segoe UI Emoji", "Apple Color Emoji", sans-serif;
-    display: flex;
+    overflow: hidden;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: auto 1fr;
     align-items: center;
     gap: 0.5rem;
-    overflow: hidden;
 }
 
 .country-select-label {
@@ -99,7 +96,64 @@ main {
     overflow-y: auto;
 }
 
+/* Responsive Country Selector */
+@media (max-width: 575.98px) {
+    .country-select {
+        grid-template-columns: auto;
+    }
 
+    .country-select-label {
+        display: none;
+    }
+}
+
+/* Reusable Layout Utilities */
+.centered-grid {
+    display: grid;
+    place-items: center;
+}
+
+.toast-content-grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.tag-filter-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(max-content, 1fr));
+    gap: 0.25rem;
+}
+
+.favorite-btn-wrapper {
+    display: grid;
+    height: 38px;
+    margin-top: 1.5rem;
+}
+
+.card-body-layout {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 0;
+}
+
+.avatar-small {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.avatar-placeholder-small {
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    background: var(--bs-primary);
+    color: white;
+    font-weight: 700;
+    border-radius: 50%;
+}
 
 /* Dark Mode Overrides (High Contrast) */
 [data-bs-theme="dark"] {
@@ -123,4 +177,8 @@ main {
 [data-bs-theme="dark"] #themeTglBtn:hover {
     background: #0e639c;
     border-color: #fff;
+}
+
+[data-bs-theme="dark"] .avatar-placeholder-small {
+    background: var(--bs-primary);
 }

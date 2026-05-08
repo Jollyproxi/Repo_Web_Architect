@@ -182,11 +182,11 @@ export function renderContactsPage(
         card.className = "card h-100 shadow-sm";
 
         const cardBody = document.createElement("div");
-        cardBody.className = "card-body d-flex flex-column";
+        cardBody.className = "card-body card-body-layout";
 
         const avatar = contact.avatar
-            ? `<img src="${contact.avatar}" alt="${contact.fullName}" class="rounded-circle mb-2" style="width:50px; height:50px; object-fit:cover;">`
-            : `<div class="rounded-circle mb-2 d-inline-flex align-items-center justify-content-center" style="width:50px; height:50px; background:#0d6efd; color:white; font-weight:700;">${getPlaceholderInitial(contact.fullName)}</div>`;
+            ? `<img src="${contact.avatar}" alt="${contact.fullName}" class="rounded-circle mb-2 avatar-small">`
+            : `<div class="rounded-circle mb-2 avatar-placeholder-small">${getPlaceholderInitial(contact.fullName)}</div>`;
 
         const q = searchState?.searchQuery || "";
         const highlightedName = highlight(contact.fullName, q);

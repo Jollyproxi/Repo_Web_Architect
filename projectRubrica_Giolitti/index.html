@@ -4,8 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Rubrica Personale</title>
-        <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.css">
-        <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./node_modules/bootstrap-icons/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="./css/style.css">
     </head>
     <body class="bg-body-tertiary">
@@ -13,8 +13,7 @@
         <nav class="navbar navbar-expand-lg border-bottom sticky-top bg-body-tertiary">
             <div class="container">
                 <span class="navbar-brand mb-0 h5">Rubrica Personale</span>
-                <button id="themeTglBtn" class="btn btn-sm btn-outline-secondary d-flex align-items-center justify-content-center" type="button"
-                        style="width: 40px; height: 40px;">
+                <button id="themeTglBtn" class="btn btn-sm btn-outline-secondary centered-grid" type="button" style="width: 40px; height: 40px;">
                     <i id="themeIcon" class="bi bi-sun-fill"></i>
                 </button>
             </div>
@@ -23,7 +22,7 @@
         <main class="container py-4">
             <!-- Inserisco la classe auth-shell per gestire lo stato di accesso -->
             <section id="authView" class="auth-shell">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center centered-grid">
                     <!--Gestione del Dom per il form di login/registrazione-->
                     <div class="col-12 col-md-9 col-lg-6">
                         <!-- Card di bootstrap con le classi per gestire il form di accesso
@@ -44,12 +43,15 @@
                                         <input id="authPassword" name="password" type="password" class="form-control" autocomplete="current-password"
                                                required>
                                     </div>
-                                    <div class="col-12 d-flex flex-column flex-sm-row gap-2 mt-2">
-                                        <button id="authLoginBtn" class="btn btn-primary flex-grow-1" type="submit" data-action="login">Accedi
-                                        </button>
-                                        <button id="authRegisterBtn" class="btn btn-outline-secondary flex-grow-1" type="submit"
-                                                data-action="register">Crea account
-                                        </button>
+                                    <div class="col-12">
+                                        <div class="row g-2 mt-0">
+                                            <div class="col-12 col-sm-6">
+                                                <button id="authLoginBtn" class="btn btn-primary w-100" type="submit" data-action="login">Accedi</button>
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <button id="authRegisterBtn" class="btn btn-outline-secondary w-100" type="submit" data-action="register">Crea account</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                                 <div id="authHint" class="small text-body-secondary mt-3"></div>
@@ -61,17 +63,27 @@
 
             <section id="appShell" class="d-none">
                 <div id="workspaceBar" class="card shadow-sm mb-3">
-                    <div class="card-body d-flex flex-column flex-lg-row gap-3 justify-content-between align-items-lg-center">
-                        <div>
-                            <div class="small text-body-secondary">Utente attivo</div>
-                            <div id="activeUserLabel" class="fw-semibold">-</div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-auto">
+                                <div class="small text-body-secondary">Utente attivo</div>
+                                <div id="activeUserLabel" class="fw-semibold">-</div>
+                            </div>
                         </div>
-                        <div class="d-flex flex-column flex-sm-row gap-2 align-items-stretch align-items-sm-center">
-                            <button id="exportBookBtn" class="btn btn-outline-success btn-sm" type="button">Esporta</button>
-                            <button id="importBookBtn" class="btn btn-outline-info btn-sm" type="button">Importa</button>
+                        <div class="row g-2">
+                            <div class="col-auto">
+                                <button id="exportBookBtn" class="btn btn-outline-success btn-sm" type="button">Esporta</button>
+                            </div>
+                            <div class="col-auto">
+                                <button id="importBookBtn" class="btn btn-outline-info btn-sm" type="button">Importa</button>
+                            </div>
                             <input id="importFileInput" type="file" accept=".json" style="display: none;">
-                            <button id="accountSettingsBtn" class="btn btn-outline-secondary btn-sm" type="button">Impostazioni account</button>
-                            <button id="logoutBtn" class="btn btn-outline-danger btn-sm" type="button">Esci</button>
+                            <div class="col-auto">
+                                <button id="accountSettingsBtn" class="btn btn-outline-secondary btn-sm" type="button">Impostazioni account</button>
+                            </div>
+                            <div class="col-auto">
+                                <button id="logoutBtn" class="btn btn-outline-danger btn-sm" type="button">Esci</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -117,12 +129,13 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
                             </div>
                             <div class="modal-body">
-                                <div class="d-flex gap-3 align-items-start">
-                                    <div>
-                                        <img id="contactModalAvatar" src="" alt="avatar" class="rounded-circle"
-                                             style="width:96px; height:96px; object-fit:cover;">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <div class="centered-grid" style="width:96px; height:96px;">
+                                            <img id="contactModalAvatar" src="" alt="avatar" class="rounded-circle avatar-small">
+                                        </div>
                                     </div>
-                                    <div class="flex-grow-1">
+                                    <div class="col">
                                         <dl class="row mb-0">
                                             <dt class="col-sm-4">Nome</dt>
                                             <dd id="contactModalName" class="col-sm-8"></dd>
@@ -156,25 +169,33 @@
 
                 <!-- Barra di ricerca -->
                 <div id="searchBar" class="border-bottom py-2 d-none">
-                    <div class="d-flex gap-2 align-items-end mb-2">
-                        <div class="flex-grow-1">
+                    <div class="row g-2 align-items-start mb-2">
+                        <div class="col">
                             <label for="globalSearchInput" class="form-label small mb-1">Ricerca contatti</label>
                             <input id="globalSearchInput" type="search" class="form-control form-control-sm"
                                    placeholder="Cerca nome, email, telefono o eta..."
                                    autocomplete="off">
                         </div>
-                        <button id="favoriteFilterBtn" class="btn btn-outline-primary btn-sm" type="button" style="white-space: nowrap;">
-                            <i class="bi bi-star"></i> Preferiti
-                        </button>
+                        <div class="col-auto">
+                            <div class="favorite-btn-wrapper">
+                                <button id="favoriteFilterBtn" class="btn btn-outline-primary btn-sm" type="button" style="white-space: nowrap;">
+                                    <i class="bi bi-star"></i> Preferiti
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div id="tagFilterContainer" class="d-flex flex-wrap gap-1"></div>
+                    <div id="tagFilterContainer" class="tag-filter-wrap"></div>
                 </div>
 
                 <!-- Bottoni per mostrare il form o la lista -->
-                <div class="mb-3">
-                    <div class="mt-2 d-flex flex-wrap gap-2">
-                        <button id="showFormBtn" class="btn btn-outline-primary" type="button">Aggiungi Contatto</button>
-                        <button id="showListBtn" class="btn btn-primary" type="button">Mostra Rubrica</button>
+                <div class="mb-3 mt-2">
+                    <div class="row g-2">
+                        <div class="col-auto">
+                            <button id="showFormBtn" class="btn btn-outline-primary" type="button">Aggiungi Contatto</button>
+                        </div>
+                        <div class="col-auto">
+                            <button id="showListBtn" class="btn btn-primary" type="button">Mostra Rubrica</button>
+                        </div>
                     </div>
                 </div>
 
@@ -269,11 +290,11 @@
 
         <!-- Toast container per Undo elimina -->
         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
-            <div id="undoToast" class="toast align-items-center text-bg-dark border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">Contatto eliminato.</div>
-                    <button id="undoToastBtn" type="button" class="btn btn-sm btn-light me-2">Annulla</button>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Chiudi"></button>
+            <div id="undoToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-body bg-dark text-white rounded toast-content-grid">
+                    <span>Contatto eliminato.</span>
+                    <button id="undoToastBtn" type="button" class="btn btn-sm btn-light">Annulla</button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Chiudi"></button>
                 </div>
             </div>
         </div>
