@@ -1,6 +1,6 @@
 const demo = document.querySelector("#demo");
 
-const URL = "https://jsonplaceholder.typicode.com/users?q='Roma-Torino'o='07:00'"; //endopoint
+const URL = "https://jsonplaceholder.typicode.com/users"; //endpoint
 
 let utenti = [];
 
