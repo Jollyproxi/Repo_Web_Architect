@@ -1,0 +1,31 @@
+//Questo file fa un po' da aggregatore, raccogliendo le reglole degli altri file
+
+//Utilizzo le variabili presenti nel partials. Uitlizzo il comando @use
+
+@use 'variables' as vars; //con as vars fornisco un alias alle variabili
+@use 'cards';
+@use 'mixins' as *;
+ 
+body{
+    color: vars.$color_primary; 
+    background: vars.$bg_color;
+    @include responsive (tablet){
+        background-color: vars.$color_primary;
+        color: vars.$color_secondary;
+    }
+}
+
+.hero{
+    @include flex-center(column);
+    height: 50vh;
+
+    @include responsive(tablet){
+        padding: 0 50px;
+        height: auto;
+        background-color: black;
+    }
+
+    @include responsive(mobile){
+        background-color: red;
+    }
+}
