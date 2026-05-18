@@ -18,6 +18,14 @@
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.8);
 }
 
+.btn-primary, .btn-danger {
+  display: inline-block;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 body {
   color: #0d9488;
   background: #f0fdf4;
@@ -33,6 +41,16 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.btn-primary {
+  background-color: #0d9488;
+  color: white;
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: white;
 }
 
 /*# sourceMappingURL=main.css.map */

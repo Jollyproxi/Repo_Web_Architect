@@ -7,12 +7,10 @@ Questo file è l'indice di primo livello del repository. Le regole dettagliate s
 - Se esistono più `AGENTS.md`, valgono tutti quelli che si trovano lungo il percorso dalla root alla cartella corrente, dal più generale al più specifico.
 
 ## Mappa rapida del repo
-- `projectRubrica_Giolitti/` → applicazione: rubrica browser-only in ES Modules con Bootstrap, autenticazione multi-account, 
-   import/export JSON e persistenza in `localStorage`/`sessionStorage`; per verificare la logica usa `npm test` in `tests/contact-utils.test.mjs`, 
-   per la UI apri `index.html` nel browser.
-- `projectRubrica/` → esercizio legacy di rubrica personale browser-only con `localStorage`/`sessionStorage` e Bootstrap.
-- `HTML/` → lezioni e demo statiche HTML/CSS/JS; include anche `HTML/Lezione7/`, che usa Bootstrap/Leaflet da npm e si avvia localmente con `npm install` + `npm run start`.
-- `JAVASCRIPT/` → esercizi e lezioni JavaScript, DOM, OOP e funzioni; sono materiali didattici statici, incluse le varianti `JAVASCRIPT/projectRubrica/` e `JAVASCRIPT/projectTodoList/`.
+- `projectRubrica_Giolitti/` → applicazione principale: rubrica client-side in ES Modules con Bootstrap e persistenza in `localStorage`/`sessionStorage`.
+- `HTML/` → lezioni e demo statiche HTML/CSS/JS; include anche `HTML/Lezione7/`, che ha un avvio locale dedicato.
+ - `HTML/Lezione8_SCSS/` → esempi e demo SCSS integrati; vedi `HTML/Lezione8_SCSS/AGENTS.md` per dettagli.
+- `JAVASCRIPT/` → esercizi e lezioni JavaScript, DOM, OOP e funzioni; sono materiali didattici statici.
 - `Statement Fondamentali/` → esempi base e pagine introduttive, sempre statiche.
 - `RESTFUL/` e `RESTFUL_my/` → materiali di supporto ed esempi dati/JSON per esercizi RESTful, senza backend nel repo.
 - `APPUNTI/` → note e documentazione di studio.
@@ -25,6 +23,23 @@ Questo file è l'indice di primo livello del repository. Le regole dettagliate s
 - Ogni volta che cambi file, struttura o comportamento in una cartella, verifica se serve aggiornare anche l'`AGENTS.md` locale più vicino e 
   allineare le regole con la nuova situazione e a cascata i file che ne dipendono o da cui dipendono dove necessario. 
 - Dopo modifiche rilevanti, rilegge le istruzioni della cartella interessata per mantenere coerenti le regole operative.
+
+ - Ogni sottocartella DEVE includere un file `AGENTS.md` che faccia da documentazione operativa e da indice per eventuali `AGENTS.md` più specifici al suo interno. Quando modifichi o aggiungi contenuto in una cartella:
+   - crea/aggiorna `AGENTS.md` locale che elenchi i file chiave (es. `index.html`, `package.json`, `scss/`, `js/`, `tests/`) e i comandi utili locali (`npm install`, `npm run start`, `npm test` se presenti);
+   - mantieni un breve riepilogo delle convenzioni locali (nomenclatura id/classi importanti, partial SCSS condivisi, entrypoint JS come `js/script01.js`);
+   - fai in modo che il `AGENTS.md` locale sia sia le istruzioni operative per un agente sia un indice navigabile per i file `AGENTS.md` più profondi.
+
+  - Struttura minima suggerita per ogni `AGENTS.md` locale (usa questi header e fornisci riferimenti concreti):
+    - `# <Cartella>` (titolo)
+    - `## Ambito` — cosa contiene la cartella (es. demo, progetto, dataset)
+    - `## Regole operative` — regole specifiche da rispettare (es. non introdurre backend, id/html da preservare)
+    - `## Comandi utili` — comandi locali di build/avvio/test con esempi (es. `npm install`, `npm run start`)
+    - `## Verifica tipica` — come verificare le modifiche (file da aprire, test da eseguire)
+    - `## Indice AGENTS.md` — elenco dei `AGENTS.md` più specifici contenuti nella cartella (se presenti)
+
+  - Regola di lettura per gli agenti: quando ti orienti su un task, leggi SOLO gli `AGENTS.md` necessari lungo il percorso dal root alla cartella target (inclusi):
+    - prima il `AGENTS.md` di root, poi quelli lungo la path fino alla cartella che contiene i file su cui lavorerai;
+    - NON aprire `AGENTS.md` di cartelle non correlate al task (evita di leggere tutte le istruzioni del repo senza necessità).
 
 ## Dove trovare le istruzioni specifiche
 - `projectRubrica_Giolitti/AGENTS.md`

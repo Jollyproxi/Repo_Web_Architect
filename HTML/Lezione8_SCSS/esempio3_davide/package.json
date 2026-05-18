@@ -1,0 +1,19 @@
+{
+  "name": "esempio3_davide",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch scss:css",
+    "sass:build": "sass scss:css --style=compressed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jollyproxi/Repo_Web_Architect.git"
+  },
+  "private": true,
+  "devDependencies": {
+    "sass": "^1.99.0"
+  }
+}

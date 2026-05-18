@@ -12,6 +12,9 @@
 ## Caso speciale
 - `Lezione7/` usa Bootstrap da npm e richiede avvio locale con server statico.
 - Per quella cartella segui anche `HTML/Lezione7/AGENTS.md`.
+ - `Lezione8_SCSS/` contiene esempi SCSS (più cartelle di esempio). Vedi `HTML/Lezione8_SCSS/AGENTS.md` per istruzioni locali.
+ - `Lezione7/` usa Bootstrap da npm e richiede avvio locale con server statico.
+ - Per quella cartella segui anche `HTML/Lezione7/AGENTS.md`.
 
 ## Verifica tipica
 - Apri l'`index.html` della lezione nel browser o usa Live Server.

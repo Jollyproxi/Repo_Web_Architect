@@ -1,6 +1,7 @@
 @use 'variables' as vars;
 @use 'card';
 @use 'mixins';
+@use 'buttons';
 
 body {
   color: vars.$color-primary;
@@ -14,3 +15,23 @@ body {
 .hero{
   @include mixins.flex-center(column);
 }
+
+
+//Extend selctors. Sono un modo per estendere le regole di un selettore ad un altro selettore.
+// In questo modo evitiamo di dover riscrivere le stesse regole per più selettori.
+// Per utilizzare gli extend selectors, utilizziamo la sintassi @extend seguito dal nome del selettore che vogliamo estendere.
+// Ad esempio, se vogliamo estendere le regole del selettore .btn possiamo scrivere:
+
+
+.btn-primary{
+  @extend %btn-base;
+  background-color: vars.$color-primary;
+  color: white;
+}
+
+.btn-danger{
+  @extend %btn-base;
+  background: vars.$color-danger;
+  color: white;
+}
+
