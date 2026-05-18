@@ -1,0 +1,36 @@
+@use 'index' as *;
+
+header.site-header {
+  background: $primary;
+  color: #fff;
+  padding: .75rem 0;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+
+  .main-nav a {
+    color: #fff;
+    margin-left: 1rem;
+    text-decoration: none;
+    opacity: .95;
+
+    &:hover {
+      opacity: 1
+    }
+  }
+}
+
+@media(max-width: $break-sm) {
+  header.site-header .container {
+    flex-direction: column;
+    gap: .5rem
+  }
+}

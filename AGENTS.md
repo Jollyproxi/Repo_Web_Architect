@@ -8,8 +8,7 @@ Questo file è l'indice di primo livello del repository. Le regole dettagliate s
 
 ## Mappa rapida del repo
 - `projectRubrica_Giolitti/` → applicazione principale: rubrica client-side in ES Modules con Bootstrap e persistenza in `localStorage`/`sessionStorage`.
-- `HTML/` → lezioni e demo statiche HTML/CSS/JS; include anche `HTML/Lezione7/`, che ha un avvio locale dedicato.
- - `HTML/Lezione8_SCSS/` → esempi e demo SCSS integrati; vedi `HTML/Lezione8_SCSS/AGENTS.md` per dettagli.
+- `HTML/` → lezioni e demo statiche HTML/CSS/JS;
 - `JAVASCRIPT/` → esercizi e lezioni JavaScript, DOM, OOP e funzioni; sono materiali didattici statici.
 - `Statement Fondamentali/` → esempi base e pagine introduttive, sempre statiche.
 - `RESTFUL/` e `RESTFUL_my/` → materiali di supporto ed esempi dati/JSON per esercizi RESTful, senza backend nel repo.
@@ -44,7 +43,6 @@ Questo file è l'indice di primo livello del repository. Le regole dettagliate s
 ## Dove trovare le istruzioni specifiche
 - `projectRubrica_Giolitti/AGENTS.md`
 - `HTML/AGENTS.md`
-- `HTML/Lezione7/AGENTS.md`
 - `JAVASCRIPT/AGENTS.md`
 - `Statement Fondamentali/AGENTS.md`
 - `RESTFUL/AGENTS.md`

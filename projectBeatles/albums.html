@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>The Beatles - Albums</title>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="container">
+                <h1 class="logo">The Beatles</h1>
+                <nav class="main-nav">
+                    <a href="index.html">Home</a>
+                    <a href="members.html">Members</a>
+                    <a href="albums.html">Discografia</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="container">
+            <h2>Discografia</h2>
+            <div id="albumsGrid" class="albums-grid">
+                <!-- rendered by js -->
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <p>Contatti: <a href="mailto:info@example.com">info@example.com</a></p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/TheBeatles" target="_blank" rel="noopener noreferrer">Facebook</a>
+                    <a href="https://www.instagram.com/thebeatles/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="https://x.com/thebeatles" target="_blank" rel="noopener noreferrer">X/Twitter</a>
+                </div>
+                <p class="muted">Dati album ottenuti via MusicBrainz API quando possibile; fallback locale in caso di errori.</p>
+            </div>
+        </footer>
+
+        <script src="js/data-manager.js" defer></script>
+        <script src="js/ui-renderer.js" defer></script>
+        <script src="js/app.js" defer></script>
+    </body>
+</html>

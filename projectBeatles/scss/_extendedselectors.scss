@@ -1,0 +1,17 @@
+// extendedselectors
+@use 'variables' as vars;
+
+%container {
+  width: 100%;
+  max-width: vars.$container-max;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+%card {
+  background: vars.$card-bg;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  padding: 1rem;
+}
+

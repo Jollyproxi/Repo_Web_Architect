@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>The Beatles - Landing</title>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="container">
+                <h1 class="logo">The Beatles</h1>
+                <nav class="main-nav">
+                    <a href="index.html">Home</a>
+                    <a href="members.html">Members</a>
+                    <a href="albums.html">Discografia</a>
+                    <a href="#gallery">Galleria</a>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div class="container">
+                    <img src="img/beatles-hero.jpg" alt="The Beatles" class="hero-img">
+                    <div class="hero-text">
+                        <h2>Benvenuti alla pagina dedicata ai Beatles</h2>
+                        <p>Una semplice demo responsive con SCSS e dati provenienti da MusicBrainz.</p>
+                        <p><a class="btn" href="members.html">Scopri i membri</a> <a class="btn ghost" href="albums.html">Vedi gli album</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="overview container">
+                <h3>Informazioni sulla band</h3>
+                <p class="lead">The Beatles sono una delle band più influenti nella storia della musica pop/rock. In questa demo trovi una panoramica,
+                                le schede dei membri e la discografia.</p>
+                <div class="cards">
+                    <article class="card">
+                        <h4>Membri</h4>
+                        <p>Visita la pagina dei membri per leggere le schede dedicate a ciascun componente.</p>
+                        <p><a href="members.html">Vai ai membri →</a></p>
+                    </article>
+                    <article class="card">
+                        <h4>Discografia</h4>
+                        <p>Scopri gli album e le date di pubblicazione.</p>
+                        <p><a href="albums.html">Vai alla discografia →</a></p>
+                    </article>
+                    <article class="card">
+                        <h4>Galleria</h4>
+                        <p>Foto storiche della band.</p>
+                        <p><a href="#gallery">Vai alla galleria →</a></p>
+                    </article>
+                </div>
+            </section>
+
+            <section id="gallery" class="gallery container">
+                <h3>Galleria</h3>
+                <div class="gallery-grid" id="galleryGrid">
+                    <!-- immagini statiche/placeholder -->
+                    <img src="img/placeholder1.jpg" alt="foto">
+                    <img src="img/placeholder2.jpg" alt="foto">
+                    <img src="img/placeholder3.jpg" alt="foto">
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <p>Contatti: <a href="mailto:info@example.com">info@example.com</a></p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/TheBeatles" target="_blank" rel="noopener noreferrer">Facebook</a>
+                    <a href="https://www.instagram.com/thebeatles/" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="https://x.com/thebeatles" target="_blank" rel="noopener noreferrer">X/Twitter</a>
+                </div>
+                <p class="muted">Progetto didattico, dati della discografia ottenuti via MusicBrainz API.</p>
+            </div>
+        </footer>
+
+        <script src="js/data-manager.js" defer></script>
+        <script src="js/ui-renderer.js" defer></script>
+        <script src="js/app.js" defer></script>
+    </body>
+</html>

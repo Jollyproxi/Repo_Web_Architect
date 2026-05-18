@@ -1,0 +1,14 @@
+{
+  "name": "projectBeatles",
+  "version": "1.0.0",
+  "description": "Landing page e pagine dedicate per The Beatles - SCSS client-side project",
+  "scripts": {
+    "build:scss": "sass scss/main.scss css/main.css --style=expanded",
+    "watch:scss": "sass --watch scss/main.scss css/main.css",
+    "sass": "npm run watch:scss",
+    "sass:build": "npm run build:scss"
+  },
+  "devDependencies": {
+    "sass": "^1.99.0"
+  }
+}

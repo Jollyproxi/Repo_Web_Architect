@@ -1,0 +1,98 @@
+// main.scss - entrypoint SCSS
+@use 'index' as *;
+
+@use 'header';
+@use 'members';
+@use 'albums';
+@use 'gallery';
+@use 'footer';
+
+.lead {
+  color: $muted;
+  max-width: 70ch;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  margin-top: 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+  padding: .7rem 1rem;
+  border-radius: 999px;
+  border: 1px solid $primary;
+  background: $primary;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform .18s ease, background .18s ease, color .18s ease;
+
+  &:hover {
+	transform: translateY(-1px);
+    background: $primary-hover;
+    border-color: $primary-hover;
+  }
+
+  &.ghost {
+	background: transparent;
+	color: $primary;
+  }
+}
+
+main {
+  background: $bg;
+
+  .container {
+	@extend %container;
+  }
+
+  .hero {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+	padding: 2rem 0;
+
+	.hero-img {
+	  width: 40%;
+	  border-radius: 8px;
+	  object-fit: cover;
+	}
+
+	.hero-text {
+	  width: 60%;
+	}
+  }
+
+  .overview {
+	padding: 2rem 0;
+
+	.cards {
+	  display: grid;
+	  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	  gap: 1rem;
+	}
+  }
+
+  .container {
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+  }
+}
+
+@media (max-width: $break-md) {
+  main .hero {
+	flex-direction: column;
+  }
+
+  main .hero .hero-img,
+  main .hero .hero-text {
+	width: 100%;
+  }
+}
+
