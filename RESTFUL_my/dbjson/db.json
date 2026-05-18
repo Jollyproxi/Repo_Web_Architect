@@ -1,0 +1,28 @@
+{
+    "autore":{
+        "Nome": "Davide",
+        "Cognome": "Giolitti",
+        "Corso" : "WSA"
+    },
+
+    "studenti": [
+        {
+            "Nome": "Davide",
+            "Cognome": "Giolitti",
+            "Corso" : "WSA",
+            "Matricola" : "123456"
+        },
+        {
+            "Nome": "Mario",
+            "Cognome": "Rossi",
+            "Corso" : "WSA",
+            "Matricola" : "654321"
+        },
+        {
+            "Nome": "Luigi",
+            "Cognome": "Verdi",
+            "Corso" : "WSA",
+            "Matricola" : "111111"
+        }
+    ]
+}
