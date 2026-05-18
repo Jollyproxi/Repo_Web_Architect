@@ -1,0 +1,16 @@
+@use 'variables' as vars;
+@use 'card';
+@use 'mixins';
+
+body {
+  color: vars.$color-primary;
+  background: vars.$bg_color;
+}
+
+body {
+  background-color: vars.$color-primary;;
+  color: vars.$color-text;
+}
+.hero{
+  @include mixins.flex-center(column);
+}

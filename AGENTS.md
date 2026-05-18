@@ -1,32 +1,30 @@
 # Repo Web Architect
 
-## Project Shape
-- This repository is a teaching playground, not a single app. Most folders under `HTML/`, `JAVASCRIPT/`, and `Statement Fondamentali/` are static lesson demos that open directly in the browser.
-- The main structured app is `projectRubrica_Giolitti/`: a browser-only ES Modules contact book with Bootstrap and persistent state in `localStorage`/`sessionStorage`.
-- There is no backend in this repo. Do not invent API layers, servers, or database workflows when changing the rubrica app.
+Questo file è l'indice di primo livello del repository. Le regole dettagliate stanno negli `AGENTS.md` locali della cartella più vicina al contenuto che stai modificando.
 
-## Architecture To Preserve
-- `projectRubrica_Giolitti/js/script01.js` is the orchestrator that boots the app and wires events.
-- `projectRubrica_Giolitti/js/app-logic.js` adapts UI events to domain actions.
-- `projectRubrica_Giolitti/js/data-manager.js` owns persistence, session state, and normalization.
-- `projectRubrica_Giolitti/js/contact-utils.js` holds pure contact helpers; `projectRubrica_Giolitti/tests/contact-utils.test.mjs` covers these helpers.
-- `projectRubrica_Giolitti/js/dom-refs.js` centralizes DOM queries. Prefer extending it instead of scattering new `querySelector` calls.
+## Regola di precedenza
+- Se esiste un `AGENTS.md` dentro la cartella che stai modificando, segui prima quello.
+- Se esistono più `AGENTS.md`, valgono tutti quelli che si trovano lungo il percorso dalla root alla cartella corrente, dal più generale al più specifico.
 
-## Working Patterns
-- Keep mutations, rendering, and DOM wiring separated the way the rubrica app already does.
-- Preserve the existing Italian UI labels and DOM ids when possible; many files depend on them.
-- Prefer small edits inside the owning lesson/app folder instead of cross-cutting refactors across unrelated exercises.
+## Mappa rapida del repo
+- `projectRubrica_Giolitti/` → applicazione principale: rubrica client-side in ES Modules con Bootstrap e persistenza in `localStorage`/`sessionStorage`.
+- `HTML/` → lezioni e demo statiche HTML/CSS/JS; include anche `HTML/Lezione7/`, che ha un avvio locale dedicato.
+- `JAVASCRIPT/` → esercizi e lezioni JavaScript, DOM, OOP e funzioni; sono materiali didattici statici.
+- `Statement Fondamentali/` → esempi base e pagine introduttive, sempre statiche.
+- `RESTFUL/` e `RESTFUL_my/` → materiali di supporto ed esempi dati/JSON per esercizi RESTful, senza backend nel repo.
+- `APPUNTI/` → note e documentazione di studio.
 
-## Commands That Actually Work
-- In `projectRubrica_Giolitti/`, run `npm test` to execute `tests/contact-utils.test.mjs`.
-- In `HTML/Lezione7/`, run `npm run start` to launch `serve . -l 5500` for browser verification.
-- For static lesson pages, use Live Server or open the HTML file directly; there is usually no build step.
+## Regole comuni
+- Non inventare backend, API o database quando lavori nel repository: il progetto è pensato per browser e file statici.
+- Mantieni separazione tra logica, rendering e wiring DOM quando modifichi app strutturate.
+- Preserva, quando possibile, label italiane, id DOM e nomenclatura già usata nei progetti didattici.
+- Preferisci modifiche piccole e locali alla cartella del progetto interessato, evitando refactor trasversali.
 
-## Integration Notes
-- `projectRubrica_Giolitti/index.html` loads Bootstrap from `node_modules` and expects the modular JS entrypoint to run in the browser.
-- `HTML/Lezione7/index.html` also relies on `node_modules` assets and local static serving.
-- The rubrica app uses Bootstrap modals, toast, and form state heavily; changing markup often requires matching updates in `dom-refs.js` and `app-logic.js`.
-
-## Change Discipline
-- When editing `projectRubrica_Giolitti`, keep `contact-utils.js` functions pure when possible and add or update the node test if you change normalization or duplicate-detection logic.
-- Avoid broad style-only rewrites in lesson files unless they are the actual task; the repo contains many educational snapshots with intentionally simple code.
+## Dove trovare le istruzioni specifiche
+- `projectRubrica_Giolitti/AGENTS.md`
+- `HTML/AGENTS.md`
+- `HTML/Lezione7/AGENTS.md`
+- `JAVASCRIPT/AGENTS.md`
+- `Statement Fondamentali/AGENTS.md`
+- `RESTFUL/AGENTS.md`
+- `RESTFUL_my/AGENTS.md`
