@@ -5,6 +5,7 @@
 @use 'variables' as vars; //con as vars fornisco un alias alle variabili
 @use 'cards';
 @use 'mixins' as *;
+@use 'buttons' as btn;
  
 body{
     color: vars.$color_primary; 
@@ -26,8 +27,7 @@ body{
     }
 
     @include responsive(mobile){
-        background-color: red;
+        background-color: vars.$bg_danger;
     }
 }
 
-//%

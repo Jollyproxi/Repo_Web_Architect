@@ -1,0 +1,25 @@
+$bg_btn_primary: #3c00ff;
+$bg_btn_danger: red;
+$bg_btn_color: white;
+
+
+// EXTEND Selector. Sono blocchi di regole che possono essere ereditati da singoli componenti
+%btn-base{ //fornisco delle regole di base a tutti i pulsanti
+ display: inline-block;
+ padding: 10px 20px;
+ border: none;
+ border-radius: 5px;
+ cursor: pointer;
+}
+
+.btn-primary{
+    @extend %btn-base;
+    background-color: $bg_btn_primary;
+    color: $bg_btn_color;
+}
+
+.btn-danger{
+    @extend %btn-base;
+    background-color: $bg_btn_danger;
+    color: $bg_btn_color;
+}
