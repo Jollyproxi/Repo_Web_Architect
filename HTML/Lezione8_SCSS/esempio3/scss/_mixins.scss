@@ -1,0 +1,15 @@
+//Blocchi di codice riutilizzabile con parametri opzionali
+@mixin flex-center($direction: row){
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+@mixin responsive($breakpoint){
+    @if $breakpoint == tablet{
+        @media (max-width: 780px){ @content; }
+    }@else if $breakpoint == mobile{
+        @media (max-width: 480px) { @content; }
+    }
+}
