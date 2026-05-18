@@ -1,0 +1,29 @@
+//Dichiaro una variabile
+$primary: #2a7547;
+$secondary: #ffff;
+$color-text: #ffff;
+$btn-color: #2d2a75;
+
+@use 'variables' as vars;
+
+.card{
+    background: $primary;
+    padding: 10px;
+    border: 2px solid;
+    color: vars.$text-light;
+    &:hover{
+        background: darken($primary, 20%);
+    }
+}
+
+.btn{
+    background: $btn-color;
+    padding: 10px 20px;
+    border-color: darken($btn-color, 15%);
+    color: $secondary;
+
+    &:hover{
+        background-color: $secondary;
+        color: blue;
+    }
+}

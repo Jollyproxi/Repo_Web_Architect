@@ -1,0 +1,40 @@
+{
+  "autore": {
+    "id": "7",
+    "nome": "Laura",
+    "cognome": "Gialli",
+    "matricola": "005ABCD"
+  },
+  "studenti": [
+    {
+      "id": "1",
+      "nome": "Anna",
+      "cognome": "Rossi",
+      "matricola": "001ABCD"
+    },
+    {
+      "id": "2",
+      "nome": "Luca",
+      "cognome": "Verdi",
+      "matricola": "002ABCD"
+    },
+    {
+      "id": "4TfUlma9KTE",
+      "nome": "Paolo",
+      "cognome": "Bianchi"
+    },
+    {
+      "nome": "Laura",
+      "cognome": "Gialli",
+      "matricola": "005ABCD",
+      "id": "6lVbb7HPpj4"
+    },
+    {
+      "id": "m_86eP-g0pk",
+      "nome": "Laura",
+      "cognome": "Gialli",
+      "matricola": "005ABCD"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

@@ -1,0 +1,7 @@
+//Un gfile con prefisso _ (underscore) non verrà compilato. Questo è utile quando non voglio lavorare con tanti file separati
+
+$bg-primary-btn: #66ff00;
+
+.btnprimary{
+    background: $bg-primary-btn;
+}

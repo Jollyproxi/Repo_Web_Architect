@@ -1,0 +1,26 @@
+.dark-mode {
+  color: #000000;
+}
+
+.card {
+  background: #2a7547;
+  padding: 10px;
+  border: 2px solid;
+  color: white;
+}
+.card:hover {
+  background: rgb(15.0566037736, 41.9433962264, 25.4528301887);
+}
+
+.btn {
+  background: #2d2a75;
+  padding: 10px 20px;
+  border-color: rgb(23.3490566038, 21.7924528302, 60.7075471698);
+  color: white;
+}
+.btn:hover {
+  background-color: white;
+  color: blue;
+}
+
+/*# sourceMappingURL=input.css.map */
