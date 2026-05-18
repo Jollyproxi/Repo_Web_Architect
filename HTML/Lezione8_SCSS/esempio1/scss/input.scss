@@ -14,8 +14,13 @@ $btn-color: #2d2a75;
     &:hover{
         background: darken($primary, 20%);
     }
+    
+    &__title{
+        font-size: larger;
+        color: red;
+    }
 }
-
+    
 .btn{
     background: $btn-color;
     padding: 10px 20px;
