@@ -1,0 +1,52 @@
+.card {
+  border: 3px solid #ffea00;
+  border-radius: 8px;
+  padding: 16px;
+}
+.card_title {
+  font-size: 2.4rem;
+  margin-bottom: 1.8rem;
+}
+.card_title_test {
+  color: red;
+}
+.card_body {
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.card:hover {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.8);
+}
+
+body {
+  color: white;
+  background: #060035;
+}
+@media (max-width: 780px) {
+  body {
+    background-color: white;
+    color: #ffea00;
+  }
+}
+
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 50vh;
+}
+@media (max-width: 780px) {
+  .hero {
+    padding: 0 50px;
+    height: auto;
+    background-color: black;
+  }
+}
+@media (max-width: 480px) {
+  .hero {
+    background-color: red;
+  }
+}
+
+/*# sourceMappingURL=main.css.map */
