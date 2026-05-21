@@ -1,0 +1,13 @@
+.navbar{
+    background-color: aliceblue;
+    color: var(--accent);
+    width: 100%;
+    height: 60px;
+    margin: 0 auto;
+}
+
+.navbar li{
+    text-decoration: none;
+    display: inline-block;
+    margin: 0 15px;
+}
