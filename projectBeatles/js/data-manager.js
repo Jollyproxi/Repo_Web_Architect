@@ -43,8 +43,7 @@ var DataManager = (function(){
     const base = `${title} ${artist}`.trim();
     return {
       album: buildMusicFetcherUrl('album', base),
-      track: buildMusicFetcherUrl('track', `${base}`),
-      artist: buildMusicFetcherUrl('member', artist)
+      track: buildMusicFetcherUrl('track', `${base}`)
     };
   }
 
@@ -91,7 +90,6 @@ var DataManager = (function(){
   }
 
   async function fetchReleaseGroupsByArtistMbid(mbid){
-    // default: fetch albums; allow type override by passing string like 'album' or 'single'
     const url = `${MB_BASE}/release-group?artist=${mbid}&fmt=json&limit=100&type=album`;
     try{
       const res = await fetch(url, {headers:{'Accept':'application/json'}});
@@ -289,7 +287,6 @@ var MusicFetcher = (function(){
 
   function member(name){
     return {
-      artist: DataManager.buildMusicFetcherUrl('member', name),
       tracks: DataManager.buildMusicFetcherUrl('track', `${name} The Beatles`)
     };
   }

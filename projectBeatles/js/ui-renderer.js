@@ -32,6 +32,43 @@ var UIRenderer = (function(){
     });
   }
 
+  function appendCards(container, cards){
+    const fragment = document.createDocumentFragment();
+    cards.forEach(card => fragment.appendChild(card));
+    container.replaceChildren(fragment);
+  }
+
+  async function fetchBeatlesArtist(){
+    const artist = await DataManager.fetchArtistByName('The Beatles');
+    return artist && artist.id ? artist : null;
+  }
+
+  function buildAlbumCard({title, year, description, imageSrc, accent, actionsHtml, clickHref, cardClass = 'album-card'}){
+    const card = document.createElement('article');
+    card.className = cardClass;
+    card.innerHTML = `
+      <img class="cover" src="${imageSrc}" alt="${title}">
+      <h4>${title}</h4>
+      ${year ? `<div class="meta">${year}</div>` : ''}
+      ${description ? `<p>${description}</p>` : ''}
+      <div class="actions">
+        ${actionsHtml || ''}
+      </div>
+    `;
+
+    const img = card.querySelector('img');
+    applyFallbackImage(img, title, accent);
+
+    if(clickHref){
+      card.addEventListener('click', event => {
+        if(event.target.closest('a')) return;
+        window.location.href = clickHref;
+      });
+    }
+
+    return card;
+  }
+
   async function renderMembers(target){
     const container = document.querySelector(target);
     if(!container) return;
@@ -66,8 +103,7 @@ var UIRenderer = (function(){
       return card;
     }));
 
-    container.innerHTML = '';
-    cards.forEach(card => container.appendChild(card));
+    appendCards(container, cards);
   }
 
   async function renderAlbums(target){
@@ -75,9 +111,9 @@ var UIRenderer = (function(){
     if(!container) return;
     showLoadingSpinner(container);
 
-    const artist = await DataManager.fetchArtistByName('The Beatles');
+    const artist = await fetchBeatlesArtist();
     let releases = [];
-    if(artist && artist.id){
+    if(artist){
       releases = await DataManager.fetchReleaseGroupsByArtistMbid(artist.id);
     }
 
@@ -85,32 +121,23 @@ var UIRenderer = (function(){
       releases = DataManager.localAlbums;
     }
 
-    container.innerHTML = '';
-    releases.slice(0, 12).forEach(release => {
+    const cards = releases.slice(0, 12).map(release => {
       const title = release.title || release.name;
       const year = release['first-release-date'] ? new Date(release['first-release-date']).getFullYear() : (release.year || 'n.d.');
       const links = MusicFetcher.album(title);
-      const card = document.createElement('article');
-      card.className = 'album-card';
-      card.innerHTML = `
-        <img class="cover" src="${release.id && release['first-release-date'] !== undefined ? DataManager.buildCoverArtUrl(release.id) : DataManager.buildSvgDataUri(title, '#c62828')}" alt="${title}">
-        <h4>${title}</h4>
-        <div class="meta">${year}</div>
-         <p>${release.disambiguation || release.summary || 'Album della discografia dei Beatles.'}</p>
-        <div class="actions">
-          ${createButton('Dettagli', `album.html?id=${encodeURIComponent(release.id)}`, 'btn')}
-          ${createButton('Ascolta album', links.album, 'btn ghost', true)}
-        </div>
-      `;
-
-      const img = card.querySelector('img');
-      applyFallbackImage(img, title, '#c62828');
-      card.addEventListener('click', event => {
-        if(event.target.closest('a')) return;
-        window.location.href = `album.html?id=${encodeURIComponent(release.id)}`;
+      const imageSrc = release.id && release['first-release-date'] !== undefined ? DataManager.buildCoverArtUrl(release.id) : DataManager.buildSvgDataUri(title, '#c62828');
+      return buildAlbumCard({
+        title,
+        year,
+        description: release.disambiguation || release.summary || 'Album della discografia dei Beatles.',
+        imageSrc,
+        accent: '#c62828',
+        actionsHtml: `${createButton('Dettagli', `album.html?id=${encodeURIComponent(release.id)}`, 'btn')}${createButton('Ascolta album', links.album, 'btn ghost', true)}`,
+        clickHref: `album.html?id=${encodeURIComponent(release.id)}`
       });
-      container.appendChild(card);
     });
+
+    appendCards(container, cards);
   }
 
   async function renderGallery(target){
@@ -119,8 +146,8 @@ var UIRenderer = (function(){
     showLoadingSpinner(container);
 
     let items = DataManager.localGallery;
-    const artist = await DataManager.fetchArtistByName('The Beatles');
-    if(artist && artist.id){
+    const artist = await fetchBeatlesArtist();
+    if(artist){
       const releases = await DataManager.fetchReleaseGroupsByArtistMbid(artist.id);
       const liveCovers = (releases || []).slice(0, 4).map(release => ({
         title: release.title,
@@ -129,8 +156,7 @@ var UIRenderer = (function(){
       items = [...liveCovers, ...DataManager.localGallery.slice(0, 2)];
     }
 
-    container.innerHTML = '';
-    items.forEach(item => {
+    const figures = items.map(item => {
       const figure = document.createElement('figure');
       figure.className = 'gallery-item';
       figure.innerHTML = `
@@ -139,8 +165,10 @@ var UIRenderer = (function(){
       `;
       const img = figure.querySelector('img');
       applyFallbackImage(img, item.title, '#666');
-      container.appendChild(figure);
+      return figure;
     });
+
+    appendCards(container, figures);
   }
 
   async function renderMemberDetail(target, name){
@@ -232,9 +260,9 @@ var UIRenderer = (function(){
     if(!container) return;
     showLoadingSpinner(container);
 
-    const artist = await DataManager.fetchArtistByName('The Beatles');
+    const artist = await fetchBeatlesArtist();
     let recordings = [];
-    if(artist && artist.id){
+    if(artist){
       recordings = await DataManager.fetchRecordingsByArtistMbid(artist.id, 1000);
     }
     // map minimal metadata and fallbacks
@@ -298,7 +326,7 @@ var UIRenderer = (function(){
               ${releaseDate ? '<span class="badge">Anno: ' + (new Date(releaseDate).getFullYear() || releaseDate) + '</span>' : ''}
               ${it.length ? '<span class="badge">Durata: ' + fmtLen(it.length) + '</span>' : ''}
             </div>
-            <div class="meta-row" style="margin-top:.45rem;">
+            <div class="meta-row meta-row--spaced">
               ${it.id ? '<span class="badge">ID: ' + it.id + '</span>' : ''}
             </div>
           </div>
@@ -334,9 +362,9 @@ var UIRenderer = (function(){
     const container = document.querySelector(target);
     if(!container) return;
     showLoadingSpinner(container);
-    const artist = await DataManager.fetchArtistByName('The Beatles');
+    const artist = await fetchBeatlesArtist();
     let singles = [];
-    if(artist && artist.id){
+    if(artist){
       singles = await DataManager.fetchReleaseGroupsByArtistMbidType(artist.id, 'single');
     }
     if(!singles || singles.length === 0){
@@ -345,23 +373,21 @@ var UIRenderer = (function(){
     }
     container.innerHTML = '<div class="container"><h2>Singles</h2><div class="albums-grid" id="singlesGrid"></div></div>';
     const grid = container.querySelector('#singlesGrid');
-    singles.slice(0, 200).forEach(sg => {
-      const card = document.createElement('article');
-      card.className = 'album-card';
+    const cards = singles.slice(0, 200).map(sg => {
       const title = sg.title || sg.name || 'Singolo';
-       card.innerHTML = `
-         <img class="cover" src="${sg.id ? DataManager.buildCoverArtUrl(sg.id) : DataManager.buildSvgDataUri(title, '#6a1b9a')}" alt="${title}">
-         <h4>${title}</h4>
-         <div class="meta">${sg['first-release-date'] ? new Date(sg['first-release-date']).getFullYear() : ''}</div>
-         <p>${sg.disambiguation || 'Singolo della discografia dei Beatles.'}</p>
-         <div class="actions">
-           ${createButton('Dettagli', `album.html?id=${encodeURIComponent(sg.id)}`, 'btn')}
-         </div>
-       `;
-      const img = card.querySelector('img');
-      applyFallbackImage(img, title, '#6a1b9a');
-      grid.appendChild(card);
+      const imageSrc = sg.id ? DataManager.buildCoverArtUrl(sg.id) : DataManager.buildSvgDataUri(title, '#6a1b9a');
+      return buildAlbumCard({
+        title,
+        year: sg['first-release-date'] ? new Date(sg['first-release-date']).getFullYear() : '',
+        description: sg.disambiguation || 'Singolo della discografia dei Beatles.',
+        imageSrc,
+        accent: '#6a1b9a',
+        actionsHtml: createButton('Dettagli', `album.html?id=${encodeURIComponent(sg.id)}`, 'btn'),
+        clickHref: `album.html?id=${encodeURIComponent(sg.id)}`
+      });
     });
+
+    appendCards(grid, cards);
   }
 
   return {renderMembers, renderAlbums, renderGallery, renderMemberDetail, renderAlbumDetail, renderSongs, renderSingles};

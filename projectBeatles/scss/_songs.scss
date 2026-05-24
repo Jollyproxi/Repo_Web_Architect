@@ -21,6 +21,7 @@
 .song-card h4{margin:0;font-size:1.05rem}
 .song-meta{color:$muted;font-size:.95rem}
 .song-meta .meta-row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.song-meta .meta-row--spaced{margin-top:.45rem}
 .song-meta .badge{background:$dark-overlay-sm;padding:.2rem .45rem;border-radius:.45rem;font-size:.85rem}
 
 .song-actions{margin-top:auto;display:flex;gap:.5rem}

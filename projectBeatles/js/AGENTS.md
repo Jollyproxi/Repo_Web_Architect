@@ -19,6 +19,7 @@ Sorgenti JavaScript del progetto: fetch verso MusicBrainz, AudioDB per i loghi, 
    - `fetchReleaseGroupsByArtistMbidType(mbid, type)` — ricerca release-groups per tipo (es. `single`).
   - `ui-renderer.js` espone `window.UIRenderer` e si occupa del rendering DOM, inclusi i fallback SVG per immagini. Sono stati aggiunti renderer per le nuove pagine: `renderSongs()` e `renderSingles()`.
   - I ritratti dei membri usano `AudioDB` come fonte primaria tramite `DataManager.resolveMemberPortrait(member)`, con fallback Unsplash/SVG se l'API non restituisce il thumbnail.
+  - `ui-renderer.js` usa helper condivisi (`appendCards`, `buildAlbumCard`, `fetchBeatlesArtist`) per ridurre markup duplicato e reflow inutili.
  - `app.js` è il bootstrap che legge la pagina corrente e invoca il renderer corretto; è stato aggiornato per gestire `songs.html` e `singles.html`.
    - `ui-renderer.js` espone `window.UIRenderer` e si occupa del rendering DOM, inclusi i fallback SVG per immagini. `renderSongs()` ora mostra ogni brano come una card con metadata (titolo, album, anno, durata, ID) e controlli di ricerca e filtro. `renderSingles()` mostra i singoli come card.
 

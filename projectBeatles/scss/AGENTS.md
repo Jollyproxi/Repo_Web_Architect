@@ -12,6 +12,7 @@ aSorgenti SCSS del progetto `projectBeatles`. Il file di ingresso è `main.scss`
 - Mantieni il responsive e la logica di layout dentro i partial di competenza.
 - Le ottimizzazioni mobile vanno concentrate su `main.scss`, `_header.scss`, `_members.scss`, `_albums.scss` e `_songs.scss`, con attenzione a hero, nav wrapping, griglie e controlli filtraggio.
 - In `main.scss` esistono anche le classi condivise `.state-message*` per loading/error UI: usale al posto di stili inline nei renderer JS.
+- In `_songs.scss` la classe `.meta-row--spaced` serve per il secondo livello di metadati, così il renderer non usa spacing inline.
 - `css/main.css*` e `scss/main.css*` sono output generati: non editarli a mano e non versionarli; lavora sempre sui sorgenti SCSS.
  - Il logo della navbar è ora alto 64px. Aggiorna `_header.scss` se modifichi la dimensione o il file immagine (`img/The_Beatles_logo.svg`).
  - Aggiungi regole per le nuove pagine `songs.html` e `singles.html` nei partial pertinenti o in `main.scss` (es. `.song-controls`, `.tracks`, `.albums-grid`).
