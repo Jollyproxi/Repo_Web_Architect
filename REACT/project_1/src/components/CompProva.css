@@ -1,0 +1,14 @@
+.stileDiv{
+    height: 50px;
+    width: 300px;
+    border: 1px solid white;
+}
+
+.rounded{
+    border-radius: 15px;
+}
+
+.rotated{
+    rotate: 45deg;
+    background-color: orange;
+}
