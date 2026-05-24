@@ -1,5 +1,7 @@
 # RESTFUL
 
+**⚠️ REGOLA FISSA:** Prima di procedere, leggi **SEMPRE** il `../AGENTS.md` di root e tutti gli AGENTS.md lungo il percorso fino a questa cartella.
+
 ## Ambito
 - Materiali didattici e dati di supporto per esercizi RESTful.
 - Il contenuto è pensato come esempio statico o dataset JSON, non come backend eseguibile.

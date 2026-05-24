@@ -1,5 +1,7 @@
 # RESTFUL_my
 
+**⚠️ REGOLA FISSA:** Prima di procedere, leggi **SEMPRE** il `../AGENTS.md` di root e tutti gli AGENTS.md lungo il percorso fino a questa cartella.
+
 ## Ambito
 - Variante personale dei materiali RESTful con dati di esempio nella cartella `dbjson/`.
 - Anche qui non è previsto alcun backend nel repository.

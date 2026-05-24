@@ -5,11 +5,69 @@
 @use 'members';
 @use 'albums';
 @use 'gallery';
+@use 'songs';
 @use 'footer';
+
+html {
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: $ink;
+  background:
+    radial-gradient(circle at top left, $accent-light, transparent 34%),
+    radial-gradient(circle at top right, $primary-light, transparent 28%),
+    linear-gradient(180deg, $bg 0%, $bg 100%);
+  font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+  line-height: 1.5;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
 
 .lead {
   color: $muted;
   max-width: 70ch;
+  font-size: 1.03rem;
+}
+
+.state-message {
+  @extend %card;
+  text-align: center;
+  display: grid;
+  gap: .35rem;
+  place-items: center;
+  min-height: 120px;
+  color: $muted;
+
+  &__title {
+    margin: 0;
+    font-size: .98rem;
+    font-weight: 600;
+  }
+
+  &__note {
+    margin: 0;
+    font-size: .88rem;
+    color: $muted;
+  }
+
+  &--error {
+    color: $primary;
+    background: rgba(212, 166, 74, 0.08);
+    border-color: rgba(143, 59, 47, 0.2);
+  }
 }
 
 .actions {
@@ -28,53 +86,165 @@
   border-radius: 999px;
   border: 1px solid $primary;
   background: $primary;
-  color: #fff;
+  color: $white;
   text-decoration: none;
   font-weight: 600;
-  transition: transform .18s ease, background .18s ease, color .18s ease;
+  transition: transform .18s ease, background .18s ease, color .18s ease, box-shadow .18s ease;
+  box-shadow: 0 10px 22px $primary-overlay-md;
 
   &:hover {
 	transform: translateY(-1px);
     background: $primary-hover;
     border-color: $primary-hover;
+    box-shadow: 0 14px 24px $primary-overlay-lg;
   }
 
   &.ghost {
 	background: transparent;
 	color: $primary;
+    box-shadow: none;
+  }
+}
+
+.card {
+  @extend %card;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  transition: transform .18s ease, box-shadow .18s ease;
+
+   &:hover {
+     transform: translateY(-6px);
+     box-shadow: 0 24px 42px $brown-shadow;
+   }
+
+  h4 {
+    margin: 0;
+  }
+
+  a {
+    color: $primary;
+    font-weight: 700;
+    text-decoration: none;
   }
 }
 
 main {
-  background: $bg;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
 
   .container {
 	@extend %container;
   }
 
-  .hero {
-	display: flex;
-	gap: 1rem;
-	align-items: center;
-	padding: 2rem 0;
+	.hero {
+	  padding: clamp(2rem, 5vw, 4rem) 0;
+     // hero: overlay gradient + Unsplash image (fallback to gradient if offline)
+     background-image: linear-gradient(180deg, rgba(255, 255, 255, .36), rgba(255, 255, 255, .12)), url("https://source.unsplash.com/1600x900/?the%20beatles,band");
+     background-size: cover;
+     background-position: center;
+	  border-bottom: 1px solid $header-border;
+	  box-shadow: inset 0 -1px 0 $white-overlay-lg;
 
-	.hero-img {
-	  width: 40%;
-	  border-radius: 8px;
-	  object-fit: cover;
+	.container {
+	  display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1rem, 3vw, 2rem);
+	  align-items: center;
+    text-align: left;
 	}
 
+	  .hero-img {
+	    width: 100%;
+	    height: auto;
+	    max-height: 500px;
+	    border-radius: 1.4rem;
+	    object-fit: contain;
+	    box-shadow: 0 24px 45px $brown-dark-3;
+	  }
+
+    /* songs / tracks styles */
+    .tracks {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .tracks ol {
+      padding-left: 1.1rem;
+    }
+
+    .song-controls {
+      margin-bottom: .8rem;
+      display: flex;
+      gap: .5rem;
+      align-items: center;
+    }
+
+    #songsList ol li {
+      padding: .45rem 0;
+      border-bottom: 1px solid $line;
+    }
+
 	.hero-text {
-	  width: 60%;
+	  padding: 1rem 0;
+    max-width: 66ch;
+
+	  h2 {
+	    font-size: clamp(2rem, 3vw, 3.3rem);
+	    line-height: 1.05;
+	    margin-bottom: .85rem;
+      overflow-wrap: anywhere;
+	  }
+
+    p {
+      overflow-wrap: anywhere;
+    }
+	}
+  }
+
+  .about {
+	padding: clamp(2rem, 5vw, 3.5rem) 0;
+	background: linear-gradient(180deg, transparent 0%, rgba(212, 166, 74, 0.08) 100%);
+	border-bottom: 1px solid $line;
+
+  .container {
+    width: 100%;
+  }
+
+	h3 {
+	  font-size: clamp(1.8rem, 3vw, 2.5rem);
+	  margin-bottom: 2rem;
+	}
+
+	.about-grid {
+	  display: grid;
+	  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	  gap: 2rem;
+
+	  div {
+		h4 {
+		  color: $primary;
+		  margin-top: 0;
+		  margin-bottom: 0.75rem;
+		  font-size: 1.15rem;
+		}
+
+		p {
+		  color: $muted;
+		  line-height: 1.6;
+		  font-size: 0.95rem;
+		}
+	  }
 	}
   }
 
   .overview {
-	padding: 2rem 0;
+	padding: clamp(1.5rem, 4vw, 2.5rem) 0;
 
 	.cards {
 	  display: grid;
-	  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
 	  gap: 1rem;
 	}
   }
@@ -83,16 +253,83 @@ main {
 	padding-top: 1rem;
 	padding-bottom: 1rem;
   }
+
+	.gallery {
+	  padding-bottom: 2rem;
+	}
+}
+
+@media (max-width: 900px) {
+  main .about .about-grid {
+  grid-template-columns: 1fr;
+  }
+
+  .member-card.detail,
+  .album-card.detail {
+  grid-template-columns: 1fr;
+  max-width: 100%;
+  }
 }
 
 @media (max-width: $break-md) {
   main .hero {
-	flex-direction: column;
+  padding: 1.5rem 0;
+
+  .hero-text h2 {
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
   }
 
-  main .hero .hero-img,
-  main .hero .hero-text {
-	width: 100%;
+  .hero-text p:last-child {
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+  }
+  }
+
+  main .overview .cards {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: $break-sm) {
+  main .container {
+  padding-left: .85rem;
+  padding-right: .85rem;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  main .hero {
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+
+  .hero-text {
+    padding: .5rem 0;
+  }
+
+  .hero-text h2 {
+    font-size: clamp(1.65rem, 8vw, 2.1rem);
+  }
+
+  .hero-text p:last-child {
+    width: 100%;
+  }
+  }
+
+  main .about,
+  main .overview {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  }
+
+  main .overview .cards {
+	grid-template-columns: 1fr;
+  }
+
+  main .about .about-grid {
+  gap: 1rem;
   }
 }
 

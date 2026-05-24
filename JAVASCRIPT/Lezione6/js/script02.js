@@ -1,15 +1,13 @@
-let url = "";
+// Esempio concreto: non lasciare url vuoto e non inviare body su GET
+const url = "https://jsonplaceholder.typicode.com/posts/1";
 
 fetch(url, {
-    method: "GET", // o "POST", "PUT", "DELETE", PATCH, HeADER, OPTIONS 
-    // GET e HEAD non hanno un body, mentre POST, PUT, DELETE e PATCH devono avere un body
+    method: "GET", // o "POST", "PUT", "DELETE", PATCH, HEAD, OPTIONS
+    // GET e HEAD non hanno un body
     headers: {
-        'Content-Type': "application/json", // che serve a specificare il tipo di dati che stiamo inviando
-        'Authorization': "Bearer token" // se serve un token di autenticazione
-    },
-    body: JSON.stringify({
-        key: "value"
-    })
+        'Content-Type': "application/json",
+        'Authorization': "Bearer token"
+    }
 })
     // la fetch restituisce una Promise che si risolve con un oggetto Response e mi aspetto di ricevere dei dati in formato JSON, quindi uso il metodo json() per convertire la risposta in un oggetto JavaScript
     // IL CRUD Create, Read, Update, Delete è un acronimo che rappresenta le quattro operazioni fondamentali per la gestione dei dati in un'applicazione.
@@ -32,7 +30,7 @@ fetch(url, {
         console.error("Si è verificato un errore:", error);
     });
 
-fetch("https://xmlplaceholder.typicode.com/posts") // di default è una GET, quindi non è necessario specificare il metodo
+fetch("https://jsonplaceholder.typicode.com/posts") // di default è una GET, quindi non è necessario specificare il metodo
     .then(response => {
         if (!response.ok)throw new Error("Errore con il seguente status: " + response.status);
         return response.json();

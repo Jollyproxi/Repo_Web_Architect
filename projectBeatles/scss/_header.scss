@@ -1,36 +1,100 @@
 @use 'index' as *;
 
 header.site-header {
-  background: $primary;
-  color: #fff;
-  padding: .75rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: $white; /* white navbar */
+  color: $ink;
+  padding: .8rem 0;
+  border-bottom: 1px solid $header-border;
+  box-shadow: 0 6px 18px $brown-header;
+  backdrop-filter: blur(6px);
 
   .container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    position:relative;
   }
 
   .logo {
-    font-size: 1.25rem;
+    display: inline-flex;
+    align-items: center;
     margin: 0;
+    text-decoration: none;
+    padding: 0.25rem 0;
+    border-radius: 0.4rem;
+    transition: transform 0.18s ease, background 0.18s ease;
+
+     &:hover {
+       transform: translateY(-2px);
+       background: $white-overlay-subtle;
+     }
+  }
+
+  .logo-img {
+    height: 64px;
+    width: auto;
+    max-width: 320px;
+    display: block;
+  }
+
+  .main-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
   }
 
   .main-nav a {
-    color: #fff;
-    margin-left: 1rem;
+    color: $ink;
+    padding: .55rem .9rem;
+    border-radius: 999px;
     text-decoration: none;
-    opacity: .95;
+    border: 1px solid transparent;
+    transition: background .18s ease, color .18s ease, border-color .18s ease, transform .18s ease;
 
-    &:hover {
-      opacity: 1
-    }
+     &:hover {
+       background: $primary; /* highlight */
+       color: $white;
+       transform: translateY(-2px);
+       box-shadow: 0 8px 18px $primary-overlay-sm;
+     }
   }
 }
 
 @media(max-width: $break-sm) {
   header.site-header .container {
     flex-direction: column;
-    gap: .5rem
+    align-items: stretch;
+    gap: .6rem;
+  }
+
+  header.site-header .logo {
+    justify-content: center;
+  }
+
+  header.site-header .logo-img {
+    height: 52px;
+    max-width: min(240px, 80vw);
+  }
+
+  header.site-header .main-nav {
+    margin: 0; /* full width on small */
+    width: 100%;
+    justify-content: center;
+
+    a {
+      flex: 1 1 calc(50% - .5rem);
+      min-width: 0;
+      text-align: center;
+      padding: .5rem .6rem;
+      font-size: .95rem;
+    }
   }
 }

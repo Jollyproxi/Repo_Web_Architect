@@ -9,12 +9,13 @@ fetch(URL)
         return data.json();
     })
 
-    .then(resoponse => {
-         console.log(resoponse);
-         utenti = resoponse;
+    .then(response => {
+         console.log(response);
+         utenti = response;
         console.log("I miei utenti sono "+ utenti.length);
         console.log(utenti);
-    });
+    })
+    .catch(err => console.error('Fetch fallita:', err));
 
 console.log("I miei utenti sono "+ utenti.length);
 console.log(utenti);

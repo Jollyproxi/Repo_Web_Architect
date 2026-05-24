@@ -1,0 +1,54 @@
+@use 'index' as *;
+
+/* songs / tracks styles */
+.songs-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:1rem;
+  margin-top:1rem;
+}
+
+.song-card{
+  @extend %card;
+  padding:1rem;
+  display:flex;
+  flex-direction:column;
+  gap:.5rem;
+  background:$card-bg;
+  border:1px solid $line;
+}
+
+.song-card h4{margin:0;font-size:1.05rem}
+.song-meta{color:$muted;font-size:.95rem}
+.song-meta .meta-row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.song-meta .badge{background:$dark-overlay-sm;padding:.2rem .45rem;border-radius:.45rem;font-size:.85rem}
+
+.song-actions{margin-top:auto;display:flex;gap:.5rem}
+
+#songsContainer .song-controls{display:flex;gap:.5rem;align-items:center;margin-bottom:.8rem}
+#songsContainer .song-controls input, #songsContainer .song-controls select{
+  padding:.55rem .7rem;border-radius:.5rem;border:1px solid $line;background:$white;color:$ink
+}
+
+@media (max-width: $break-sm){
+  .songs-grid{
+    grid-template-columns: 1fr;
+  }
+
+  #songsContainer .song-controls{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  #songsContainer .song-controls input,
+  #songsContainer .song-controls select{
+    width:100%;
+  }
+
+  .song-card{
+    padding:.9rem;
+  }
+
+  .song-meta .meta-row{flex-direction:column;align-items:flex-start}
+}
+

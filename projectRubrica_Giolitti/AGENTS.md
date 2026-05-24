@@ -1,5 +1,7 @@
 # projectRubrica_Giolitti
 
+**⚠️ REGOLA FISSA:** Prima di procedere, leggi **SEMPRE** il `../AGENTS.md` di root e tutti gli AGENTS.md lungo il percorso fino a questa cartella.
+
 ## Ambito
 - Applicazione browser-only in ES Modules per la rubrica personale.
 - Nessun backend: persistenza solo in `localStorage` e `sessionStorage`.

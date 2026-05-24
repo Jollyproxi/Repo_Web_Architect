@@ -10,6 +10,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
   if(path === 'albums.html'){
     window.UIRenderer.renderAlbums('#albumsGrid');
   }
+  if(path === 'songs.html'){
+    window.UIRenderer.renderSongs('#songsContainer');
+  }
+  if(path === 'singles.html'){
+    window.UIRenderer.renderSingles('#singlesContainer');
+  }
   if(path === 'member.html'){
     const params = new URLSearchParams(location.search);
     const name = params.get('name');

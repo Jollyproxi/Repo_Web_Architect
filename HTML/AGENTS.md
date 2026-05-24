@@ -1,5 +1,7 @@
 # HTML
 
+**⚠️ REGOLA FISSA:** Prima di procedere, leggi **SEMPRE** il `../AGENTS.md` di root e tutti gli AGENTS.md lungo il percorso fino a questa cartella.
+
 ## Ambito
 - Lezioni e demo statiche di HTML/CSS/JS.
 - Ogni cartella `Lezione*` è pensata per essere aperta direttamente nel browser.

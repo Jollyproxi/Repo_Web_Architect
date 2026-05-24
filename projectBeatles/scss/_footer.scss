@@ -1,19 +1,23 @@
 /* footer */
+@use 'index' as *;
+
 .site-footer {
-  background: #222;
-  color: #fff;
-  padding: 1rem 0;
-  margin-top: 2rem;
+  background: linear-gradient(180deg, $footer-dark-1 0%, $footer-dark-2 100%);
+  color: $white;
+  padding: 1.4rem 0;
+  margin-top: 2.5rem;
+  border-top: 1px solid $white-overlay-sm;
 
   .container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center
   }
 
   .muted {
     opacity: .8;
-    color: #ddd
+    color: $white-text-muted
   }
 
   .social-links {
@@ -23,11 +27,18 @@
   }
 
   a {
-    color: #fff;
+    color: $white;
     text-decoration: none;
+    transition: color .18s ease, background .18s ease;
 
     &:hover {
-      text-decoration: underline;
+      color: $accent;
     }
+  }
+
+  .social-links a {
+    padding: .45rem .8rem;
+    border-radius: 999px;
+    background: $white-overlay-subtle;
   }
 }

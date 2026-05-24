@@ -1,5 +1,7 @@
 # Statement Fondamentali
 
+**⚠️ REGOLA FISSA:** Prima di procedere, leggi **SEMPRE** il `../AGENTS.md` di root e tutti gli AGENTS.md lungo il percorso fino a questa cartella.
+
 ## Ambito
 - Materiali introduttivi e pagine statiche su concetti fondamentali di JavaScript.
 - È una cartella didattica, pensata per essere aperta direttamente nel browser.

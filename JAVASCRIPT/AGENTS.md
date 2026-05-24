@@ -1,5 +1,7 @@
 # JAVASCRIPT
 
+**⚠️ REGOLA FISSA:** Prima di procedere, leggi **SEMPRE** il `../AGENTS.md` di root e tutti gli AGENTS.md lungo il percorso fino a questa cartella.
+
 ## Ambito
 - Lezioni, demo ed esercitazioni JavaScript, DOM, funzioni e OOP.
 - La maggior parte dei materiali è statica e si apre direttamente nel browser.

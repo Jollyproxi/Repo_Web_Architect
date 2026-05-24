@@ -16,11 +16,11 @@ fetch(URL)
     utenti = response;
     console.log("I miei utenti sono: ", utenti);
 })
-.finally( ()=>{
-
+.finally(()=>{
     console.log("Fetch Terminata");
-}
-)
+})
+
+.catch(err => console.error('Fetch fallita:', err));
 
 
 console.log("I miei utenti sono: ", utenti); //Qui sono fuori dalla fetch, quindi sono in ASINCRONO, non vedo i dati

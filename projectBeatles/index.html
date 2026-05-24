@@ -3,17 +3,20 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="description" content="Scopri la storia dei Beatles: leggi le biografie dei quattro membri, esplora la loro discografia completa, ascolta i loro brani iconici e visualizza foto storiche della band più influente della musica rock.">
+        <meta name="keywords" content="Beatles, Lennon, McCartney, Harrison, Starr, musica, rock, discografia, storia">
         <title>The Beatles - Landing</title>
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
         <header class="site-header">
             <div class="container">
-                <h1 class="logo">The Beatles</h1>
-                <nav class="main-nav">
-                    <a href="index.html">Home</a>
+                <a href="index.html" class="logo"><img src="img/The_Beatles_logo.svg" alt="The Beatles" class="logo-img"></a>
+                <nav class="main-nav" aria-label="Navigazione principale">
                     <a href="members.html">Members</a>
                     <a href="albums.html">Discografia</a>
+                    <a href="songs.html">Brani</a>
+                    <a href="singles.html">Singles</a>
                     <a href="#gallery">Galleria</a>
                 </nav>
             </div>
@@ -22,11 +25,32 @@
         <main>
             <section class="hero">
                 <div class="container">
-                    <img src="img/beatles-hero.jpg" alt="The Beatles" class="hero-img">
                     <div class="hero-text">
                         <h2>Benvenuti alla pagina dedicata ai Beatles</h2>
                         <p>Una semplice demo responsive con SCSS e dati provenienti da MusicBrainz.</p>
                         <p><a class="btn" href="members.html">Scopri i membri</a> <a class="btn ghost" href="albums.html">Vedi gli album</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="about container">
+                <h3>La storia dei Beatles</h3>
+                <div class="about-grid">
+                    <div>
+                        <h4>Origini (1960-1964)</h4>
+                        <p>The Beatles si formarono a Liverpool nel 1960, inizialmente come backing band per artisti in tour. Il nucleo originale comprendeva John Lennon, Paul McCartney, George Harrison e Pete Best (alla batteria). Nel 1962, Ringo Starr sostituì Best, completando la formazione classica che avrebbe rivoluzionato la musica pop mondiale.</p>
+                    </div>
+                    <div>
+                        <h4>Beatlemania e l'invasione britannica (1963-1966)</h4>
+                        <p>Con il loro primo album "Please Please Me" nel 1963, i Beatles conquistarono il Regno Unito e quindi il mondo. La "Beatlemania" raggiunse il picco quando si esibirono agli Ed Sullivan Show nel 1964. Durante questo periodo pubblicarono alcuni dei loro album più iconici, tra cui "Rubber Soul" e "Revolver", sperimentando con nuovi stili musicali e tecniche di registrazione.</p>
+                    </div>
+                    <div>
+                        <h4>L'era psichedelica (1966-1968)</h4>
+                        <p>"Sgt. Pepper's Lonely Hearts Club Band" (1967) rappresentò il culmine della creatività artistica del gruppo. Durante questo periodo esplorarono il rock psichedelico, influenzati dalla cultura giovanile dell'epoca. "The White Album" (1968) showcased la diversità creativa dei quattro musicisti con stili più sperimentali.</p>
+                    </div>
+                    <div>
+                        <h4>Declino e scioglimento (1969-1970)</h4>
+                        <p>Nonostante "Abbey Road" (1969) fosse un successo commerciale, tensioni interne e conflitti personali portarono allo scioglimento ufficiale del gruppo nel 1970. Tuttavia, il loro lascito musicale rimane incomparabile, continuando a influenzare generazioni di musicisti e artisti in tutto il mondo.</p>
                     </div>
                 </div>
             </section>
@@ -47,20 +71,28 @@
                         <p><a href="albums.html">Vai alla discografia →</a></p>
                     </article>
                     <article class="card">
+                        <h4>Brani</h4>
+                        <p>Esplora il catalogo completo di canzoni con metadata e link per ascoltare.</p>
+                        <p><a href="songs.html">Vai ai brani →</a></p>
+                    </article>
+                    <article class="card">
+                        <h4>Singoli</h4>
+                        <p>Scopri i singoli e release speciali della band.</p>
+                        <p><a href="singles.html">Vai ai singoli →</a></p>
+                    </article>
+                    <article class="card">
                         <h4>Galleria</h4>
                         <p>Foto storiche della band.</p>
                         <p><a href="#gallery">Vai alla galleria →</a></p>
                     </article>
+                </div>
                 </div>
             </section>
 
             <section id="gallery" class="gallery container">
                 <h3>Galleria</h3>
                 <div class="gallery-grid" id="galleryGrid">
-                    <!-- immagini statiche/placeholder -->
-                    <img src="img/placeholder1.jpg" alt="foto">
-                    <img src="img/placeholder2.jpg" alt="foto">
-                    <img src="img/placeholder3.jpg" alt="foto">
+                    <!-- rendered dynamically by js -->
                 </div>
             </section>
         </main>

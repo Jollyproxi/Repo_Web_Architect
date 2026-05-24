@@ -1,0 +1,61 @@
+// _colors.scss - Centralized color palette for the entire project
+// Modify colors here to tweak the entire design without searching through other files
+
+// === PRIMARY BRAND COLORS ===
+$primary: #8f3b2f;              // warm burgundy (main brand color)
+$primary-hover: #6f2d25;        // darker burgundy for hover/active states
+$primary-light: rgba(143, 59, 47, 0.14);  // 14% opacity for backgrounds/overlays
+$primary-overlay-sm: rgba(143, 59, 47, 0.12);  // 12% opacity for subtle backgrounds
+$primary-overlay-md: rgba(143, 59, 47, 0.24);  // 24% opacity for medium overlays
+$primary-overlay-lg: rgba(143, 59, 47, 0.28);  // 28% opacity for shadows
+
+// === ACCENT & MOOD COLORS ===
+$accent: #d4a64a;              // warm gold accent
+$accent-light: rgba(212, 166, 74, 0.22);  // 22% opacity for gradient backgrounds
+
+// === NEUTRAL PALETTE ===
+$muted: #6b665f;               // neutral muted text color
+$ink: #14120f;                 // dark ink for high contrast text
+
+// === BACKGROUND COLORS ===
+$bg: #fbf7f0;                  // light warm background
+$card-bg: rgba(255, 250, 245, 0.95);  // card background with slight transparency
+$surface: #fffaf2;             // surface color for lighter elements
+
+// === WHITE & TRANSPARENCY ===
+$white: #fff;                  // pure white
+$white-overlay-subtle: rgba(255, 255, 255, 0.05);    // 5% opacity for subtle overlays
+$white-overlay-sm: rgba(255, 255, 255, 0.08);        // 8% opacity for borders/dividers
+$white-overlay-md: rgba(255, 255, 255, 0.45);        // 45% opacity for gallery borders
+$white-overlay-lg: rgba(255, 255, 255, 0.55);        // 55% opacity for inset shadows
+$white-text-muted: #ddd;       // muted white text
+
+// === BLACK & DARK OVERLAYS ===
+$black: #000;
+$black-dark-dark: #111;        // very dark background
+$footer-dark-1: #241a16;       // dark footer top
+$footer-dark-2: #171311;       // dark footer bottom
+$dark-overlay-sm: rgba(0, 0, 0, 0.04);      // 4% opacity for subtle backgrounds
+$dark-overlay-md: rgba(0, 0, 0, 0.08);      // 8% opacity for borders
+$dark-overlay-lg: rgba(21, 14, 10, 0.35);   // 35% opacity for text gradients
+$dark-overlay-dark: rgba(0, 0, 0, 0.35);    // 35% opacity for dark overlays
+$dark-overlay-darker: rgba(21, 14, 10, 0.74);  // 74% opacity for text overlays
+$dark-overlay-xl: rgba(21, 14, 10, 0.02);   // 2% opacity for very subtle effects
+
+// === GRAY & NEUTRAL ===
+$gray-placeholder: #999;       // placeholder gray
+$line: rgba(74, 48, 34, 0.12); // subtle divider line
+
+// === BROWN TONES (for shadows & depth) ===
+$brown-dark-1: rgba(41, 28, 20, 0.16);     // 16% opacity shadow
+$brown-dark-2: rgba(41, 28, 20, 0.22);     // 22% opacity shadow (hover)
+$brown-dark-3: rgba(41, 28, 20, 0.2);      // 20% opacity shadow
+$brown-shadow: rgba(54, 32, 19, 0.15);     // 15% opacity card shadow
+$brown-shadow-dark: rgba(54, 32, 19, 0.16); // 16% opacity
+$brown-header: rgba(18, 12, 8, 0.06);      // 6% opacity header shadow
+$header-border: rgba(0, 0, 0, 0.06);       // 6% opacity border
+
+// === SHADOW & DEPTH ===
+$shadow-lg: 0 18px 45px rgba(54, 32, 19, 0.1);  // large shadow
+$shadow-hover: 0 24px 42px rgba(54, 32, 19, 0.15);  // hover shadow
+

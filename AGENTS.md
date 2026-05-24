@@ -1,4 +1,4 @@
-# Repo Web Architect
+l# Repo Web Architect
 
 Questo file è l'indice di primo livello del repository. Le regole dettagliate stanno negli `AGENTS.md` locali della cartella più vicina al contenuto che stai modificando.
 
@@ -8,6 +8,7 @@ Questo file è l'indice di primo livello del repository. Le regole dettagliate s
 
 ## Mappa rapida del repo
 - `projectRubrica_Giolitti/` → applicazione principale: rubrica client-side in ES Modules con Bootstrap e persistenza in `localStorage`/`sessionStorage`.
+- `projectBeatles/` → progetto stedativo: landing page dei Beatles con pagine dedicate ai membri e discografia, SCSS e fetch da MusicBrainz/AudioDB.
 - `HTML/` → lezioni e demo statiche HTML/CSS/JS;
 - `JAVASCRIPT/` → esercizi e lezioni JavaScript, DOM, OOP e funzioni; sono materiali didattici statici.
 - `Statement Fondamentali/` → esempi base e pagine introduttive, sempre statiche.
@@ -36,12 +37,14 @@ Questo file è l'indice di primo livello del repository. Le regole dettagliate s
     - `## Verifica tipica` — come verificare le modifiche (file da aprire, test da eseguire)
     - `## Indice AGENTS.md` — elenco dei `AGENTS.md` più specifici contenuti nella cartella (se presenti)
 
-  - Regola di lettura per gli agenti: quando ti orienti su un task, leggi SOLO gli `AGENTS.md` necessari lungo il percorso dal root alla cartella target (inclusi):
-    - prima il `AGENTS.md` di root, poi quelli lungo la path fino alla cartella che contiene i file su cui lavorerai;
-    - NON aprire `AGENTS.md` di cartelle non correlate al task (evita di leggere tutte le istruzioni del repo senza necessità).
+  - **Regola di lettura per gli agenti (REGOLA FISSA):** prima di procedere con qualsiasi task, leggi **SEMPRE TUTTI** gli `AGENTS.md` delle cartelle coinvolte:
+    - leggi prima il `AGENTS.md` di root;
+    - poi leggi TUTTI gli `AGENTS.md` lungo il percorso dal root alla cartella target;
+    - assicurati di avere il quadro completo delle regole operative prima di procedere.
 
 ## Dove trovare le istruzioni specifiche
 - `projectRubrica_Giolitti/AGENTS.md`
+- `projectBeatles/AGENTS.md`
 - `HTML/AGENTS.md`
 - `JAVASCRIPT/AGENTS.md`
 - `Statement Fondamentali/AGENTS.md`

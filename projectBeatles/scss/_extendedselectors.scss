@@ -1,4 +1,5 @@
 // extendedselectors
+@use 'colors' as colors;
 @use 'variables' as vars;
 
 %container {
@@ -9,9 +10,11 @@
 }
 
 %card {
-  background: vars.$card-bg;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  background: colors.$card-bg;
+  border: 1px solid colors.$line;
+  border-radius: 1.1rem;
+  box-shadow: 0 18px 45px colors.$brown-shadow;
   padding: 1rem;
+  backdrop-filter: blur(12px);
 }
 
