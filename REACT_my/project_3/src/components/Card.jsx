@@ -6,14 +6,14 @@ import './Card.css'
 //     const description = props.description;
 //     const strumento = props.strumento;
 //     const imgUrl = props.imgUrl;
-  
+//
 //     return (
 //         // In React la parola class è una keyword
 //         <div className='card'>
 //             <div className="card-image">
 //                 <img src={imgUrl} alt="" />
 //             </div>
-
+//
 //             <h3>{nome}</h3>
 //             <p>{description}</p>
 //             <p>Suona: {strumento}</p>
@@ -30,7 +30,7 @@ import './Card.css'
 //             <div className="card-image">
 //                 <img src={imgUrl} alt="" />
 //             </div>
-
+//
 //             <h3>{nome}</h3>
 //             <p>{description}</p>
 //             <p>Suona: {strumento}</p>
@@ -38,11 +38,8 @@ import './Card.css'
 //     )
 // }
 
-
-//MODO 3. Oltre all'oggetto gli passo la parola chiave "children" che voglio utilizzare al posto di description. Con questa parola chiave posso renderizzare quello che inseirsco tra il selettore di Card
-
-function Card({nome, imgUrl, strumento, children, isConosciuto}) {
-  
+//MODO 3. Oltre all'oggetto gli passo la parola chiave "children" che voglio utilizzare al posto di description. Con questa parola chiave posso renderizzare quello che inserisco tra il selettore di Card
+function Card({nome, imgUrl, strumento, children}) {
     return (
         // In React la parola class è una keyword
         <div className='card'>
@@ -53,18 +50,6 @@ function Card({nome, imgUrl, strumento, children, isConosciuto}) {
             <h3>{nome}</h3>
             <p>{children}</p>
             <p>Suona: {strumento}</p>
-
-            <hr />
-
-            {/* {isConosciuto ? <span>L'ho conosciuto</span>: <span>Mai conosciuto</span>} */}
-
-            {/* oppure */}
-            <span>{isConosciuto ? "L'ho conosciuto": "MAI conosciuto"}</span>
-
-            {/* oppure */}
-            {/* Molto usato */}
-            {isConosciuto && <span>L'ho conosciuto</span>}
-            {!isConosciuto && <span>MAI conosciuto</span>}
 
         </div>
     )

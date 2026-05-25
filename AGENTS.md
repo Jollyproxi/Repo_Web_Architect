@@ -1,4 +1,4 @@
-l# Repo Web Architect
+# Repo Web Architect
 
 Questo file è l'indice di primo livello del repository. Le regole dettagliate stanno negli `AGENTS.md` locali della cartella più vicina al contenuto che stai modificando.
 
@@ -9,6 +9,7 @@ Questo file è l'indice di primo livello del repository. Le regole dettagliate s
 ## Mappa rapida del repo
 - `projectRubrica_Giolitti/` → applicazione principale: rubrica client-side in ES Modules con Bootstrap e persistenza in `localStorage`/`sessionStorage`.
 - `projectBeatles/` → progetto stedativo: landing page dei Beatles con pagine dedicate ai membri e discografia, SCSS e fetch da MusicBrainz/AudioDB.
+- `REACT_my/` → progetti didattici React con Vite: `project_1` (componenti base), `project_2` (card con children), `project_3` (array + map + filtering).
 - `HTML/` → lezioni e demo statiche HTML/CSS/JS;
 - `JAVASCRIPT/` → esercizi e lezioni JavaScript, DOM, OOP e funzioni; sono materiali didattici statici.
 - `Statement Fondamentali/` → esempi base e pagine introduttive, sempre statiche.
@@ -45,6 +46,7 @@ Questo file è l'indice di primo livello del repository. Le regole dettagliate s
 ## Dove trovare le istruzioni specifiche
 - `projectRubrica_Giolitti/AGENTS.md`
 - `projectBeatles/AGENTS.md`
+- `REACT_my/AGENTS.md` → `project_1/AGENTS.md`, `project_2/AGENTS.md`, `project_3/AGENTS.md`
 - `HTML/AGENTS.md`
 - `JAVASCRIPT/AGENTS.md`
 - `Statement Fondamentali/AGENTS.md`
