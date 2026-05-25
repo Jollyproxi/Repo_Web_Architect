@@ -5,5 +5,8 @@
   "scripts": {
     "sass": "sass --watch ./scss:./css",
     "sass:build": "sass ./scss:./css --style=compressed"
+  },
+  "dependencies": {
+    "vite": "^8.0.14"
   }
 }
