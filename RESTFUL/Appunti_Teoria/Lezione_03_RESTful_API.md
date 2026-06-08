@@ -1,14 +1,6 @@
 # RESTful API — Lezione 03
 ## Struttura di una REST API
 
-| | |
-|---|---|
-| **Durata** | ~3 ore (2h teoria + 1h laboratorio) |
-| **Modulo** | 03 / 13 |
-| **Livello** | Intermedio |
-| **Stack** | JavaScript / Node.js / Express |
-
----
 
 ## 1. Obiettivi della lezione
 
