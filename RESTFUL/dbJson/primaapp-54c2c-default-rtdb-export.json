@@ -1,0 +1,51 @@
+{
+  "applicazione": {
+    "autore": "Dario Mennillo",
+    "caratteristiche": {
+      "anno": 2026,
+      "distro": "Ubuntu",
+      "os": "Linux",
+      "path": "dist/public"
+    },
+    "nome": "prima App con Json Server",
+    "version": "v1"
+  },
+  "docenti": [
+    {
+      "id": 1,
+      "materie": [
+        "HTML",
+        "CSS",
+        "JS"
+      ],
+      "nome": "Marta Bianchi",
+      "ruolo": "Admin"
+    },
+    {
+      "id": 2,
+      "materie": [
+        "Java",
+        "Spring"
+      ],
+      "nome": "Luca Neri",
+      "ruolo": "Base"
+    }
+  ],
+  "utenti": [
+    {
+      "email": "laura@mail.com",
+      "id": 1,
+      "nome": "Laura Verdi"
+    },
+    {
+      "email": "paolo@mail.com",
+      "id": 2,
+      "nome": "Paolo Rossi"
+    },
+    {
+      "email": "maria@mail.com",
+      "id": 3,
+      "nome": "Maria Gialli"
+    }
+  ]
+}

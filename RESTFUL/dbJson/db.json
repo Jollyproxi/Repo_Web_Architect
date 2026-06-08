@@ -30,11 +30,11 @@
   "docenti": [
     {
       "id": "1",
-      "nome": "Marta Bianchi",
+      "nome": "Anna Verdone",
       "materie": [
-        "HTML",
-        "CSS",
-        "JS"
+        "MySql",
+        "PostGres",
+        "Elastic"
       ],
       "ruolo": "Admin"
     },
