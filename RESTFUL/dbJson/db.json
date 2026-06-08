@@ -1,39 +1,70 @@
 {
-  "autore": {
-    "id": "7",
-    "nome": "Laura",
-    "cognome": "Gialli",
-    "matricola": "005ABCD"
+  "applicazione": {
+    "nome": "prima App con Json Server",
+    "autore": "Dario Mennillo",
+    "version": "v1",
+    "caratteristiche": {
+      "os": "Linux",
+      "distro": "Ubuntu",
+      "anno": 2026,
+      "path": "dist/public"
+    }
   },
-  "studenti": [
+  "utenti": [
     {
       "id": "1",
-      "nome": "Anna",
-      "cognome": "Rossi",
-      "matricola": "001ABCD"
+      "nome": "Laura Verdi",
+      "email": "laura@mail.com"
     },
     {
       "id": "2",
-      "nome": "Luca",
-      "cognome": "Verdi",
-      "matricola": "002ABCD"
+      "nome": "Paolo Rossi",
+      "email": "paolo@mail.com"
     },
     {
-      "id": "4TfUlma9KTE",
-      "nome": "Paolo",
-      "cognome": "Bianchi"
+      "id": "3",
+      "nome": "Maria Gialli",
+      "email": "maria@mail.com"
+    }
+  ],
+  "docenti": [
+    {
+      "id": "1",
+      "nome": "Anna Verdone",
+      "materie": [
+        "MySql",
+        "PostGres",
+        "Elastic"
+      ],
+      "ruolo": "Admin"
     },
     {
-      "nome": "Laura",
-      "cognome": "Gialli",
-      "matricola": "005ABCD",
-      "id": "6lVbb7HPpj4"
+      "id": "2",
+      "nome": "Luca Neri",
+      "materie": [
+        "Java",
+        "Spring"
+      ],
+      "ruolo": "Base"
     },
     {
-      "id": "m_86eP-g0pk",
-      "nome": "Laura",
-      "cognome": "Gialli",
-      "matricola": "005ABCD"
+      "id": "3",
+      "nome": "Anna Verdi",
+      "materie": [
+        "Java",
+        "Spring"
+      ],
+      "ruolo": "Base"
+    },
+    {
+      "id": "nneaSkAnQFw",
+      "nome": "Anna Azzurri",
+      "materie": [
+        "MySql",
+        "PostGres",
+        "Elastic"
+      ],
+      "ruolo": "Admin"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
