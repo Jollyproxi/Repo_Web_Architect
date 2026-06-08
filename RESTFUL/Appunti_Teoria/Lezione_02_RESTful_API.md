@@ -1,13 +1,5 @@
 # RESTful API — Lezione 02
 ## Metodi HTTP e semantica delle operazioni
-
-| | |
-|---|---|
-| **Durata** | ~3 ore (2h teoria + 1h laboratorio) |
-| **Modulo** | 02 / 13 |
-| **Livello** | Intermedio |
-| **Stack** | JavaScript / Node.js / Express |
-
 ---
 
 ## 1. Obiettivi della lezione
