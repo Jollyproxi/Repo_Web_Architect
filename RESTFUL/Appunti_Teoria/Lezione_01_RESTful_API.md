@@ -1,18 +1,10 @@
 # RESTful API — Lezione 01
 ## Introduzione alle REST API
 
-| | |
-|---|---|
-| **Durata** | ~3 ore (2h teoria + 1h laboratorio) |
-| **Modulo** | 01 / 13 |
-| **Livello** | Intermedio |
-| **Stack** | JavaScript / Node.js |
 
 ---
 
 ## 1. Obiettivi della lezione
-
-Al termine di questa lezione lo studente sarà in grado di:
 
 - Descrivere il modello architetturale client-server e il ruolo di HTTP
 - Spiegare cos'è REST e come si differenzia da altri stili architetturali (SOAP, RPC)
@@ -34,7 +26,7 @@ Il web è costruito su un principio di separazione netta: il client richiede ris
 | **Server** | Riceve la richiesta, elabora la logica di business, restituisce una risposta. Non conosce il tipo di client. |
 | **Protocollo (HTTP)** | Il contratto condiviso. Definisce il formato di richieste e risposte, i metodi, i codici di stato. |
 
-> 📘 **Nota** — La separazione client-server è il primo vincolo architetturale di REST. Consente di evolvere client e server in modo indipendente, a patto che il contratto HTTP non si rompa.
+> **OSServazione** — La separazione client-server è il primo vincolo architetturale di REST. Consente di evolvere client e server in modo indipendente, a patto che il contratto HTTP non si rompa.
 
 ### 2.2 Layered system
 
@@ -86,7 +78,7 @@ Ogni messaggio HTTP è composto da tre parti:
 2. **Headers** — metadati in formato `chiave: valore`, uno per riga
 3. **Body** — payload opzionale, separato dagli header da una riga vuota
 
-### 3.2 Anatomy degli headers
+### 3.2 Anatomia degli headers
 
 Gli header HTTP trasportano metadati sulla richiesta o risposta. Non fanno parte del payload, ma sono fondamentali per il comportamento del sistema.
 
@@ -100,7 +92,7 @@ Gli header HTTP trasportano metadati sulla richiesta o risposta. Non fanno parte
 
 Gli header che iniziano con `X-` sono convenzionalmente custom (non standard). Sono ancora molto diffusi ma formalmente deprecati dalla RFC 6648 (2012) a favore di nomi senza prefisso.
 
-### 3.3 Anatomy di una URL
+### 3.3 Anatomia di una URL
 
 Una URL non è solo un indirizzo: ogni componente ha un significato preciso.
 
@@ -119,7 +111,7 @@ schema   host             porta  path     query string              fragment
 | Query string | `fields=nome,email&lang=it` | Filtri, paginazione, opzioni |
 | Fragment | `#sezione` | Non arriva al server — solo client-side |
 
-> ⚠️ **Attenzione** — Il fragment (`#...`) non viene mai inviato al server. È gestito interamente dal browser/client. Non usarlo nelle API per veicolare parametri.
+> **Attenzione** — Il fragment (`#...`) non viene mai inviato al server. È gestito interamente dal browser/client. Non usarlo nelle API per veicolare parametri.
 
 ---
 
@@ -129,7 +121,7 @@ schema   host             porta  path     query string              fragment
 
 REST (Representational State Transfer) è uno stile architetturale — non un protocollo, non uno standard formale. Viene definito da Roy Fielding nella sua dissertazione di dottorato del 2000 come un insieme di vincoli che, se rispettati, producono un sistema web scalabile, manutenibile e interoperabile.
 
-> 📘 **Nota** — REST non è HTTP. REST è uno stile che si appoggia su HTTP. Si potrebbe tecnicamente fare REST su altri protocolli, ma nella pratica HTTP è l'unica implementazione diffusa.
+> **Nota** — REST non è HTTP. REST è uno stile che si appoggia su HTTP. Si potrebbe tecnicamente fare REST su altri protocolli, ma nella pratica HTTP è l'unica implementazione diffusa.
 
 ### 4.2 I sei vincoli di REST
 
@@ -153,7 +145,7 @@ REST (Representational State Transfer) è uno stile architetturale — non un pr
 | **Uso tipico** | API pubbliche, web, mobile | Enterprise legacy, sistemi bancari | Microservizi interni ad alta performance |
 | **Stato** | Stateless | Stateful possibile | Stateless / Streaming |
 
-> ✅ **Best practice** — Per la quasi totalità dei progetti web moderni, REST + JSON è lo standard de facto. SOAP è rilevante solo per integrazione con sistemi legacy. gRPC è interessante per microservizi interni, ma esula dagli obiettivi di questo corso.
+> **Best practice** — Per la quasi totalità dei progetti web moderni, REST + JSON è lo standard de facto. SOAP è rilevante solo per integrazione con sistemi legacy. gRPC è interessante per microservizi interni, ma esula dagli obiettivi di questo corso.
 
 ---
 
@@ -194,7 +186,7 @@ Content-Type: application/xml
 <user><id>42</id><nome>Mario Rossi</nome></user>
 ```
 
-> 📘 **Nota** — Il server risponde con il formato che il client dichiara di accettare nell'header `Accept`. Se non supporta il formato richiesto, risponde `406 Not Acceptable`. Questo meccanismo si chiama **content negotiation**.
+>  **Nota** — Il server risponde con il formato che il client dichiara di accettare nell'header `Accept`. Se non supporta il formato richiesto, risponde `406 Not Acceptable`. Questo meccanismo si chiama **content negotiation**.
 
 ---
 
@@ -210,7 +202,7 @@ Postman è lo strumento grafico più diffuso per testare e documentare API. Perm
 - Generare documentazione dalla Collection
 - Condividere Collection con il team
 
-> ✅ **Best practice** — Abituati a salvare ogni richiesta in una Collection, non ad eseguirle e buttarle. Le Collection diventano la documentazione pratica di un'API.
+> **Best practice** — Abituati a salvare ogni richiesta in una Collection, non ad eseguirle e buttarle. Le Collection diventano la documentazione pratica di un'API.
 
 ### 6.2 curl
 
@@ -325,7 +317,7 @@ curl -X POST https://jsonplaceholder.typicode.com/posts \
    - `Response Body` — come appare nel tab Preview vs Response?
 5. Trovare e annotare: status code, tempo di risposta (Timing → TTFB)
 
-> 📘 **Nota** — Nel tab Timing trovi il TTFB (Time To First Byte): il tempo che passa tra l'invio della richiesta e la ricezione del primo byte della risposta. È la metrica più significativa per la latenza di un'API.
+> **Nota** — Nel tab Timing trovi il TTFB (Time To First Byte): il tempo che passa tra l'invio della richiesta e la ricezione del primo byte della risposta. È la metrica più significativa per la latenza di un'API.
 
 ---
 

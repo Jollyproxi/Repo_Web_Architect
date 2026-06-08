@@ -1,8 +1,16 @@
+import { useState } from 'react';
 import './Card.css'
 
 
 function Card({nome, imgUrl, strumento, children, isConosciuto}) {
   
+   const [conosciuto, setConosciuto] = useState(isConosciuto)
+
+    function handleConosciuto(){
+       setConosciuto(!conosciuto);
+       console.log(conosciuto);
+    }
+
     return (
         // In React la parola class è una keyword
         <div className='card'>
@@ -23,9 +31,14 @@ function Card({nome, imgUrl, strumento, children, isConosciuto}) {
 
             {/* oppure */}
             {/* Molto usato */}
-            {isConosciuto && <span>L'ho conosciuto</span>}
-            {!isConosciuto && <span>MAI conosciuto</span>}
+            {conosciuto && <span>L'ho conosciuto</span>}
+            {!conosciuto && <span>MAI conosciuto</span>}
 
+
+            <button onClick={handleConosciuto}>
+                Clicca se lo hai conosciuto:
+                {conosciuto? "Lo hai conosciuto": "Mai conosciuto"}
+            </button>
         </div>
     )
 }

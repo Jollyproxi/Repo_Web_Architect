@@ -47,7 +47,7 @@ Un metodo è **idempotente** se eseguirlo N volte produce lo stesso risultato di
 | `POST` | ❌ | ❌ |
 | `PATCH` | ❌ | ❌ (di solito) |
 
-> 📘 **Nota** — L'idempotenza non riguarda la risposta HTTP (che può cambiare), ma lo stato del server. Un secondo `DELETE /users/42` risponderà `404`, ma lo stato del server è lo stesso di dopo il primo `DELETE`: l'utente 42 non esiste.
+> **Nota** — L'idempotenza non riguarda la risposta HTTP (che può cambiare), ma lo stato del server. Un secondo `DELETE /users/42` risponderà `404`, ma lo stato del server è lo stesso di dopo il primo `DELETE`: l'utente 42 non esiste.
 
 ### 2.3 Perché queste proprietà contano
 
@@ -157,7 +157,7 @@ Content-Type: application/json
 - Se ometti un campo, quel campo viene cancellato (o impostato al default) — questo è il comportamento atteso di PUT
 - PUT è idempotente: inviare la stessa richiesta N volte produce sempre lo stesso stato finale
 
-> ⚠️ **Attenzione** — L'errore più comune con PUT è usarlo come PATCH: inviare solo i campi da aggiornare. Il risultato è una risorsa parziale sul server, con i campi omessi azzerati o nulli.
+> **Attenzione** — L'errore più comune con PUT è usarlo come PATCH: inviare solo i campi da aggiornare. Il risultato è una risorsa parziale sul server, con i campi omessi azzerati o nulli.
 
 ---
 
@@ -196,7 +196,7 @@ Content-Type: application/json
 | Aggiornare lo stato di un ordine da `pending` a `shipped` | `PATCH` |
 | Sostituire interamente un documento di configurazione | `PUT` |
 
-> 📘 **Nota** — PATCH non è formalmente idempotente per specifica (RFC 5789), perché il risultato dipende dallo stato corrente della risorsa. In pratica, per le API JSON semplici (non JSON Patch), si comporta spesso in modo idempotente — ma non puoi contarci come garanzia di protocollo.
+> **Nota** — PATCH non è formalmente idempotente per specifica (RFC 5789), perché il risultato dipende dallo stato corrente della risorsa. In pratica, per le API JSON semplici (non JSON Patch), si comporta spesso in modo idempotente — ma non puoi contarci come garanzia di protocollo.
 
 ---
 
@@ -282,7 +282,7 @@ Questi sono gli errori di progettazione più frequenti nelle API REST alle prime
 | Usare `200 OK` per la creazione | POST risponde `200` | POST risponde `201 Created` |
 | Usare PUT inviando solo campi parziali | PUT con `{"email": "..."}` | Usare PATCH per aggiornamenti parziali |
 
-> ✅ **Best practice** — L'URL identifica **cosa** (la risorsa). Il metodo HTTP dice **come** (l'operazione). Se senti il bisogno di mettere un verbo nell'URL, è quasi sempre un segnale che stai usando il metodo HTTP sbagliato.
+> **Best practice** — L'URL identifica **cosa** (la risorsa). Il metodo HTTP dice **come** (l'operazione). Se senti il bisogno di mettere un verbo nell'URL, è quasi sempre un segnale che stai usando il metodo HTTP sbagliato.
 
 ---
 
