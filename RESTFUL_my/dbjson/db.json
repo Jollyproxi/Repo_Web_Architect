@@ -1,28 +1,67 @@
 {
-    "autore":{
-        "Nome": "Davide",
-        "Cognome": "Giolitti",
-        "Corso" : "WSA"
+    "applicatione": {
+        "id": 1,
+        "nome": "RESTful API",
+        "versione": "1.0.0",
+        "autore": 
+        {
+            "id": 1,
+                    "Nome": "Davide",
+                    "Cognome": "Giolitti",
+                    "Corso": "WSA"
+        },
+        "caratteristiche": 
+        {
+            "os": "Windows, Linux, MacOS",
+            "distro": "Ubuntu, Fedora, Debian",
+            "linguaggi": "Python, JavaScript, Java",
+            "framework": "Flask, Express, Spring Boot"
+        }
     },
-
     "studenti": [
         {
+            "id": 1,
             "Nome": "Davide",
             "Cognome": "Giolitti",
-            "Corso" : "WSA",
-            "Matricola" : "123456"
+            "Corso": "WSA",
+            "Matricola": "123456"
         },
         {
+            "id": 2,
             "Nome": "Mario",
             "Cognome": "Rossi",
-            "Corso" : "WSA",
-            "Matricola" : "654321"
+            "Corso": "WSA",
+            "Matricola": "654321"
         },
         {
+            "id": 3,
             "Nome": "Luigi",
             "Cognome": "Verdi",
-            "Corso" : "WSA",
-            "Matricola" : "111111"
+            "Corso": "WSA",
+            "Matricola": "111111"
+        }
+    ],
+    "Docenti": [
+        {
+            "id": 1,
+            "Nome": "Giuseppe",
+            "Cognome": "Bianchi",
+            "Corso": "WSA",
+            "Matricola": "222222"
+        },
+        {
+            "id": 2,
+            "Nome": "Francesca",
+            "Cognome": "Neri",
+            "Corso": "WSA",
+            "Matricola": "333333"
+        },
+        {
+            "id": 3,
+            "Nome": "Antonio",
+            "Cognome": "Gialli",
+            "Corso": "WSA",
+            "Matricola": "444444"
         }
     ]
 }
