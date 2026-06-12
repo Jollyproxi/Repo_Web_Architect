@@ -1,16 +1,53 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
 import Card from './components/Card'
+import CardForm from './components/CardForm'
+import CardFormVero from './components/CardFormVero'
 
 
 function App() {
 
+  // useState è un HOOK direttamente importato da react. Mi permette di "agganciarmi" ad altri fiunzionalità. Con l'utilizzo dello useState imposto uno "stato iniziale" del mio component. Questo stato è possibile modificarlo attraverso una funzione che lo controlla.
+
+  //Il valore iniziale dello useState, cioè lo 0, viene assegnato a counter. Il counter viene modificato attraverso la funzione setCount
+
+  // Gestisco lo state di una variabile
+  const [counter, setCount] = useState(0);
+
+  const handleCounter = () => {
+    setCount((count) => count + 1);
+  }
+
+  //Gestisco lo state di un array
+  const [items, setItems] = useState([1, 2, 3]);
+
+  const aggiungiItem = () => {
+    //1. aggiorno il counter
+    handleCounter();
+    //2. utilizzo il valore del counter nel setItems
+    setItems([...items, counter]);
+  }
+
+  //gestisco lo state di un oggetto 
+  const [user, setUser] = useState({ nome: "Mario", eta: 25 });
+
+  const updateUser = () => {
+    let updatedUser = { ...user, nome: "Lello" };
+    setUser(updatedUser);
+    console.log("Adesso l'utente è: ", user);
+  }
+
+  useEffect(() => {
+    console.log(user);
+
+  }, [user]);
+
   let nomeApp = "BEATLES"
 
-  const beatles = [
+  const [beatles, setBeatles] = useState([
     {
       id: 0,
       isConosciuto: false,
@@ -43,40 +80,36 @@ function App() {
       strumento: "batteria",
       imgUrl: "https://townsquare.media/site/295/files/2012/11/ringo-Keystone-hutton-archives-getty.jpg?w=780&q=75"
     }
-  ]
+  ]);
 
-  function chiamaAlert(){
-    console.log("Ciao dalla funzione su pulsante 2");
-    alert("Queto è l'alert del pulsante 2")
+  const addBeatle = (newBeatle) => {
+    setBeatles([...beatles, newBeatle]);
   }
 
-
-  function handleChange(event){
-    console.log(event);
-    console.log(event.target.value);
-       
-  }
-
-
-  function handleSub(event){
-    event.preventDefault(); //Se non uso il preventDEfault perdo il senso dell'intero framework strutturato per produrre delle SPA
-    console.log(event);
-    
-  }
   return (
     <>
+
       <h1>{nomeApp}</h1>
       <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Adipisci, aliquid! Quisquam molestiae consequatur deleniti hic, sint illum laboriosam deserunt asperiores.</p>
-      {/* In questo progetto ho eliminato le card sostituendo le properties con un array di oggetti */}
 
-      {/* <Card
-      nome={beatles[0].nome}
-      imgUrl={beatles[0].imgUrl}
-      strumento={beatles[0].strumento}
-      >
-        {beatles[0].description}
-      </Card> */}
+      <div className="counter">
 
+        {/* <button onClick={() => { addBeatle({ id: 4, nome: "Pippo Rossi", strumento: "citofono" }) }
+        }>
+          Aggiungi un beatle
+        </button> */}
+        
+        {/* addBeatle (sx) è la props del child. addBeatle(dx) è il nome della funzione, della funzione, del parametroe ecc */}
+        <CardForm addBeatle={addBeatle}></CardForm>
+
+      </div>
+        
+      <div className="counter">
+        <CardFormVero addBeatle={addBeatle}></CardFormVero>
+      </div>
+
+
+      <br />
       <div className="card-container">
 
         {beatles.map((beatle) => (
@@ -98,52 +131,58 @@ function App() {
       <div className="card-container">
 
         {beatles
-        .filter(beatle => beatle.isConosciuto)
-        .map((beatle) => (
-        <Card
-          key={beatle.id}
-          isConosciuto={beatle.isConosciuto}
-          nome={beatle.nome}
-          strumento={beatle.strumento}
-          imgUrl={beatle.imgUrl}
-          >
-            {beatle.description}
-          </Card>
-        ))}
+          .filter(beatle => beatle.isConosciuto)
+          .map((beatle) => (
+            <Card
+              key={beatle.id}
+              isConosciuto={beatle.isConosciuto}
+              nome={beatle.nome}
+              strumento={beatle.strumento}
+              imgUrl={beatle.imgUrl}
+            >
+              {beatle.description}
+            </Card>
+          ))}
 
       </div>
 
+      <div className="container">
+        <h2>Gestione dello Use State</h2>
 
-      <br />
-      <h2>Gestione degli eventi</h2>
-      <div className="card">
-        {/* GESTIONE degli EVENTI */}
-        
-        {/* Posso gestire un evento con una function anonima */}
-        <button type='button' className='counter' onClick={() => {
-          alert("Ciao dall'evento del pulsante 1")
-        }}> Pulsante 1</button>
-        
-        <br />
-        
-        {/* Gestisco un evento attraverso una funzione. ATT: anche in questo caso non uso le () dopo la funzione */}
-        <button type='button' className='counter' onClick={chiamaAlert}>Pulsante 2</button>
-        
-        <br />
-        {/* Provo con un input. "handleChange" è una funzione*/}
-        <input type="text" onChange={handleChange} />
+        <div className='counter'>
 
-        <br />
-        {/* Provo con un form più piccolo */}
-        <form onSubmit={handleSub}>
-
-          <button type='submit' className='counter'>
-            Invia
+          {/* USE STATE è lo stato di un'app, cioè i dati interni, quello che in C# possiamo chiamre come stato della classe.
+        Quello che succede è che ogni volta che viene "aggiornato" lo state viene "tenuto a mente" da REACT  */}
+          <button onClick={handleCounter}>
+            Contatore {counter}
           </button>
-        </form>
 
+          <br />
 
+          <button onClick={() => setCount((count) => count + 1)}>
+            Contatore {counter}
+          </button>
+
+        </div>
+
+        <br />
+        <div className="counter">
+          <button onClick={aggiungiItem}>
+            Aggiungi un Item all'array
+          </button>
+          <br />
+
+          {items}
+        </div>
+
+        <br />
+
+        <div className="counter">
+          <button onClick={updateUser}>Aggiorna lo User</button>
+          <p>Adesso lo user è {user.nome}</p>
+        </div>
       </div>
+      <br />
 
     </>
   )
