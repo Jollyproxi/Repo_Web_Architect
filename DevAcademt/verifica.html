@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <!-- metto bootstrap in node_modules -->
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/style.css">
+
+    </head>
+
+    <body>
+
+        <section id="esercizio1">
+            <header>
+                    <h1>DevAcademy</h1>
+                    <nav>
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Contact</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+            </header>
+            <div class="hero">
+                <h2>Benvenuti a DevAcademy</h2>
+                <p>Impara a programmare con i nostri corsi online</p>
+                <button id="scopri-corsi" class="btn btn-primary">Scopri i corsi</button>
+            </div>
+            <div class="courses d-none">
+                <div class="carte">
+                    <h3>Web Architect</h3>
+                    <p>Durata: 18 mesi</p>
+                    <p>Prezzo: 0€ (Pagano MSC e Unione Europea)</p>
+                    <p>Impara a progettare e sviluppare applicativi web professionali.</p>
+                </div>
+                <div class="carte">
+                    <h3>Java Developer</h3>
+                    <p>Durata: 4 mesi</p>
+                    <p>Prezzo: 1500€</p>
+                    <p>Diventa uno sviluppatore Java esperto e lavora su progetti reali.</p>
+                </div>
+                <div class="carte">
+                    <h3>Python Base</h3>
+                    <p>Durata: 3 mesi</p>
+                    <p>Prezzo: 1000€</p>
+                    <p>Inizia a programmare con Python e scopri le sue potenzialità.</p>
+                </div>
+                <div class="carte">
+                    <h3>Database SQL</h3>
+                    <p>Durata: 2 mesi</p>
+                    <p>Prezzo: 800€</p>
+                    <p>Impara a gestire e interrogare database relazionali con SQL.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="esercizio2">
+            <form id="mioForm" class="p-3">
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" class="form-control" id="nome" placeholder="Inserisci il tuo nome">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Inserisci la tua email">
+                </div>
+                <div class="mb-3">
+                    <label for="eta" class="form-label">Età</label>
+                    <input type="number" class="form-control" id="eta" placeholder="Inserisci la tua età">
+                </div>
+                <select id="form-control" class="form-select mb-3" aria-label="Default select example">
+                    <option selected>Seleziona il tuo corso</option>
+                </select>
+                <button type="submit" class="btn btn-primary">Registrati</button>
+            </form>
+            <div id="validation-warns" class="alert alert-danger mt-3 d-none" role="alert">
+                <ul id="validation-list"></ul>
+            </div>
+        </section>
+
+        <section id="esercizio3">
+            <button id="carica-docenti" class="btn btn-secondary">Carica Docenti</button>
+
+            <div id="docenti-container" class="mt-3 d-none">
+                <h3>Docenti</h3>
+                <ul id="docenti-list" class="list-group"></ul>
+            </div>
+        </section>
+
+
+
+
+
+
+
+
+        <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="js/script.js"></script>
+
+    </body>
+
+</html>

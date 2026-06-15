@@ -1,0 +1,50 @@
+/**
+ * Approccio mobile-first: di default (mobile) le card sono in colonna, una sotto l'altra; con una media query @media screen and (min-width: 768px) le card si dispongono affiancate sulla stessa riga
+
+ * Cura il box model: padding, margini e bordi coerenti sulle card 
+ * (consigliato partire da un reset: * { margin: 0; padding: 0; box-sizing: border-box; })
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.courses {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.carte {
+    width: 100%;
+}
+
+.card{
+    width: fit-content;
+}
+
+#docenti-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+#docenti-container h3 {
+    width: 100%;
+}
+
+
+@media screen and (min-width: 768px) {
+    .courses {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .carte {
+        width: calc(25% - 15px);
+    }
+}
+
