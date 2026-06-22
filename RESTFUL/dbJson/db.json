@@ -1,13 +1,11 @@
 {
   "applicazione": {
-    "nome": "prima App con Json Server",
+    "nome": "terza APP con JSON-SERVER",
     "autore": "Dario Mennillo",
-    "version": "v1",
+    "version": "v3",
     "caratteristiche": {
       "os": "Linux",
-      "distro": "Ubuntu",
-      "anno": 2026,
-      "path": "dist/public"
+      "distro": "Fedora"
     }
   },
   "utenti": [
@@ -63,6 +61,25 @@
         "MySql",
         "PostGres",
         "Elastic"
+      ],
+      "ruolo": "Admin"
+    },
+    {
+      "id": "6",
+      "nome": "Anna Azzurri",
+      "materie": [
+        "Prova",
+        "Prova",
+        "Prova"
+      ],
+      "ruolo": "Base"
+    },
+    {
+      "id": "Wj9q8aDE2eY",
+      "nome": "Luisa Gialli",
+      "materie": [
+        "Matematica",
+        "Fisica"
       ],
       "ruolo": "Admin"
     }

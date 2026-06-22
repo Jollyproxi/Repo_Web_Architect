@@ -2,10 +2,7 @@
 ## Struttura di una REST API
 
 
-## 1. Obiettivi della lezione
-
-Al termine di questa lezione lo studente sarà in grado di:
-
+## 1. Obiettivi della lezione21
 - Applicare le convenzioni di naming delle risorse nelle URL
 - Progettare una gerarchia di route con nesting corretto
 - Implementare il versioning dell'API tramite prefisso nel path
@@ -106,7 +103,7 @@ POST /users/42/posts          → crea un post per l'utente 42
 Il nesting profondo diventa problematico rapidamente:
 
 ```
-❌  GET /users/42/posts/7/comments/3/likes   (troppo profondo)
+  GET /users/42/posts/7/comments/3/likes   (troppo profondo)
 ```
 
 **Regola pratica**: non superare un livello di nesting. Se serve un terzo livello, esponi la sotto-risorsa come risorsa di primo livello con un filtro:
@@ -222,7 +219,7 @@ Il `package.json` ora contiene:
 }
 ```
 
-> 📘 **Nota** — La cartella `node_modules` non va mai committata su Git. Aggiungila a `.gitignore`. Chiunque cloni il repo esegue `npm install` per ricrearla dalle informazioni in `package.json`.
+> **Nota** — La cartella `node_modules` non va mai committata su Git. Aggiungila a `.gitignore`. Chiunque cloni il repo esegue `npm install` per ricrearla dalle informazioni in `package.json`.
 
 ### 5.4 Il server più semplice possibile
 
@@ -319,7 +316,7 @@ app.get('/users', (req, res) => {
 });
 ```
 
-> ⚠️ **Attenzione** — I valori di `req.query` sono sempre stringhe. Se serve un numero, converti esplicitamente: `parseInt(req.query.page)`.
+>  **Attenzione** — I valori di `req.query` sono sempre stringhe. Se serve un numero, converti esplicitamente: `parseInt(req.query.page)`.
 
 ### 6.5 Body della richiesta
 
@@ -888,26 +885,4 @@ Testare: cosa risponde il server se il body è `{"nome": "Anna"}` senza email?
 
 ---
 
-## 14. Domande di verifica
-
-1. Perché si usano nomi al plurale nelle URL REST? Fai un esempio di URL corretta e una scorretta per la stessa risorsa.
-2. Cos'è Express e cosa aggiunge rispetto al modulo `http` nativo di Node.js?
-3. Qual è la differenza tra `app.use()` e `app.get()`?
-4. Cosa succede se un middleware non chiama `next()` e non invia una risposta?
-5. Qual è la differenza tra `req.params`, `req.query` e `req.body`? Quando è popolato ciascuno?
-6. Cos'è un breaking change in un'API? Fai un esempio che lo è e uno che non lo è.
-
 ---
-
-## 15. Riferimenti
-
-- Express.js — [Sito ufficiale](https://expressjs.com)
-- Express.js docs — [Getting started](https://expressjs.com/en/starter/installing.html)
-- Express.js docs — [Routing](https://expressjs.com/en/guide/routing.html)
-- Express.js docs — [Writing middleware](https://expressjs.com/en/guide/writing-middleware.html)
-- npm — [Pagina del pacchetto Express](https://www.npmjs.com/package/express)
-- Stripe API — esempio reale di versioning nel path: `api.stripe.com/v1/`
-
----
-
-*Fine Lezione 03 — Prossima lezione: Codici di risposta HTTP*

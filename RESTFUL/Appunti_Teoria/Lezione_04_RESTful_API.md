@@ -1,18 +1,10 @@
 # RESTful API — Lezione 04
 ## Codici di risposta HTTP
 
-| | |
-|---|---|
-| **Durata** | ~3 ore (2h teoria + 1h laboratorio) |
-| **Modulo** | 04 / 13 |
-| **Livello** | Intermedio |
-| **Stack** | JavaScript / Node.js / Express |
 
 ---
 
 ## 1. Obiettivi della lezione
-
-Al termine di questa lezione lo studente sarà in grado di:
 
 - Riconoscere e usare correttamente i codici di risposta HTTP più comuni
 - Distinguere le famiglie 2xx, 3xx, 4xx, 5xx e sapere quando appartiene una risposta a ciascuna
@@ -36,7 +28,7 @@ La prima cifra identifica la famiglia:
 | `4xx` | Client Error — la richiesta contiene un errore | Mostra errore all'utente, non fare retry automatico |
 | `5xx` | Server Error — il server non è riuscito a soddisfare la richiesta | Retry dopo un intervallo, segnala il problema |
 
-> 📘 **Nota** — La distinzione tra 4xx e 5xx è fondamentale: `4xx` significa che il problema è nel client (richiesta sbagliata), `5xx` significa che il problema è nel server (colpa nostra). Un client non deve fare retry su un `400` — la stessa richiesta sbagliata darà sempre lo stesso errore. Può invece fare retry su un `503`.
+> **Nota** — La distinzione tra 4xx e 5xx è fondamentale: `4xx` significa che il problema è nel client (richiesta sbagliata), `5xx` significa che il problema è nel server (colpa nostra). Un client non deve fare retry su un `400` — la stessa richiesta sbagliata darà sempre lo stesso errore. Può invece fare retry su un `503`.
 
 ---
 
@@ -77,7 +69,7 @@ Content-Type: application/json
 }
 ```
 
-> ⚠️ **Errore frequente** — Rispondere `200 OK` a una POST che crea una risorsa. Il codice corretto è `201 Created`. Il client (e i tool automatici) distinguono tra i due: `201` dice esplicitamente "qualcosa è stato creato".
+>  **Errore frequente** — Rispondere `200 OK` a una POST che crea una risorsa. Il codice corretto è `201 Created`. Il client (e i tool automatici) distinguono tra i due: `201` dice esplicitamente "qualcosa è stato creato".
 
 ### 3.3 204 No Content
 
@@ -149,7 +141,7 @@ HTTP/1.1 304 Not Modified
 ETag: "33a64df5"
 ```
 
-> 📘 **Nota** — Il `304` è il meccanismo principale del caching HTTP. Il client chiede "è cambiato dall'ultima volta che l'ho scaricato?" e il server risponde sì o no senza riscaricare i dati. Lo vedremo in dettaglio nella Lezione 06.
+>  **Nota** — Il `304` è il meccanismo principale del caching HTTP. Il client chiede "è cambiato dall'ultima volta che l'ho scaricato?" e il server risponde sì o no senza riscaricare i dati. Lo vedremo in dettaglio nella Lezione 06.
 
 ---
 
@@ -203,7 +195,7 @@ Content-Type: application/json
 }
 ```
 
-> 📘 **Nota — 401 vs 403:**
+>  **Nota — 401 vs 403:**
 > - `401` → Non sei autenticato. Soluzione: fai login e riprova.
 > - `403` → Sei autenticato, ma non hai i permessi. Soluzione: chiedi i permessi a un admin.
 
@@ -221,7 +213,7 @@ Content-Type: application/json
 }
 ```
 
-> ⚠️ **Errore frequente** — Usare `404` come risposta generica per qualsiasi errore non gestito. Il `404` deve significare solo che la risorsa non esiste. Un errore di validazione è un `400`, non un `404`.
+>  **Errore frequente** — Usare `404` come risposta generica per qualsiasi errore non gestito. Il `404` deve significare solo che la risorsa non esiste. Un errore di validazione è un `400`, non un `404`.
 
 ### 5.5 405 Method Not Allowed
 
@@ -453,7 +445,7 @@ Esempi:
 }
 ```
 
-> ✅ **Best practice** — Il campo `error` deve essere sempre una stringa leggibile da un essere umano. Non usare codici numerici come valore di `error` — per quelli c'è già il codice HTTP.
+> **Best practice** — Il campo `error` deve essere sempre una stringa leggibile da un essere umano. Non usare codici numerici come valore di `error` — per quelli c'è già il codice HTTP.
 
 ---
 
@@ -579,7 +571,7 @@ app.get('/users', async (req, res, next) => {
 });
 ```
 
-> 📘 **Nota** — Express 5 (attualmente in release candidate) cattura automaticamente gli errori dalle funzioni async. In Express 4, il try/catch è obbligatorio oppure si usa una libreria come `express-async-errors`.
+>  **Nota** — Express 5 (attualmente in release candidate) cattura automaticamente gli errori dalle funzioni async. In Express 4, il try/catch è obbligatorio oppure si usa una libreria come `express-async-errors`.
 
 ---
 
@@ -709,83 +701,7 @@ module.exports = app;
 
 ---
 
-## 11. Laboratorio (~1 ora)
 
-**Obiettivo**: aggiornare il progetto della Lezione 03 con la gestione errori centralizzata e verificare che ogni scenario restituisca il codice HTTP corretto.
-
----
-
-### Esercizio 1 — Aggiungere utils/errors.js
-
-1. Creare la cartella `utils/` nella root del progetto
-2. Creare `utils/errors.js` con il codice della sezione 10.1
-3. Aggiornare `controllers/usersController.js` e `controllers/productsController.js` per usare `next(err)` invece di `res.status(...).json(...)` per gli errori
-
----
-
-### Esercizio 2 — Aggiornare app.js
-
-Sostituire l'error handler esistente con quello della sezione 10.3. Aggiungere anche il catch-all 404 se non già presente.
-
----
-
-### Esercizio 3 — Verifica dei codici di risposta
-
-Testare in Postman i seguenti scenari e verificare che il codice HTTP ricevuto corrisponda a quello atteso:
-
-| # | Richiesta | Codice atteso | Motivo |
-|---|---|---|---|
-| 1 | `GET /api/v1/users` | 200 | Lista restituita correttamente |
-| 2 | `GET /api/v1/users/1` | 200 | Utente trovato |
-| 3 | `GET /api/v1/users/999` | 404 | Utente inesistente |
-| 4 | `POST /api/v1/users` body completo | 201 | Utente creato |
-| 5 | `POST /api/v1/users` senza email | 400 | Campo obbligatorio mancante |
-| 6 | `POST /api/v1/users` email duplicata | 409 | Conflitto email |
-| 7 | `DELETE /api/v1/users/1` | 204 | Eliminato, nessun body |
-| 8 | `DELETE /api/v1/users/1` (già eliminato) | 404 | Non trovato |
-| 9 | `GET /api/v1/nonesiste` | 404 | Endpoint non definito |
-| 10 | `GET /health` | 200 | Health check |
-
----
-
-### Esercizio 4 — Simulare un errore 500
-
-Aggiungi temporaneamente questa route in `app.js` per testare l'error handler con un errore inaspettato:
-
-```javascript
-app.get('/api/v1/crash', (req, res, next) => {
-  // Simula un errore imprevisto (es. bug nel codice, database giù)
-  next(new Error('Questo è un errore simulato del server'));
-});
-```
-
-1. Avvia il server con `NODE_ENV=development node index.js`
-2. Chiama `GET /api/v1/crash` — vedi lo stack trace nella risposta?
-3. Avvia con `NODE_ENV=production node index.js`
-4. Chiama di nuovo — lo stack trace è nascosto?
-
----
-
-### Esercizio 5 — Formattare gli errori di validazione
-
-Aggiornare il middleware `validateBody.js` per restituire un formato di errore più dettagliato:
-
-```javascript
-// Attuale
-{ "error": "Campi obbligatori mancanti", "campi_mancanti": ["email"] }
-
-// Obiettivo
-{
-  "error": "Validazione fallita",
-  "campi": {
-    "email": "campo obbligatorio mancante"
-  }
-}
-```
-
-Come modificheresti `validateBody.js` per produrre questo output?
-
----
 
 ## 12. Riepilogo
 
@@ -804,33 +720,4 @@ Come modificheresti `validateBody.js` per produrre questo output?
 | `500` | Internal Server Error | Errore generico del server |
 | `503` | Service Unavailable | Server non disponibile |
 
-**Principi da ricordare:**
-- Il codice HTTP deve riflettere l'esito reale — mai `200` con un payload di errore
-- `4xx` = colpa del client, `5xx` = colpa del server
-- Mai esporre stack trace o dettagli interni in produzione
-- Definisci un formato di errore JSON uniforme e rispettalo su tutte le route
-- Centralizza la gestione degli errori in un unico error handler in fondo ad `app.js`
-
 ---
-
-## 13. Domande di verifica
-
-1. Qual è la differenza semantica tra `401` e `403`? Fai un esempio concreto per ciascuno.
-2. Perché non si deve rispondere `200 OK` a una POST che crea una risorsa?
-3. Un client riceve `503`. Può fare retry automatico della richiesta? E se riceve `400`?
-4. Cos'è un error handler in Express? Come lo distingue dagli altri middleware?
-5. Perché non si devono mai esporre stack trace nelle risposte `500` in produzione?
-6. Qual è la differenza tra `400` e `422`? In quali casi useresti l'uno o l'altro?
-
----
-
-## 14. Riferimenti
-
-- RFC 9110 — *HTTP Semantics*, sezione 15 — Status Codes (definizione ufficiale di tutti i codici)
-- MDN Web Docs — [HTTP response status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
-- Express.js docs — [Error handling](https://expressjs.com/en/guide/error-handling.html)
-- httpstatuses.com — riferimento rapido con descrizioni e casi d'uso
-
----
-
-*Fine Lezione 04 — Prossima lezione: JSON — il formato dati delle API*
