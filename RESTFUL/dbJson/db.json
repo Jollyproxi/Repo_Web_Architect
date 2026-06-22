@@ -65,17 +65,16 @@
       "ruolo": "Admin"
     },
     {
-      "id": "6",
-      "nome": "Anna Azzurri",
+      "id": "Wj9q8aDE2eY",
+      "nome": "Luisa Gialli",
       "materie": [
-        "Prova",
-        "Prova",
-        "Prova"
+        "Matematica",
+        "Fisica"
       ],
-      "ruolo": "Base"
+      "ruolo": "Admin"
     },
     {
-      "id": "Wj9q8aDE2eY",
+      "id": "oi2qcWfLeDQ",
       "nome": "Luisa Gialli",
       "materie": [
         "Matematica",
@@ -84,5 +83,9 @@
       "ruolo": "Admin"
     }
   ],
+  "versioneDistribuita": {
+    "nome": "App per test API",
+    "versione": "v8"
+  },
   "$schema": "./node_modules/json-server/schema.json"
 }
