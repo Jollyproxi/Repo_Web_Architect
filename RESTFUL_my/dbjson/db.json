@@ -1,67 +1,75 @@
 {
-    "applicatione": {
-        "id": 1,
-        "nome": "RESTful API",
-        "versione": "1.0.0",
-        "autore": 
-        {
-            "id": 1,
-                    "Nome": "Davide",
-                    "Cognome": "Giolitti",
-                    "Corso": "WSA"
-        },
-        "caratteristiche": 
-        {
-            "os": "Windows, Linux, MacOS",
-            "distro": "Ubuntu, Fedora, Debian",
-            "linguaggi": "Python, JavaScript, Java",
-            "framework": "Flask, Express, Spring Boot"
-        }
+  "applicazione": {
+    "id": 1,
+    "nome": "RESTful API",
+    "versione": "1.0.2",
+    "autore": {
+      "nome": "Davide",
+      "cognome": "Giolitti",
+      "corso": "WSA",
+      "gerico": "0"
     },
-    "studenti": [
-        {
-            "id": 1,
-            "Nome": "Davide",
-            "Cognome": "Giolitti",
-            "Corso": "WSA",
-            "Matricola": "123456"
-        },
-        {
-            "id": 2,
-            "Nome": "Mario",
-            "Cognome": "Rossi",
-            "Corso": "WSA",
-            "Matricola": "654321"
-        },
-        {
-            "id": 3,
-            "Nome": "Luigi",
-            "Cognome": "Verdi",
-            "Corso": "WSA",
-            "Matricola": "111111"
-        }
-    ],
-    "Docenti": [
-        {
-            "id": 1,
-            "Nome": "Giuseppe",
-            "Cognome": "Bianchi",
-            "Corso": "WSA",
-            "Matricola": "222222"
-        },
-        {
-            "id": 2,
-            "Nome": "Francesca",
-            "Cognome": "Neri",
-            "Corso": "WSA",
-            "Matricola": "333333"
-        },
-        {
-            "id": 3,
-            "Nome": "Antonio",
-            "Cognome": "Gialli",
-            "Corso": "WSA",
-            "Matricola": "444444"
-        }
-    ]
+    "caratteristiche": {
+      "os": "Windows, Linux, MacOS",
+      "distro": "Ubuntu, Fedora, Debian",
+      "linguaggi": "Python, JavaScript, Java",
+      "framework": "Flask, Express, Spring Boot"
+    }
+  },
+  "studenti": [
+    {
+      "id": "1",
+      "nome": "Davide",
+      "cognome": "Giolitti",
+      "corso": "WSA",
+      "matricola": "123456"
+    },
+    {
+      "id": "2",
+      "nome": "Mario",
+      "cognome": "Rossi",
+      "corso": "WSA",
+      "matricola": "654321"
+    },
+    {
+      "id": "3",
+      "nome": "Luigi",
+      "cognome": "Verdi",
+      "corso": "WSA",
+      "matricola": "111111"
+    }
+  ],
+  "docenti": [
+    {
+      "id": "1",
+      "nome": "Giuseppe",
+      "cognome": "Bianchi",
+      "corso": "WSA",
+      "Matricola": "222222",
+      "ruolo": "Admin"
+    },
+    {
+      "id": "2",
+      "nome": "Francesca",
+      "cognome": "Neri",
+      "corso": "WSA",
+      "Matricola": "333333"
+    },
+    {
+      "id": "3",
+      "nome": "Antonio",
+      "cognome": "Gialli",
+      "corso": "WSA",
+      "Matricola": "444444"
+    },
+    {
+      "id": "TE_I2Xa2nzI",
+      "nome": "Leonida",
+      "cognome": "Agiade",
+      "corso": "BID",
+      "matricola": "300",
+      "ruolo": "Diarca"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
