@@ -3,19 +3,8 @@
 
 ---
 
-## 1. Obiettivi della lezione
 
-Al termine di questa lezione lo studente sarà in grado di:
-
-- Descrivere la sintassi di JSON e i suoi tipi di dato
-- Spiegare perché JSON si è affermato come formato dominante per le API rispetto a XML
-- Usare `JSON.parse()` e `JSON.stringify()` con le loro opzioni avanzate (replacer, reviver, indentazione)
-- Gestire i casi limite di serializzazione (date, `undefined`, `BigInt`, riferimenti circolari)
-- Validare il JSON in ingresso con JSON Schema e la libreria `ajv`
-
----
-
-## 2. Cos'è JSON
+## 1. Cos'è JSON
 
 JSON (JavaScript Object Notation) è un formato testuale per lo scambio di dati. Nasce come sottoinsieme della sintassi degli oggetti letterali JavaScript, ma è oggi un formato indipendente dal linguaggio, supportato nativamente da quasi tutti i linguaggi di programmazione.
 
