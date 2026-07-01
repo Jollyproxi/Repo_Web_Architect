@@ -1,0 +1,6 @@
+{
+    "autore":{
+        "nome": "Dario",
+        "cognome": "Mennillo"
+    }
+}
