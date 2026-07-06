@@ -89,15 +89,16 @@ function registraUtente() {
     }).then(creato => {
         console.log(`Utente creato con id ${creato.id}`);
     })
-    .catch(err => console.error("Richiesta fallita", err))
-    .finally(() => {
+        .catch(err => console.error("Richiesta fallita", err))
+        .finally(() => {
             btnRegistra.setAttribute("disabled", true);
-            console.log("Richiesta terminata")});
+            console.log("Richiesta terminata")
             // location.href = "./utenteRegistrato.html";
             document.querySelector("#demo").innerHTML = "Sto registrando l'utente";
             setTimeout(() => {
                 document.querySelector("#demo").innerHTML = "Utente registrato";
-            }, 3000);        
+            }, 3000);
+        });
 }
 
 const btnRegistra = document.querySelector("#btnRegistra");
