@@ -21,7 +21,7 @@ const findIndexById = (id) => users.findIndex(u => u.id === parseInt(id));
 const getAll = (req, res) => {
   const { ruolo } = req.query;
 
-  let result = users;
+   let result = users;
   if (ruolo) {
     result = users.filter(u => u.ruolo === ruolo);
   }
