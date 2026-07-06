@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!--bootstrap con node modules-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <h1>Prova fetch</h1>
+
+    <p>Testare tutti i verbi dello HTTP con la fetch API, chiamando l'API di json-server.</p>
+
+    <li>GET -> ricevi tutti gli oggetti o le collection</li>
+    <li>GET -> ricevi oggetti filtrati</li>
+    <li>POST -> crea oggetti all'interno di un collection</li>
+    <li>PUT -> modifica integralmente un oggetto di una collection</li>
+    <li>PATCH -> modifica parzialmente un oggetto di una collection</li>
+    <li>DELETE -> elimina un oggetto</li>
+
+    <p>Ogni singolo metodo deve avere un pulsante al quale è collegato. Nel caso della POST utilizza dei campi input per
+        inserire le informazioni necessarie alla creazione dell'oggetto.</p>
+    <p>BONUS: inserisci uno spinner (fai riferimento agli spinner di bootstrap) quando carichi un nuovo oggetto
+        attraverso la POST</p>
+    
+    
+
+
+
+        <button id="getAll" class="btn btn-primary">GET ALL</button>
+        <button id="getFiltered" class="btn btn-primary">GET FILTERED</button>  <br/>
+        
+        <!-- metto il form per la post in una card bootstrap-->
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">POST</h5>
+                <form id="postForm">
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cognome" class="form-label">Cognome</label>
+                        <input type="text" class="form-control" id="cognome" name="cognome" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="post">Submit</button>  
+                </form>
+                <div id="spinnerPost" class="text-center mt-3 d-none">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Caricamento...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="put" class="btn btn-primary">PUT</button>
+        <button id="patch" class="btn btn-primary">PATCH</button>
+        <button id="delete" class="btn btn-primary">DELETE</button>
+
+
+        <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="script.js"></script>
+
+</body>
+
+</html>

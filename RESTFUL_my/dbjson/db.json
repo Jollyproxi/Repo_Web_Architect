@@ -26,13 +26,6 @@
     },
     {
       "id": "2",
-      "nome": "Mario",
-      "cognome": "Rossi",
-      "corso": "WSA",
-      "matricola": "654321"
-    },
-    {
-      "id": "3",
       "nome": "Luigi",
       "cognome": "Verdi",
       "corso": "WSA",
