@@ -1,0 +1,53 @@
+{
+    "prodotti": [
+        {
+            "id": 1,
+            "nome": "Tastiera meccanica",
+            "prezzo": 79.90,
+            "categoria": "periferiche",
+            "disponibile": true
+        },
+        {
+            "id": 2,
+            "nome": "Monitor 27 pollici",
+            "prezzo": 219.00,
+            "categoria": "monitor",
+            "disponibile": true
+        },
+        {
+            "id": 3,
+            "nome": "Mouse wireless",
+            "prezzo": 24.50,
+            "categoria": "periferiche",
+            "disponibile": false
+        },
+        {
+            "id": 4,
+            "nome": "Webcam HD",
+            "prezzo": 45.00,
+            "categoria": "periferiche",
+            "disponibile": true
+        },
+        {
+            "id": 5,
+            "nome": "Hub USB-C",
+            "prezzo": 18.90,
+            "categoria": "accessori",
+            "disponibile": true
+        }
+    ],
+    "ordini": [
+        {
+            "id": 1,
+            "prodottoId": 1,
+            "quantita": 2,
+            "stato": "spedito"
+        },
+        {
+            "id": 2,
+            "prodottoId": 3,
+            "quantita": 1,
+            "stato": "in_attesa"
+        }
+    ]
+}
