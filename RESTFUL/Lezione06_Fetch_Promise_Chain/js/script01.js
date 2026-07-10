@@ -75,7 +75,7 @@ document.querySelector("#btn").addEventListener("click", stampaUtenti);
 //provo una POST utilizzando json-server come db
 function registraUtente() {
 
-    fetch("http://localhost:3000/utenti", {
+    fetch("http://localhost:3000/utent", {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -89,16 +89,17 @@ function registraUtente() {
     }).then(creato => {
         console.log(`Utente creato con id ${creato.id}`);
     })
-        .catch(err => console.error("Richiesta fallita", err))
-        .finally(() => {
-            btnRegistra.setAttribute("disabled", true);
-            console.log("Richiesta terminata")
-            // location.href = "./utenteRegistrato.html";
-            document.querySelector("#demo").innerHTML = "Sto registrando l'utente";
-            setTimeout(() => {
-                document.querySelector("#demo").innerHTML = "Utente registrato";
-            }, 3000);
-        });
+    .catch(err => console.error("Richiesta fallita", err))
+    //Il finally in questo caso è stupido poiché il metodo viene sempre e comunque eseguito, indipendentemente dall'esito della chiamata
+    .finally(() => {
+        btnRegistra.setAttribute("disabled", true);
+        console.log("Richiesta terminata")
+        // location.href = "./utenteRegistrato.html";
+        document.querySelector("#demo").innerHTML = "Sto registrando l'utente";
+        setTimeout(() => {
+            document.querySelector("#demo").innerHTML = "Utente registrato";
+        }, 3000);
+    });
 }
 
 const btnRegistra = document.querySelector("#btnRegistra");
