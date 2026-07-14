@@ -5,8 +5,10 @@
 
 async function lancioParallelo() {
     
+
     const userPromise = fetch("https://jsonplaceholder.typicod.com/users").then(r => r.json());
     const docPromise = fetch("http://localhost:3000/docenti").then(r => r.json());
+
     
     //Se una delle due Promise fallisce allora vengono scartati anche i risultati dell'altra.
     // const [user, docs] = await Promise.all([userPromise, docPromise]);

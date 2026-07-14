@@ -23,9 +23,14 @@ let btn = document.querySelector("#btn");
 let demo = document.querySelector("#demo");
 
 btn.addEventListener("click", function(){
+    let t0 = performance.now();
     recuperaDati();
     recuperaSingoloUser();    
     recuperaPostById();
+    let t1 = performance.now();
+
+    console.log(`Tempo totale richieste: ${t1-t0}`);
+    
     //OSS: scritto così ho gli stessi problemi del then di prima. Await blocca l'esecuzione di quella funzione finché la Promise non si risolve. Se ho due richieste dipendenti, la seconda parte solo dopo che la prima è risolta. Ho lo stesso comportamento delle due then annidate ma non sono più una dentro l'altra
 })
 
