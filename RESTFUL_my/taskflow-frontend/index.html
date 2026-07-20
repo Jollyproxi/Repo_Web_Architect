@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>TaskFlow</h1>
+      <div id="stato-login" class="stato-login">Non autenticato</div>
+    </header>
+
+    <!-- Sezione login -->
+    <section id="sezione-login" class="card">
+      <h2>Login</h2>
+      <div class="campo">
+        <label for="email">Email</label>
+        <input type="email" id="email" value="admin@taskflow.it">
+      </div>
+      <div class="campo">
+        <label for="password">Password</label>
+        <input type="password" id="password" value="admin123">
+      </div>
+      <button id="btn-login">Accedi</button>
+      <p id="errore-login" class="errore"></p>
+    </section>
+
+    <!-- Sezione creazione task (visibile solo se autenticato) -->
+    <section id="sezione-crea" class="card nascosto">
+      <h2>Nuova task</h2>
+      <div class="campo">
+        <label for="titolo">Titolo</label>
+        <input type="text" id="titolo" placeholder="Cosa c'è da fare?">
+      </div>
+      <div class="campo-riga">
+        <div class="campo">
+          <label for="priorita">Priorità</label>
+          <select id="priorita">
+            <option value="bassa">Bassa</option>
+            <option value="media" selected>Media</option>
+            <option value="alta">Alta</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="stato">Stato</label>
+          <select id="stato">
+            <option value="da_fare" selected>Da fare</option>
+            <option value="in_corso">In corso</option>
+            <option value="completata">Completata</option>
+          </select>
+        </div>
+      </div>
+      <button id="btn-crea">Crea task</button>
+      <p id="errore-crea" class="errore"></p>
+    </section>
+
+    <!-- Filtri -->
+    <section class="filtri">
+      <label for="filtro-stato">Filtra per stato:</label>
+      <select id="filtro-stato">
+        <option value="">Tutti</option>
+        <option value="da_fare">Da fare</option>
+        <option value="in_corso">In corso</option>
+        <option value="completata">Completata</option>
+      </select>
+    </section>
+
+    <!-- Lista task -->
+    <section id="lista-task" class="lista">
+      <p class="caricamento">Caricamento…</p>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

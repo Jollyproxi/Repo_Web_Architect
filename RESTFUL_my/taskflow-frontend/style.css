@@ -1,0 +1,120 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #f4f4f2;
+  color: #2c2c2a;
+  line-height: 1.5;
+  padding: 2rem 1rem;
+}
+
+.container { max-width: 640px; margin: 0 auto; }
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+header h1 { font-size: 1.6rem; }
+
+.stato-login {
+  font-size: 0.8rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  background: #e8e6e0;
+  color: #6b6a64;
+}
+.stato-login.attivo { background: #d5f5e3; color: #1e8449; }
+
+.card {
+  background: #fff;
+  border: 1px solid #e0ded8;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.card h2 { font-size: 1.1rem; margin-bottom: 1rem; }
+
+.campo { margin-bottom: 1rem; }
+.campo-riga { display: flex; gap: 1rem; }
+.campo-riga .campo { flex: 1; }
+
+label { display: block; font-size: 0.85rem; font-weight: 500; margin-bottom: 0.3rem; }
+
+input, select {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #d3d1c7;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+}
+input:focus, select:focus { outline: none; border-color: #378add; }
+
+button {
+  padding: 0.6rem 1.2rem;
+  background: #2c2c2a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+button:hover { background: #444441; }
+
+.errore { color: #a32d2d; font-size: 0.85rem; margin-top: 0.5rem; min-height: 1rem; }
+
+.nascosto { display: none; }
+
+.filtri {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+.filtri select { width: auto; }
+
+.lista { display: flex; flex-direction: column; gap: 0.7rem; }
+.caricamento { text-align: center; color: #6b6a64; padding: 2rem; }
+
+.task {
+  background: #fff;
+  border: 1px solid #e0ded8;
+  border-left-width: 4px;
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.task.priorita-alta   { border-left-color: #e24b4a; }
+.task.priorita-media  { border-left-color: #e2a44b; }
+.task.priorita-bassa  { border-left-color: #4ba3e2; }
+
+.task-info h3 { font-size: 1rem; margin-bottom: 0.2rem; }
+.task-info p { font-size: 0.85rem; color: #6b6a64; }
+
+.task-meta {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.badge {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  background: #eeece6;
+  color: #6b6a64;
+}
+.badge.stato-completata { background: #d5f5e3; color: #1e8449; }
+.badge.stato-in_corso   { background: #fde3c8; color: #b9770e; }
+
+.btn-elimina {
+  background: none;
+  color: #a32d2d;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+}
+.btn-elimina:hover { background: #fcebeb; }
